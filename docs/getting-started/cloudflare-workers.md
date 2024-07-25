@@ -203,8 +203,6 @@ app.get('/static/*', serveStatic({ root: './', manifest }))
 app.get('/favicon.ico', serveStatic({ path: './favicon.ico' }))
 ```
 
-[例](https://github.com/honojs/examples/tree/main/serve-static)をご確認ください。
-
 ### `rewriteRequestPath`
 
 `http://localhost:8787/static/*` を `./assets/statics` にマップするために `rewriteRequestPath` オプションを使用します:
