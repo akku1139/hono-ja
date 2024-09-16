@@ -159,6 +159,7 @@ Hono は以下のすぐに使えるミドルウェアとヘルパーを提供し
 - [Body Limit](/docs/middleware/builtin/body-limit)
 - [キャッシュ](/docs/middleware/builtin/cache)
 - [圧縮](/docs/middleware/builtin/compress)
+- [Context Storage](/docs/middleware/builtin/context-storage)
 - [Cookie](/docs/helpers/cookie)
 - [CORS](/docs/middleware/builtin/cors)
 - [ETag](/docs/middleware/builtin/etag)
