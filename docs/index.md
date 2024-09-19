@@ -1,5 +1,5 @@
 ---
-title: Hono - エッジ向けの爆速Webフレームワーク
+title: Hono - Web 標準に基づいた Web フレームワーク
 titleTemplate: ':title'
 ---
 

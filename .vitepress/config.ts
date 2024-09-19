@@ -1,7 +1,9 @@
 import { defineConfig } from 'vitepress'
 import type { DefaultTheme } from 'vitepress'
-import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from 'vitepress-plugin-group-icons'
 
 const sidebars = (): DefaultTheme.SidebarItem[] => [
   {
@@ -155,7 +157,10 @@ const sidebars = (): DefaultTheme.SidebarItem[] => [
       { text: 'キャッシュ', link: '/docs/middleware/builtin/cache' },
       { text: 'Combine', link: '/docs/middleware/builtin/combine' },
       { text: '圧縮', link: '/docs/middleware/builtin/compress' },
-      { text: 'Context Storage', link: '/docs/middleware/builtin/context-storage' },
+      {
+        text: 'Context Storage',
+        link: '/docs/middleware/builtin/context-storage',
+      },
       { text: 'CORS', link: '/docs/middleware/builtin/cors' },
       {
         text: 'CSRF 保護',
@@ -280,7 +285,7 @@ export default defineConfig({
   lang: 'ja',
   title: 'Hono',
   description:
-    'Cloudflare Workers 、 Fastly Compute 、Deno 、 Bun 、 Vercel 、 Netlify 、 AWS Lambda 、 Lambda@Edge 、 Node.js などのための爆速 Web フレームワーク。 速いですが、それだけではありません。',
+    'Cloudflare Workers 、 Fastly Compute 、Deno 、 Bun 、 Vercel 、 Netlify 、 AWS Lambda 、 Lambda@Edge 、 Node.js などのための Web 標準に基づいた Web フレームワーク。 速いし、すごいです。',
   lastUpdated: true,
   ignoreDeadLinks: true,
   cleanUrls: true,
@@ -361,9 +366,9 @@ export default defineConfig({
     plugins: [
       groupIconVitePlugin({
         customIcon: {
-          cloudflare: 'logos:cloudflare-workers-icon'
-        }
-      })
+          cloudflare: 'logos:cloudflare-workers-icon',
+        },
+      }),
     ],
-  }
+  },
 })
