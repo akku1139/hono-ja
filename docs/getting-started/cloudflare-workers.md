@@ -275,7 +275,7 @@ bun add --dev @cloudflare/workers-types
 
 ## テスト
 
-テストのために `jest-environment-miniflare` が推奨されます。
+テストのために `@cloudflare/vitest-pool-workers` が推奨されます。
 [例](https://github.com/honojs/examples)を読んで設定してください。
 
 このようなアプリケーションに対して
