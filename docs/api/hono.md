@@ -33,7 +33,7 @@ export default app // for Cloudflare Workers or Bun
 
 ## Not Found
 
-`app.notFound` は Not Found レスポンスをカスタマイズできます。
+`app.notFound` を使用して Not Found レスポンスをカスタマイズできます。
 
 ```ts twoslash
 import { Hono } from 'hono'

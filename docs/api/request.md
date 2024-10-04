@@ -355,7 +355,7 @@ app.get('/about/me', async (c) => {
 
 ## raw
 
-RAWな [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) オブジェクト。
+生の [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) オブジェクト。
 
 ```ts
 // For Cloudflare Workers
