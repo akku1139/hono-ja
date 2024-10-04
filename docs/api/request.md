@@ -248,6 +248,7 @@ app.post('/entry', async (c) => {
 ## valid()
 
 バリデーションされたデータを取得します。
+
 ```ts
 app.post('/posts', async (c) => {
   const { title, body } = c.req.valid('form')

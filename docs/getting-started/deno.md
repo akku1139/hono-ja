@@ -23,7 +23,6 @@ Select `deno` template for this example.
 
 `my-app` に移動しますが、 Deno では Hono を明示的にインストールする必要はありません。
 
-
 ```sh
 cd my-app
 ```

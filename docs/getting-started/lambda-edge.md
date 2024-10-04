@@ -8,8 +8,7 @@ Hono は Node.js 18 以上の Lambda@Edge をサポートします。
 
 Lambda@Edge でアプリケーションを作成する時に
 [CDK](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-cdk.html)
-is useful to setup the functions such as CloudFront, IAM Role, API Gateway, and others.
-CloudFront や IAM ロール、 API ゲートウェイなどを設定するのに役立ちます。
+は CloudFront や IAM ロール、 API ゲートウェイなどの機能を設定するのに役立ちます。
 
 `cdk` CLI を使用してプロジェクトを初期化します。
 

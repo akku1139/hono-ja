@@ -266,7 +266,6 @@ GET /bar ---> `fallback`
 
 ルーティングのグループ化の間違いは気が付きにくいので気をつけてください。
 The `route()` function takes the stored routing from the second argument (such as `three` or `two`) and adds it to its own (`two` or `app`) routing.
-`route()` 関数は、 2番目の引数から保存されたルーティング( `three` `two` など)を取得し、自分自身( `two` `app` )のルーティングに追加します。
 
 ```ts
 three.get('/hi', (c) => c.text('hi'))

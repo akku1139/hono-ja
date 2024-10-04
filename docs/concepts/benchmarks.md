@@ -90,6 +90,8 @@ const routes: (Route & { name: string })[] = [
 
 ### Node.js
 
+The following screenshots show the results on Node.js.
+
 ![bench](/images/bench01.png)
 
 ![bench](/images/bench02.png)

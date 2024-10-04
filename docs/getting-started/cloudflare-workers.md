@@ -135,8 +135,6 @@ Cloudflare Workers には2通りの記法があります。 _Module Worker モ�
 export default app
 ```
 
-ただしバインディング変数がローカライズされるため、 今は Module Worker モードが推奨されています。
-
 ```ts
 // Service Worker
 app.fire()

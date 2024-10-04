@@ -16,7 +16,6 @@ Supabase Edge Functions を始める方法は以下の通りです:
 
 1. ターミナル/コマンドプロンプトを開いてください。
 
-2. Create a new Supabase project in a directory on your local machine by running:
 2. 次のコマンドを実行して、ローカルマシンのディレクトリに新しい Supabase プロジェクトを作成します。
 
 ```bash

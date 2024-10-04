@@ -157,28 +157,8 @@ app.get(
   '/static/*',
   serveStatic({
     root: './',
-<<<<<<< HEAD:getting-started/nodejs.md
-    rewriteRequestPath: (path) => path.replace(/^\/static/, '/statics'),
-  })
-)
-```
-
-### `mimes`
-
-`mimes` で追加の MIME タイプを指定できます:
-
-```ts
-app.get(
-  '/static/*',
-  serveStatic({
-    mimes: {
-      m3u8: 'application/vnd.apple.mpegurl',
-      ts: 'video/mp2t',
-    }
-=======
     rewriteRequestPath: (path) =>
       path.replace(/^\/static/, '/statics'),
->>>>>>> upstream/main:docs/getting-started/nodejs.md
   })
 )
 ```
@@ -254,3 +234,4 @@ CMD ["node", "/app/dist/index.js"]
 2. `tsconfig.json` に `"exclude": ["node_modules"]` を追加する。
 3. `package.json` の `script` に `"build": "tsc"` を追加する。
 4. `npm install typescript --save-dev` を実行する。
+5. `"type": "module"` を `package.json` に追加する。

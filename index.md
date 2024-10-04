@@ -6,11 +6,7 @@ head:
       'meta',
       {
         property: 'og:description',
-<<<<<<< HEAD
-        content: 'Hono は小さく、シンプルで爆速なエッジ向け Web フレームワークです。 Cloudflare Workers 、 Fastly Compute 、 Deno 、 Bun 、 Vercel 、 Netlify 、 AWS Lambda 、 Lambda@Edge そして Node.js で動作します。 速いですが、それだけではありません。',
-=======
-        content: 'Hono is a small, simple, and ultrafast web framework built on Web Standards. It works on Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, Netlify, AWS Lambda, Lambda@Edge, and Node.js. Fast, but not only fast.',
->>>>>>> origin/sync
+        content: 'Hono は、Web 標準に基づいた、小さく、シンプルで、爆速な Web フレームワークです。 Cloudflare Workers 、 Fastly Compute 、 Deno 、 Bun 、 Vercel 、 Netlify 、 AWS Lambda 、 Lambda@Edge そして Node.js で動作します。 速いですが、それだけではありません。',
       },
     ]
 layout: home
