@@ -2,7 +2,7 @@
 
 [Lambda@Edge](https://aws.amazon.com/lambda/edge/) は Amazon Web Services のサーバーレスプラットフォームです。 これにより、 Amazon CloudFront のエッジロケーションで Lambda 関数を実行できるようになり、 HTTP リクエスト/レスポンスをカスタマイズできるようになります。
 
-Hono は Node.js 18以上の Lambda@Edge をサポートします。
+Hono は Node.js 18 以上の Lambda@Edge をサポートします。
 
 ## 1. セットアップ
 
