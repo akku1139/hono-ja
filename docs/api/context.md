@@ -6,10 +6,16 @@ Request / Response を処理するには、 `Context` オブジェクトを使�
 
 `req` は HonoRequest のインスタンスです。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/hello', (c) => {
   const userAgent = c.req.header('User-Agent')
-  ...
+  // ...
+  // ---cut-start---
+  return c.text(`Hello, ${userAgent}`)
+  // ---cut-end---
 })
 ```
 
@@ -24,7 +30,10 @@ HTTP レスポンスを返します。
 **Note**: テキストや HTML を返す場合は、 `c.text()` や `c.html()` を使ってください。
 :::
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/welcome', (c) => {
   // Set headers
   c.header('X-Message', 'Hello!')
@@ -40,7 +49,10 @@ app.get('/welcome', (c) => {
 
 このように書くこともできます。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/welcome', (c) => {
   return c.body('Thank you for coming', 201, {
     'X-Message': 'Hello!',
@@ -51,7 +63,7 @@ app.get('/welcome', (c) => {
 
 以下と同じです。
 
-```ts
+```ts twoslash
 new Response('Thank you for coming', {
   status: 201,
   headers: {
@@ -65,7 +77,10 @@ new Response('Thank you for coming', {
 
 `Content-Type:text/plain` でテキストをレンダリングします。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/say', (c) => {
   return c.text('Hello!')
 })
@@ -75,7 +90,10 @@ app.get('/say', (c) => {
 
 `Content-Type:application/json` で JSON をレンダリングします。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/api', (c) => {
   return c.json({ message: 'Hello!' })
 })
@@ -85,7 +103,10 @@ app.get('/api', (c) => {
 
 `Content-Type:text/html` で HTML をレンダリングします。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/', (c) => {
   return c.html('<h1>Hello! Hono!</h1>')
 })
@@ -95,7 +116,10 @@ app.get('/', (c) => {
 
 `Not Found` レスポンスを返します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/notfound', (c) => {
   return c.notFound()
 })
@@ -105,7 +129,10 @@ app.get('/notfound', (c) => {
 
 リダイレクトします。 デフォルトのステータスコードは `302` です。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/redirect', (c) => {
   return c.redirect('/')
 })
@@ -116,7 +143,10 @@ app.get('/redirect-permanently', (c) => {
 
 ## res
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 // Response object
 app.use('/', async (c, next) => {
   await next()
@@ -128,7 +158,10 @@ app.use('/', async (c, next) => {
 
 Get and set arbitrary key-value pairs, with a lifetime of the current request. This allows passing specific values between middleware or from middleware to route handlers.
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono<{ Variables: { message: string } }>()
+// ---cut---
 app.use(async (c, next) => {
   c.set('message', 'Hono is cool!!')
   await next()
@@ -142,7 +175,9 @@ app.get('/', (c) => {
 
 `Variables` ジェネリクスを `Hono` に渡すと型安全になります。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+// ---cut---
 type Variables = {
   message: string
 }
@@ -156,14 +191,20 @@ The value of `c.set` / `c.get` are retained only within the same request. They c
 
 `c.var` を使用しても変数の値にアクセスできます。
 
-```ts
+```ts twoslash
+import type { Context } from 'hono'
+declare const c: Context
+// ---cut---
 const result = c.var.client.oneMethod()
 ```
 
 カスタムメソッドを提供するミドルウェアを作成したい場合は、
 このように書きます:
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+import { createMiddleware } from 'hono/factory'
+// ---cut---
 type Env = {
   Variables: {
     echo: (str: string) => string
@@ -185,7 +226,16 @@ app.get('/echo', echoMiddleware, (c) => {
 If you want to use the middleware in multiple handlers, you can use `app.use()`.
 Then, you have to pass the `Env` as Generics to the constructor of `Hono` to make it type-safe.
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+import type { MiddlewareHandler } from 'hono/types'
+declare const echoMiddleware: MiddlewareHandler
+type Env = {
+  Variables: {
+    echo: (str: string) => string
+  }
+}
+// ---cut---
 const app = new Hono<Env>()
 
 app.use(echoMiddleware)
@@ -199,7 +249,12 @@ app.get('/echo', (c) => {
 
 カスタムミドルウェア内で `c.setRenderer()` を使用してレイアウトを設定できます。
 
-```tsx
+```tsx twoslash
+/** @jsx jsx */
+/** @jsxImportSource hono/jsx */
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.use(async (c, next) => {
   c.setRenderer((content) => {
     return c.html(
@@ -216,7 +271,10 @@ app.use(async (c, next) => {
 
 次に、 `c.render()` を使用してそのレイアウトでレスポンスを作成します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/', (c) => {
   return c.render('Hello!')
 })
@@ -281,19 +339,33 @@ app.get('/pages/my-hobbies', (c) => {
 
 ## executionCtx
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono<{
+  Bindings: {
+    KV: any
+  }
+}>()
+declare const key: string
+declare const data: string
+// ---cut---
 // ExecutionContext object
 app.get('/foo', async (c) => {
   c.executionCtx.waitUntil(
     c.env.KV.put(key, data)
   )
-  ...
+  // ...
 })
 ```
 
 ## event
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+declare const key: string
+declare const data: string
+type KVNamespace = any
+// ---cut---
 // Type definition to make type inference
 type Bindings = {
   MY_KV: KVNamespace
@@ -307,7 +379,7 @@ app.get('/foo', async (c) => {
   c.event.waitUntil(
     c.env.MY_KV.put(key, data)
   )
-  ...
+  // ...
 })
 ```
 
@@ -316,7 +388,10 @@ app.get('/foo', async (c) => {
 Cloudflare Workers の環境変数、シークレット、 KV ネームスペース、 D1 データベース、 R2 バケット等... をバインディングよ呼びます。
 種類に関係なく、バインディングは常にグローバル変数として利用でき、 `c.env.BINDING_KEY` からアクセスできます。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+type KVNamespace = any
+// ---cut---
 // Type definition to make type inference
 type Bindings = {
   MY_KV: KVNamespace
@@ -325,7 +400,7 @@ type Bindings = {
 const app = new Hono<{ Bindings: Bindings }>()
 
 // Environment object for Cloudflare Workers
-app.get('/', (c) => {
+app.get('/', async (c) => {
   c.env.MY_KV.get('my-key')
   // ...
 })
@@ -335,7 +410,11 @@ app.get('/', (c) => {
 
 ハンドラでエラーが発生した場合、エラーオブジェクトは `c.error` に格納されます。
 ミドルウェアからアクセスできます。
-```ts
+
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.use(async (c, next) => {
   await next()
   if (c.error) {
@@ -358,7 +437,9 @@ declare module 'hono' {
 
 これをミドルウェアで利用できます:
 
-```ts
+```ts twoslash
+import { createMiddleware } from 'hono/factory'
+// ---cut---
 const mw = createMiddleware(async (c, next) => {
   c.set('result', 'some values') // result is a string
   await next()
@@ -367,9 +448,13 @@ const mw = createMiddleware(async (c, next) => {
 
 ハンドラで、変数は適切な型を推論されます:
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono<{ Variables: { result: string } }>()
+// ---cut---
 app.get('/', (c) => {
   const val = c.get('result') // val is a string
-  //...
+  // ...
+  return c.json({ result: val })
 })
 ```

@@ -17,7 +17,12 @@
 まず、それぞれのルーターに以下のルートを登録しました。
 それらは現実で実際に使われるものとよく似ています。
 
-```ts
+```ts twoslash
+interface Route {
+  method: string
+  path: string
+}
+// ---cut---
 export const routes: Route[] = [
   { method: 'GET', path: '/user' },
   { method: 'GET', path: '/user/comments' },
@@ -36,7 +41,12 @@ export const routes: Route[] = [
 
 そして、以下のようにそれぞれのエンドポイントにリクエストを行いました。
 
-```ts
+```ts twoslash
+interface Route {
+  method: string
+  path: string
+}
+// ---cut---
 const routes: (Route & { name: string })[] = [
   {
     name: 'short static',

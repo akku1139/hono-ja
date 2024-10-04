@@ -11,7 +11,7 @@ Hono のコンストラクタで使用するルーターを指定できます。
 
 使い方:
 
-```ts
+```ts twoslash
 import { Hono } from 'hono'
 ```
 
@@ -27,7 +27,7 @@ this.router = new SmartRouter({
 
 使い方 :
 
-```ts
+```ts twoslash
 import { Hono } from 'hono/quick'
 ```
 
@@ -43,7 +43,7 @@ this.router = new SmartRouter({
 
 使い方:
 
-```ts
+```ts twoslash
 import { Hono } from 'hono/tiny'
 ```
 

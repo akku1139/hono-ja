@@ -8,7 +8,10 @@
 
 例えば、 "X-Response-Time" ヘッダを付与するミドルウェアはこのようになります。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.use(async (c, next) => {
   const start = Date.now()
   await next()

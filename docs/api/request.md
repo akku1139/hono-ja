@@ -5,16 +5,22 @@
 ## param()
 
 パスパラメータの値を取得します。
-```ts
+
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 // Captured params
-app.get('/entry/:id', (c) => {
+app.get('/entry/:id', async (c) => {
   const id = c.req.param('id')
-  ...
+  //    ^?
+  // ...
 })
 
 // Get all params at once
-app.get('/entry/:id/comment/:commentId', (c) => {
+app.get('/entry/:id/comment/:commentId', async (c) => {
   const { id, commentId } = c.req.param()
+  //      ^?
 })
 ```
 
@@ -22,17 +28,20 @@ app.get('/entry/:id/comment/:commentId', (c) => {
 
 クエリパラメータを取得します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 // Query params
-app.get('/search', (c) => {
+app.get('/search', async (c) => {
   const query = c.req.query('q')
-  ...
+  //     ^?
 })
 
 // Get all params at once
-app.get('/search', (c) => {
+app.get('/search', async (c) => {
   const { q, limit, offset } = c.req.query()
-  ...
+  //      ^?
 })
 ```
 
@@ -40,11 +49,15 @@ app.get('/search', (c) => {
 
 複数のクエリパラメータを取得します。 例: `/search?tags=A&tags=B`
 
-```ts
-app.get('/search', (c) => {
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/search', async (c) => {
   // tags will be string[]
   const tags = c.req.queries('tags')
-  ...
+  //     ^?
+  // ...
 })
 ```
 
@@ -52,10 +65,14 @@ app.get('/search', (c) => {
 
 リクエストのヘッダを取得します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/', (c) => {
   const userAgent = c.req.header('User-Agent')
-  ...
+  //      ^?
+  return c.text(`Your user agent is ${userAgent}`)
 })
 ```
 
@@ -80,10 +97,13 @@ const foo = c.req.header('X-Foo')
 
 `multipart/form-data` または `application/x-www-form-urlencoded` のリクエストボディをパースします。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.post('/entry', async (c) => {
   const body = await c.req.parseBody()
-  ...
+  // ...
 })
 ```
 
@@ -91,9 +111,13 @@ app.post('/entry', async (c) => {
 
 **単一ファイル**
 
-```ts
+```ts twoslash
+import { Context } from 'hono'
+declare const c: Context
+// ---cut---
 const body = await c.req.parseBody()
-body['foo']
+const data = body['foo']
+//    ^?
 ```
 
 `body['foo']` is `(string | File)`.
@@ -102,7 +126,10 @@ body['foo']
 
 ### 複数ファイル
 
-```ts
+```ts twoslash
+import { Context } from 'hono'
+declare const c: Context
+// ---cut---
 const body = await c.req.parseBody()
 body['foo[]']
 ```
@@ -113,7 +140,10 @@ body['foo[]']
 
 ### 同じ名前の複数ファイル
 
-```ts
+```ts twoslash
+import { Context } from 'hono'
+declare const c: Context
+// ---cut---
 const body = await c.req.parseBody({ all: true })
 body['foo']
 ```
@@ -129,7 +159,7 @@ If you set the `dot` option `true`, the return value is structured based on the 
 
 Imagine receiving the following data:
 
-```ts
+```ts twoslash
 const data = new FormData()
 data.append('obj.key1', 'value1')
 data.append('obj.key2', 'value2')
@@ -137,7 +167,10 @@ data.append('obj.key2', 'value2')
 
 You can get the structured value by setting the `dot` option `true`:
 
-```ts
+```ts twoslash
+import { Context } from 'hono'
+declare const c: Context
+// ---cut---
 const body = await c.req.parseBody({ dot: true })
 // body is `{ obj: { key1: 'value1', key2: 'value2' } }`
 ```
@@ -146,10 +179,13 @@ const body = await c.req.parseBody({ dot: true })
 
 Parses the request body of type `application/json`
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.post('/entry', async (c) => {
   const body = await c.req.json()
-  ...
+  // ...
 })
 ```
 
@@ -157,10 +193,13 @@ app.post('/entry', async (c) => {
 
 `text/plain` のリクエストボディをパースします。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.post('/entry', async (c) => {
   const body = await c.req.text()
-  ...
+  // ...
 })
 ```
 
@@ -168,10 +207,13 @@ app.post('/entry', async (c) => {
 
 リクエストボディを `ArrayBuffer` としてパースします。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.post('/entry', async (c) => {
   const body = await c.req.arrayBuffer()
-  ...
+  // ...
 })
 ```
 
@@ -179,10 +221,13 @@ app.post('/entry', async (c) => {
 
 Parses the request body as a `Blob`.
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.post('/entry', async (c) => {
   const body = await c.req.blob()
-  ...
+  // ...
 })
 ```
 
@@ -190,10 +235,13 @@ app.post('/entry', async (c) => {
 
 Parses the request body as a `FormData`.
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.post('/entry', async (c) => {
   const body = await c.req.formData()
-  ...
+  // ...
 })
 ```
 
@@ -201,9 +249,9 @@ app.post('/entry', async (c) => {
 
 バリデーションされたデータを取得します。
 ```ts
-app.post('/posts', (c) => {
+app.post('/posts', async (c) => {
   const { title, body } = c.req.valid('form')
-  ...
+  // ...
 })
 ```
 
@@ -222,7 +270,10 @@ app.post('/posts', (c) => {
 
 ハンドラ内で定義されたパスをこのように取得できます:
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/posts/:id', (c) => {
   return c.json({ path: c.req.routePath })
 })
@@ -238,7 +289,10 @@ app.get('/posts/:id', (c) => {
 
 ハンドラで一致したルートを返します、デバッグに適しています。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.use(async function logger(c, next) {
   await next()
   c.req.matchedRoutes.forEach(({ handler, method, path }, i) => {
@@ -261,10 +315,13 @@ app.use(async function logger(c, next) {
 
 リクエストのパス。
 
-```ts
-app.get('/about/me', (c) => {
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/about/me', async (c) => {
   const pathname = c.req.path // `/about/me`
-  ...
+  // ...
 })
 ```
 
@@ -272,10 +329,13 @@ app.get('/about/me', (c) => {
 
 リクエストの URL 文字列。
 
-```ts
-app.get('/about/me', (c) => {
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/about/me', async (c) => {
   const url = c.req.url // `http://localhost:8787/about/me`
-  ...
+  // ...
 })
 ```
 
@@ -283,10 +343,13 @@ app.get('/about/me', (c) => {
 
 リクエストの HTTP メソッド名。
 
-```ts
-app.get('/about/me', (c) => {
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/about/me', async (c) => {
   const method = c.req.method // `GET`
-  ...
+  // ...
 })
 ```
 
@@ -298,6 +361,6 @@ RAWな [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) オ
 // For Cloudflare Workers
 app.post('/', async (c) => {
   const metadata = c.req.raw.cf?.hostMetadata?
-  ...
+  // ...
 })
 ```

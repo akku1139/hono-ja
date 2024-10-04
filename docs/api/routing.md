@@ -5,7 +5,10 @@ Hono のルーティングは柔軟で直感的です。
 
 ## 基本
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 // HTTP Methods
 app.get('/', (c) => c.text('GET /'))
 app.post('/', (c) => c.text('POST /'))
@@ -36,49 +39,70 @@ app.on('GET', ['/hello', '/ja/hello', '/en/hello'], (c) =>
 
 ## パスパラメータ
 
-```ts
-app.get('/user/:name', (c) => {
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/user/:name', async (c) => {
   const name = c.req.param('name')
-  ...
+  //       ^?
+  // ...
 })
 ```
 
 または一度に多くのパラメータを使用できます:
 
-```ts
-app.get('/posts/:id/comment/:comment_id', (c) => {
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/posts/:id/comment/:comment_id', async (c) => {
   const { id, comment_id } = c.req.param()
-  ...
+  //       ^?
+  // ...
 })
 ```
 
 ## オプションのパラメータ
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 // Will match `/api/animal` and `/api/animal/:type`
 app.get('/api/animal/:type?', (c) => c.text('Animal!'))
 ```
 
 ## 正規表現
 
-```ts
-app.get('/post/:date{[0-9]+}/:title{[a-z]+}', (c) => {
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/post/:date{[0-9]+}/:title{[a-z]+}', async (c) => {
   const { date, title } = c.req.param()
-  ...
+  //       ^?
+  // ...
 })
 ```
 
 ## スラッシュを含む
 
-```ts
-app.get('/posts/:filename{.+\\.png$}', (c) => {
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/posts/:filename{.+\\.png$}', async (c) => {
   //...
 })
 ```
 
 ## 連鎖的なルート
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app
   .get('/endpoint', (c) => {
     return c.text('GET /endpoint')
@@ -95,7 +119,9 @@ app
 
 Hono インスタンスを使用してルートをグループ化し、メインのアプリケーションで route メソッドを使用して追加します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+// ---cut---
 const book = new Hono()
 
 book.get('/', (c) => c.text('List Books')) // GET /book
@@ -114,7 +140,9 @@ app.route('/book', book)
 
 You can also group multiple instances while keeping base.
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+// ---cut---
 const book = new Hono()
 book.get('/book', (c) => c.text('List Books')) // GET /book
 book.post('/book', (c) => c.text('Create Book')) // POST /book
@@ -132,7 +160,9 @@ app.route('/', user) // Handle /user
 
 基底パスを指定できます。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+// ---cut---
 const api = new Hono().basePath('/api')
 api.get('/book', (c) => c.text('List Books')) // GET /api/book
 ```
@@ -141,7 +171,9 @@ api.get('/book', (c) => c.text('List Books')) // GET /api/book
 
 ホスト名をルートに含めても動作します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+// ---cut---
 const app = new Hono({
   getPath: (req) => req.url.replace(/^https?:\/([^?]+).*$/, '$1'),
 })
@@ -154,7 +186,9 @@ app.get('/www2.example.com/hello', (c) => c.text('hello www2'))
 
 Hono コンストラクタに `getPath()` 関数を実装すると `host` ヘッダの値を処理できます。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+// ---cut---
 const app = new Hono({
   getPath: (req) =>
     '/' +
@@ -176,7 +210,10 @@ app.get('/www1.example.com/hello', (c) => c.text('hello www1'))
 
 ハンドラ、ミドルウェアは登録順に実行されます。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/book/a', (c) => c.text('a')) // a
 app.get('/book/:slug', (c) => c.text('common')) // common
 ```
@@ -188,7 +225,10 @@ GET /book/b ---> `common`
 
 ハンドラが実行されると処理が停止します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('*', (c) => c.text('common')) // common
 app.get('/foo', (c) => c.text('foo')) // foo
 ```
@@ -199,14 +239,21 @@ GET /foo ---> `common` // foo will not be dispatched
 
 実行したいミドルウェアがある場合は、ハンドラよりも前に記述します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+import { logger } from 'hono/logger'
+const app = new Hono()
+// ---cut---
 app.use(logger())
 app.get('/foo', (c) => c.text('foo'))
 ```
 
 If you want to have a "_fallback_" handler, write the code below the other handler.
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.get('/bar', (c) => c.text('bar')) // bar
 app.get('*', (c) => c.text('fallback')) // fallback
 ```
@@ -237,7 +284,12 @@ GET /two/three/hi ---> `hi`
 
 順序が間違っている場合は 404 を返します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+const two = new Hono()
+const three = new Hono()
+// ---cut---
 three.get('/hi', (c) => c.text('hi'))
 app.route('/two', two) // `two` does not have routes
 two.route('/three', three)

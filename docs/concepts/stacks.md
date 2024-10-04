@@ -23,7 +23,7 @@ API サーバーとそのクライアントを作ってみましょう。
 
 まずは、 GET リクエストを受け取り JSON を返すエンドポイントを作成します。
 
-```ts
+```ts twoslash
 import { Hono } from 'hono'
 
 const app = new Hono()

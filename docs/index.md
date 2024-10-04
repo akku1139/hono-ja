@@ -10,7 +10,7 @@ Hono - _**\[炎\] 🔥**_ - は小さく、シンプルで爆速なエッジ向�
 
 Honoは速いけど、速いだけではありません。
 
-```ts
+```ts twoslash
 import { Hono } from 'hono'
 const app = new Hono()
 

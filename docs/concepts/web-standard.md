@@ -7,7 +7,7 @@ Hono は Fetch のような **Web 標準**のみを使用します。
 Cloudflare Workers 、 Deno 、 Bun は Web 標準 API 上に構築されています。
 例えば、 "Hello World" を返すサーバーは以下のように書くことが出来ます。 Cloudflare Workers と Bun で動作します。
 
-```ts
+```ts twoslash
 export default {
   async fetch() {
     return new Response('Hello World')

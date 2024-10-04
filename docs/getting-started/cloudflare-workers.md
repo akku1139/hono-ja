@@ -159,94 +159,24 @@ export default {
 
 ## 静的ファイルの提供
 
-::: warning
-This "Serve static files" feature for Cloudflare Workers has been deprecated. If you want to create an application that serves static assets files, use [Cloudflare Pages](/docs/getting-started/cloudflare-pages) instead of Cloudflare Workers.
-:::
-
-静的ファイルを提供するためにセットアップが必要です。
-静的ファイルは Workers Sites を通じて提供されます。
-`wrangler.toml` を編集して静的ファイルを提供するディレクトリを設定します。
+If you want to serve static files, you can use [the Static Assets feature](https://developers.cloudflare.com/workers/static-assets/) of Cloudflare Workers. Specify the directory for the files in `wrangler.toml`:
 
 ```toml
-[site]
-bucket = "./assets"
+assets = { directory = "public" }
 ```
 
-次に `assets` ディレクトリを作成し、ファイルを設置します。
+Then create the `public` directory and place the files there. For instance, `./public/static/hello.txt` will be served as `/static/hello.txt`.
 
 ```
-./
-├── assets
-│   ├── favicon.ico
-│   └── static
-│       ├── demo
-│       │   └── index.html
-│       ├── fallback.txt
-│       └── images
-│           └── dinotocat.png
+.
 ├── package.json
+├── public
+│   ├── favicon.ico
+│   └── static
+│       └── hello.txt
 ├── src
-│   └── index.ts
+│   └── index.ts
 └── wrangler.toml
-```
-
-"アダプタ" を使用します。
-
-```ts
-import { Hono } from 'hono'
-import { serveStatic } from 'hono/cloudflare-workers'
-import manifest from '__STATIC_CONTENT_MANIFEST'
-
-const app = new Hono()
-
-app.get('/static/*', serveStatic({ root: './', manifest }))
-app.get('/favicon.ico', serveStatic({ path: './favicon.ico' }))
-```
-
-### `rewriteRequestPath`
-
-`http://localhost:8787/static/*` を `./assets/statics` にマップするために `rewriteRequestPath` オプションを使用します:
-
-```ts
-app.get(
-  '/static/*',
-  serveStatic({
-    root: './',
-    rewriteRequestPath: (path) =>
-      path.replace(/^\/static/, '/statics'),
-  })
-)
-```
-
-### `mimes`
-
-MIME タイプを `mimes` で指定します:
-
-```ts
-app.get(
-  '/static/*',
-  serveStatic({
-    mimes: {
-      m3u8: 'application/vnd.apple.mpegurl',
-      ts: 'video/mp2t',
-    },
-  })
-)
-```
-
-### `onNotFound`
-
-要求されたファイルが見つからないときの処理を `onNotFound` で実装します:
-
-```ts
-app.get(
-  '/static/*',
-  serveStatic({
-    onNotFound: (path, c) => {
-      console.log(`${path} is not found, you access ${c.req.path}`)
-    },
-  })
-)
 ```
 
 ## 型

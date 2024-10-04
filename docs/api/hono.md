@@ -3,7 +3,7 @@
 `Hono` は中心的なオブジェクトです。
 最初にインポートされ、最後まで使用されます。
 
-```ts
+```ts twoslash
 import { Hono } from 'hono'
 
 const app = new Hono()
@@ -34,7 +34,11 @@ export default app // for Cloudflare Workers or Bun
 ## Not Found
 
 `app.notFound` は Not Found レスポンスをカスタマイズできます。
-```ts
+
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.notFound((c) => {
   return c.text('Custom 404 Message', 404)
 })
@@ -44,7 +48,10 @@ app.notFound((c) => {
 
 `app.onError` はエラーをハンドルし、カスタマイズしたレスポンスを返すことが出来ます。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 app.onError((err, c) => {
   console.error(`${err}`)
   return c.text('Custom Error Message', 500)
@@ -71,7 +78,12 @@ addEventListener('fetch', (event: FetchEventLike): void => {
 
 Cloudflare Workers ではこのように使用できます:
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+type Env = any
+type ExecutionContext = any
+// ---cut---
 export default {
   fetch(request: Request, env: Env, ctx: ExecutionContext) {
     return app.fetch(request, env, ctx)
@@ -81,7 +93,10 @@ export default {
 
 もしくは:
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
 export default app
 ```
 
@@ -103,7 +118,12 @@ export default {  // [!code ++]
 URL かパスを渡して GET リクエストを送信します。
 `app` は `Response` オブジェクトを返します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+declare const test: (name: string, fn: () => void) => void
+declare const expect: (value: any) => any
+// ---cut---
 test('GET /hello is ok', async () => {
   const res = await app.request('/hello')
   expect(res.status).toBe(200)
@@ -112,7 +132,12 @@ test('GET /hello is ok', async () => {
 
 また、 `Request` オブジェクトを渡すことも出来ます:
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+declare const test: (name: string, fn: () => void) => void
+declare const expect: (value: any) => any
+// ---cut---
 test('POST /message is ok', async () => {
   const req = new Request('Hello!', {
     method: 'POST',
@@ -154,7 +179,9 @@ strict mode はデフォルトで `true` で、以下のルートが区別され
 
 strict mode を `false` に設定した場合、2つのルートは等しくなります。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+// ---cut---
 const app = new Hono({ strict: false })
 ```
 
@@ -162,7 +189,9 @@ const app = new Hono({ strict: false })
 
 `router` オプションはどのルーターを使うか指定できます。 デフォルトでは `SmartRouter` が使われます。 `RegExpRouter` を使いたい場合、このように `Hono` のインスタンスを生成してください。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+// ---cut---
 import { RegExpRouter } from 'hono/router/reg-exp-router'
 
 const app = new Hono({ router: new RegExpRouter() })
@@ -172,7 +201,11 @@ const app = new Hono({ router: new RegExpRouter() })
 
 ジェネリクスを使用して、 `c.set` / `c.get` で使用される Cloudflare Workers バインディングと変数を追加します。
 
-```ts
+```ts twoslash
+import { Hono } from 'hono'
+type User = any
+declare const user: User
+// ---cut---
 type Bindings = {
   TOKEN: string
 }
@@ -181,7 +214,10 @@ type Variables = {
   user: User
 }
 
-const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
+const app = new Hono<{
+  Bindings: Bindings
+  Variables: Variables
+}>()
 
 app.use('/auth/*', async (c, next) => {
   const token = c.env.TOKEN // token is `string`
