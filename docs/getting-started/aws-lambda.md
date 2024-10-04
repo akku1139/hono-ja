@@ -195,7 +195,6 @@ export const handler = handle(app)
 
 AWS Lambda の呼び出しモードを変更することで[ストリーミングレスポンス](https://aws.amazon.com/blogs/compute/introducing-aws-lambda-response-streaming/)を実現できます。
 
-
 ```diff
 fn.addFunctionUrl({
   authType: lambda.FunctionUrlAuthType.NONE,
