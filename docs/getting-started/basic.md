@@ -174,7 +174,7 @@ app.delete('/posts/:id', (c) =>
 
 ## HTML を返す
 
-Hono はちょっとした HTML を返すのにも適しています。 ファイル名を `src/index.tsx` に変更し、 JSX の設定を行います(ランタイム毎に違う設定です)。 フロントエンドフレームワークを使う必要はありません。
+You can write HTML with [the html Helper](/docs/helpers/html) or using [JSX](/docs/guides/jsx) syntax. If you want to use JSX, rename the file to `src/index.tsx` and configure it (check with each runtime as it is different). Below is an example using JSX.
 
 ```tsx
 const View = () => {
