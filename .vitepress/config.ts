@@ -233,6 +233,10 @@ export const sidebarsExamples = (): DefaultTheme.SidebarItem[] => [
         text: 'RPC のためのルートのグループ化',
         link: '/examples/grouping-routes-rpc',
       },
+      {
+        text: 'CBOR',
+        link: '/examples/cbor',
+      },
     ],
   },
   {
@@ -318,9 +322,10 @@ export default defineConfig({
       indexName: 'hono-ja',
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/honojs' },
+      { icon: 'github', link: 'https://github.com/akku1139/hono-ja' },
       { icon: 'discord', link: 'https://discord.gg/VARKtGvCZK' },
-      { icon: 'x', link: 'https://twitter.com/honojs' },
+      { icon: 'x', link: 'https://x.com/honojs' },
+      { icon: 'bluesky', link: 'https://bsky.app/profile/hono.dev' },
     ],
     editLink: {
       pattern: 'https://github.com/akku1139/hono-ja/edit/main/:path',
