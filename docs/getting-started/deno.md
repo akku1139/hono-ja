@@ -16,7 +16,7 @@ Deno でもスターターを使用できます。
 "create-hono" コマンドでプロジェクトを作成してください。
 
 ```sh
-deno run -A npm:create-hono my-app
+deno init --npm hono my-app
 ```
 
 Select `deno` template for this example.
