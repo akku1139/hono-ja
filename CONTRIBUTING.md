@@ -84,6 +84,7 @@ Typo修正や数段落程度の翻訳、変更はissueを使用してくださ�
 - JavaScript
 - TypeScript
 - etc...
+- Web Standard (一部例外)
 
 ### 表記ゆれについて
 
