@@ -1,9 +1,9 @@
-# Third-party Middleware
+# サードパーティー製のミドルウェア
 
-Third-party middleware refers to middleware not bundled within the Hono package.
-Most of this middleware leverages external libraries.
+サードパーティーミドルウェアとは Hono のパッケージにバンドルされていないミドルウェアのことです。
+ここにある殆どのミドルウェアは外部ライブラリを使用します。
 
-### Authentication
+### 認証
 
 - [Auth.js(Next Auth)](https://github.com/honojs/middleware/tree/main/packages/auth-js)
 - [Clerk Auth](https://github.com/honojs/middleware/tree/main/packages/clerk-auth)
@@ -12,7 +12,7 @@ Most of this middleware leverages external libraries.
 - [Firebase Auth](https://github.com/honojs/middleware/tree/main/packages/firebase-auth)
 - [Verify RSA JWT (JWKS)](https://github.com/wataruoguchi/verify-rsa-jwt-cloudflare-worker)
 
-### Validators
+### バリデーター
 
 - [ArkType validator](https://github.com/honojs/middleware/tree/main/packages/arktype-validator)
 - [Effect Schema Validator](https://github.com/honojs/middleware/tree/main/packages/effect-validator)
@@ -29,7 +29,7 @@ Most of this middleware leverages external libraries.
 - [Swagger UI](https://github.com/honojs/middleware/tree/main/packages/swagger-ui)
 - [Hono OpenAPI](https://github.com/rhinobase/hono-openapi)
 
-### Others
+### その他
 
 - [Bun Transpiler](https://github.com/honojs/middleware/tree/main/packages/bun-transpiler)
 - [esbuild Transpiler](https://github.com/honojs/middleware/tree/main/packages/esbuild-transpiler)
