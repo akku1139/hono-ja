@@ -240,7 +240,7 @@ export const sidebarsExamples = (): DefaultTheme.SidebarItem[] => [
     ],
   },
   {
-    text: 'サードパーティーミドルウェア',
+    text: 'サードパーティー製のミドルウェア',
     items: [
       {
         text: 'Zod OpenAPI',
