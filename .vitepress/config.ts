@@ -89,7 +89,7 @@ const sidebars = (): DefaultTheme.SidebarItem[] => [
     collapsed: true,
     items: [
       { text: 'ミドルウェア', link: '/docs/guides/middleware' },
-      { text: 'Helpers', link: '/docs/guides/helpers' },
+      { text: 'ヘルパー', link: '/docs/guides/helpers' },
       {
         text: 'JSX',
         link: '/docs/guides/jsx',
