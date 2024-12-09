@@ -197,7 +197,7 @@ app.get('/page', (c) => {
 生の [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) を返すことも出来ます。
 
 ```ts
-app.get('/', (c) => {
+app.get('/', () => {
   return new Response('Good morning!')
 })
 ```
