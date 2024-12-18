@@ -33,6 +33,7 @@
 
 - [Bun Transpiler](https://github.com/honojs/middleware/tree/main/packages/bun-transpiler)
 - [esbuild Transpiler](https://github.com/honojs/middleware/tree/main/packages/esbuild-transpiler)
+- [Event Emitter](https://github.com/honojs/middleware/tree/main/packages/event-emitter)
 - [GraphQL Server](https://github.com/honojs/middleware/tree/main/packages/graphql-server)
 - [Hono Rate Limiter](https://github.com/rhinobase/hono-rate-limiter)
 - [Node WebSocket Helper](https://github.com/honojs/middleware/tree/main/packages/node-ws)
