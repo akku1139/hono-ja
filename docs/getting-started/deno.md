@@ -179,7 +179,7 @@ Deno でアプリケーションをテストするのは簡単です。
 `Deno.test` と、公式ライブラリの `assert` か `assertEquals` を [@std/assert](https://jsr.io/@std/assert) からインポートして書いてください。
 
 ```sh
-deno add @std/assert
+deno add jsr:@std/assert
 ```
 
 ```ts
