@@ -15,7 +15,7 @@ Hono はもちろん Bun でも動作します。
 選択肢は `bun` を選んでください。
 
 ```sh
-bun create hono my-app
+bun create hono@latest my-app
 ```
 
 `my-app` に移動し、依存関係をインストールします。
