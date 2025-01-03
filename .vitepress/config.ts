@@ -12,7 +12,7 @@ const sidebars = (): DefaultTheme.SidebarItem[] => [
     text: 'コンセプト',
     collapsed: true,
     items: [
-      { text: 'モチベーション', link: '/docs/concepts/motivation' },
+      { text: '哲学', link: '/docs/concepts/motivation' },
       { text: 'ルーター', link: '/docs/concepts/routers' },
       { text: 'ベンチマーク', link: '/docs/concepts/benchmarks' },
       { text: 'Web 標準', link: '/docs/concepts/web-standard' },
