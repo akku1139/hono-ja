@@ -1,12 +1,12 @@
-# Philosophy
+# 哲学
 
-In this section, we talk about the concept, or philosophy, of Hono.
+この章では、 Hono のコンセプトや哲学について説明します。
 
-## Motivation
+## モチベーション
 
-At first, I just wanted to create a web application on Cloudflare Workers.
-But, there was no good framework that works on Cloudflare Workers.
-So, I started building Hono.
+始めは、 Cloudflare Workers でウェブアプリケーションを作りたいだけでした。
+しかし、 Cloudflare Workers で動く良いフレームワークがありませんでした。
+そのため、 Hono の開発を始めました。
 
 I thought it would be a good opportunity to learn how to build a router using Trie trees.
 Then a friend showed up with ultra crazy fast router called "RegExpRouter".
