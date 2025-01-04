@@ -1,3 +1,3 @@
-# Examples
+# 例
 
-See the [Examples section](/examples/).
+[例のセクション](/examples/) をご覧ください。
