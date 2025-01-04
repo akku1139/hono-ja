@@ -1,11 +1,11 @@
-# Best Practices
+# ベストプラクティス
 
-Hono is very flexible. You can write your app as you like.
-However, there are best practices that are better to follow.
+Hono はとても柔軟です。 あなたの好きなようにアプリを書くことが出来ます。
+しかし、従ったほうが良いベストプラクティスもあります。
 
-## Don't make "Controllers" when possible
+## できるだけ "コントローラー" を作らないでください
 
-When possible, you should not create "Ruby on Rails-like Controllers".
+極力、 "Ruby on Rails のようなコントローラー" は作るべきではありません。
 
 ```ts
 // 🙁
@@ -17,7 +17,7 @@ const booksList = (c: Context) => {
 app.get('/books', booksList)
 ```
 
-The issue is related to types. For example, the path parameter cannot be inferred in the Controller without writing complex generics.
+問題は型に関係しています。 例えば、複雑なジェネリクスを書かない限り、コントローラーではパスパラメータを推論できません。
 
 ```ts
 // 🙁
@@ -28,7 +28,7 @@ const bookPermalink = (c: Context) => {
 }
 ```
 
-Therefore, you don't need to create RoR-like controllers and should write handlers directly after path definitions.
+そのため、 RoR-like なコントローラーを作る必要はなく、パス定義の直後にハンドラを書くべきです。
 
 ```ts
 // 😃
@@ -38,9 +38,9 @@ app.get('/books/:id', (c) => {
 })
 ```
 
-## `factory.createHandlers()` in `hono/factory`
+## `hono/factory` の `factory.createHandlers()`
 
-If you still want to create a RoR-like Controller, use `factory.createHandlers()` in [`hono/factory`](/docs/helpers/factory). If you use this, type inference will work correctly.
+それでも RoR-like なコントローラーを作りたい場合、 [`hono/factory`](/docs/helpers/factory) の `factory.createHandlers()` を使ってください。 これを使う場合、型推論は正しく動作します。
 
 ```ts
 import { createFactory } from 'hono/factory'
@@ -63,11 +63,11 @@ const handlers = factory.createHandlers(logger(), middleware, (c) => {
 app.get('/api', ...handlers)
 ```
 
-## Building a larger application
+## 大きなアプリケーションを作る
 
-Use `app.route()` to build a larger application without creating "Ruby on Rails-like Controllers".
+"Ruby on Rails のようなコントローラー" を作ること無く大きなアプリケーションを作るには `app.route()` を使います。
 
-If your application has `/authors` and `/books` endpoints and you wish to separate files from `index.ts`, create `authors.ts` and `books.ts`.
+アプリケーションに `/authors` と `/books` というエンドポイントがあって `index.ts` を分割したい場合は `authors.ts` と `books.ts` を作成します。
 
 ```ts
 // authors.ts
@@ -95,7 +95,7 @@ app.get('/:id', (c) => c.json(`get ${c.req.param('id')}`))
 export default app
 ```
 
-Then, import them and mount on the paths `/authors` and `/books` with `app.route()`.
+次に、それらをインポートし `app.route()` で `/authors` と `/books` をマウントします。
 
 ```ts
 // index.ts
@@ -111,8 +111,8 @@ app.route('/books', books)
 export default app
 ```
 
-The above code would work fine. However, doing this would lose the type-safe.
-If you want to use `RPC` features, a better solution would be chaining the methods as described below.
+上のコードは正しく動作します。 しかし、それでは型安全が失われます。
+`RPC` 機能を使いたい場合、下のようにメソッドチェーンをすることがより良い解決策です。
 
 ```ts
 // authors.ts
@@ -126,4 +126,4 @@ const app = new Hono()
 export default app;
 ```
 
-This way, when you use this route, the types can be properly inferred.
+このようにすることで、ルートの型を正しく推論できます。
