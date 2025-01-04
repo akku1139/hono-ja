@@ -8,7 +8,7 @@
 
 大きな範囲の翻訳はプルリクエストを立ててください。
 
-Typo修正や数段落程度の翻訳、変更はissueを使用してください。
+Typo 修正や数段落程度の翻訳、変更は issue を使用してください。
 
 ## コミットメッセージ
 
@@ -121,7 +121,7 @@ https://typescriptbook.jp/writing/japanese-english-table
 
 ## 上流の変更
 
-[honojs/website](https://github.com/honojs/website)に変更があった場合は以下のルールに従って取り込みます。
+[honojs/website](https://github.com/honojs/website) に変更があった場合は以下のルールに従って取り込みます。
 
 1. ファイルや章の追加だった場合
    新しいファイルをそのまま追加し、目次も翻訳せずに追加します。
