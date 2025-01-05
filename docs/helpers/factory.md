@@ -1,8 +1,8 @@
-# Factory Helper
+# Factory ヘルパー
 
-The Factory Helper provides useful functions for creating Hono's components such as Middleware. Sometimes it's difficult to set the proper TypeScript types, but this helper facilitates that.
+Factory ヘルパーはミドルウェアのような Hono のコンポーネントを作るときに有用な機能を提供します。 時々、適切な TypeScript の型を設定することが難しい場合もありますが、このヘルパーはそれを簡単にします。
 
-## Import
+## インポート
 
 ```ts
 import { Hono } from 'hono'
@@ -11,7 +11,7 @@ import { createFactory, createMiddleware } from 'hono/factory'
 
 ## `createFactory()`
 
-`createFactory()` will create an instance of the Factory class.
+`createFactory()` は Factory クラスのインスタンスを作ります。
 
 ```ts
 import { createFactory } from 'hono/factory'
@@ -19,7 +19,7 @@ import { createFactory } from 'hono/factory'
 const factory = createFactory()
 ```
 
-You can pass your Env types as Generics:
+`Env` (バインディングや `c.var.*` など) の型をジェネリクスとして渡すことが出来ます:
 
 ```ts
 type Env = {
@@ -33,8 +33,8 @@ const factory = createFactory<Env>()
 
 ## `createMiddleware()`
 
-`createMiddleware()` is shortcut of `factory.createMiddleware()`.
-This function will create your custom middleware.
+`createMiddleware()` は `factory.createMiddleware()` のショートカットです。
+この関数は、カスタムミドルウェアを作成します。
 
 ```ts
 const messageMiddleware = createMiddleware(async (c, next) => {
@@ -43,7 +43,7 @@ const messageMiddleware = createMiddleware(async (c, next) => {
 })
 ```
 
-Tip: If you want to get an argument like `message`, you can create it as a function like the following.
+ヒント: `message` のような引数を受け取りたい場合、次のような関数を作ることが出来ます。
 
 ```ts
 const messageMiddleware = (message: string) => {
@@ -58,7 +58,7 @@ app.use(messageMiddleware('Good evening!'))
 
 ## `factory.createHandlers()`
 
-`createHandlers()` helps to define handlers in a different place than `app.get('/')`.
+`createHandlers()` は `app.get('/')` とは別の場所でハンドラを定義するのに役立ちます。
 
 ```ts
 import { createFactory } from 'hono/factory'
@@ -82,9 +82,9 @@ app.get('/api', ...handlers)
 
 ## `factory.createApp()` <Badge style="vertical-align: middle;" type="warning" text="Experimental" />
 
-`createApp()` helps to create an instance of Hono with the proper types. If you use this method with `createFactory()`, you can avoid redundancy in the definition of the `Env` type.
+`createApp()` は適切な型で Hono のインスタンスを作ることを助けてくれます。 このメソッドを `createFactory()` と一緒に使うと、 `Env` の型定義の重複を避けることが出来ます。
 
-If your application is like this, you have to set the `Env` in two places:
+次のようなアプリケーションは、 `Env` を二箇所で設定する必要があります:
 
 ```ts
 import { createMiddleware } from 'hono/factory'
@@ -106,7 +106,7 @@ const mw = createMiddleware<Env>(async (c, next) => {
 app.use(mw)
 ```
 
-By using `createFactory()` and `createApp()`, you can set the `Env` only in one place.
+`createFactory()` と `createApp()` を使うことで、 `Env` を一箇所だけセットするだけで良くなります。
 
 ```ts
 import { createFactory } from 'hono/factory'
@@ -124,7 +124,7 @@ const mw = factory.createMiddleware(async (c, next) => {
 })
 ```
 
-`createFactory()` can receive the `initApp` option to initialize an `app` created by `createApp()`. The following is an example that uses the option.
+`createFactory()` には `createApp()` で作られた `app` を初期化するための `initApp` オプションを渡すことが出来ます。 このようにオプションを使います。
 
 ```ts
 // factory-with-db.ts
