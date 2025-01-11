@@ -80,7 +80,7 @@ const handlers = factory.createHandlers(logger(), middleware, (c) => {
 app.get('/api', ...handlers)
 ```
 
-## `factory.createApp()` <Badge style="vertical-align: middle;" type="warning" text="Experimental" />
+## `factory.createApp()`
 
 `createApp()` は適切な型で Hono のインスタンスを作ることを助けてくれます。 このメソッドを `createFactory()` と一緒に使うと、 `Env` の型定義の重複を避けることが出来ます。
 
