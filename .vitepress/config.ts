@@ -322,7 +322,7 @@ export default defineConfig({
     siteTitle: 'Hono',
     algolia: {
       appId: 'ML5YEKHL8B',
-      apiKey: 'b37d63b7bab0db0e52ca5f5cd9c6ac21',
+      apiKey: 'bab03cdf5d8f656e15fdf238edb14782',
       indexName: 'hono-ja',
     },
     socialLinks: [
