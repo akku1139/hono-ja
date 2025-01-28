@@ -4,7 +4,7 @@ Request / Response を処理するには、 `Context` オブジェクトを使�
 
 ## req
 
-`req` は HonoRequest のインスタンスです。
+`req` は HonoRequest のインスタンスです。 詳しくは [HonoRequest](/docs/api/request) をご覧ください。
 
 ```ts twoslash
 import { Hono } from 'hono'
