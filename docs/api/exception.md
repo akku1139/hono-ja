@@ -65,7 +65,7 @@ app.onError((err, c) => {
 
 ## `cause`
 
-The `cause` option is available to add a [`cause`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) data.
+`cause` オプションは [`cause`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) のデータを追加するために使えます。
 
 ```ts twoslash
 import { Hono, Context } from 'hono'
