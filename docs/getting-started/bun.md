@@ -9,7 +9,7 @@ Hono はもちろん Bun でも動作します。
 
 ## 2. セットアップ
 
-### 2.1. Setup a new project
+### 2.1. 新しいプロジェクトをセットアップする
 
 スターターは Bun でも使用できます。 "bun create" コマンドでプロジェクトを作成してください。
 選択肢は `bun` を選んでください。
@@ -25,9 +25,9 @@ cd my-app
 bun install
 ```
 
-### 2.2. Setup an existing project
+### 2.2. すでにあるプロジェクトにセットアップする
 
-On an existing Bun project, we only need to install `hono` dependencies on the project root directory via
+すでにある Bun プロジェクトでは、プロジェクトルートのディレクトリで `hono` を依存関係としてインストールするだけです。
 
 ```sh
 bun add hono
@@ -137,7 +137,7 @@ app.get(
 
 ### `onFound`
 
-You can specify handling when the requested file is found with `onFound`:
+リクエストされたファイルが見つかった場合の処理を `onFound` で実装できます:
 
 ```ts
 app.get(
@@ -168,7 +168,7 @@ app.get(
 
 ### `precompressed`
 
-The `precompressed` option checks if files with extensions like `.br` or `.gz` are available and serves them based on the `Accept-Encoding` header. It prioritizes Brotli, then Zstd, and Gzip. If none are available, it serves the original file.
+`precompressed` オプションでは `.br` や `.gz` のような拡張子を持ってるファイルがあるか確認して、 `Accept-Encoding` ヘッダに基づいてそれらを返します。 Brotli 、 Zstd 、 Gzip の順で優先されます。 それらがなければ元のファイルを返します。
 
 ```ts
 app.get(
