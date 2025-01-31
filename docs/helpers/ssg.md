@@ -1,12 +1,12 @@
-# SSG Helper
+# SSG ヘルパー
 
-SSG Helper generates a static site from your Hono application. It will retrieve the contents of registered routes and save them as static files.
+SSG ヘルパーは Hono アプリケーションから静的サイトを作成します。 登録されたルートのコンテンツを取得し、静的なファイルとして保存します。
 
-## Usage
+## 使い方
 
-### Manual
+### 手動
 
-If you have a simple Hono application like the following:
+このようなシンプルな Hono のアプリケーションがある時:
 
 ```tsx
 // index.tsx
@@ -35,7 +35,7 @@ app.get('/about', (c) => {
 export default app
 ```
 
-For Node.js, create a build script like this:
+Node.js では、このようなビルドスクリプトを書きます:
 
 ```ts
 // build.ts
@@ -46,28 +46,28 @@ import fs from 'fs/promises'
 toSSG(app, fs)
 ```
 
-By executing the script, the files will be output as follows:
+スクリプトを実行して、ファイルが出力されます:
 
 ```bash
 ls ./static
 about.html  index.html
 ```
 
-### Vite Plugin
+### Vite プラグイン
 
-Using the `@hono/vite-ssg` Vite Plugin, you can easily handle the process.
+Vite プラグインである `@hono/vite-ssg` を使うと、簡単に処理を行うことができます。
 
-For more details, see here:
+詳しくは、以下のページを御覧ください:
 
 https://github.com/honojs/vite-plugins/tree/main/packages/ssg
 
 ## toSSG
 
-`toSSG` is the main function for generating static sites, taking an application and a filesystem module as arguments. It is based on the following:
+`toSSG` は静的サイトを作成するために使うメイン関数で、アプリケーションとファイルシステムモジュールを引数として受け取ります。 詳しくはこのようなものです:
 
-### Input
+### 入力
 
-The arguments for toSSG are specified in ToSSGInterface.
+toSSG の引数は ToSSGInterface です。
 
 ```ts
 export interface ToSSGInterface {
@@ -79,8 +79,8 @@ export interface ToSSGInterface {
 }
 ```
 
-- `app` specifies `new Hono()` with registered routes.
-- `fs` specifies the following object, assuming `node:fs/promise`.
+- `app` には、ルートを登録した `new Hono()` を指定します。
+- `fs` には、 `node:fs/promise` のようなオブジェクトを指定します。
 
 ```ts
 export interface FileSystemModule {
@@ -92,11 +92,11 @@ export interface FileSystemModule {
 }
 ```
 
-### Using adapters for Deno and Bun
+### Deno や Bun でアダプタを使用する
 
-If you want to use SSG on Deno or Bun, a `toSSG` function is provided for each file system.
+Deno や Bun で SSG を行いたい場合、それぞれのファイルシステム API 用に `toSSG` 関数が用意されています。
 
-For Deno:
+Deno:
 
 ```ts
 import { toSSG } from 'hono/deno'
@@ -104,7 +104,7 @@ import { toSSG } from 'hono/deno'
 toSSG(app) // The second argument is an option typed `ToSSGOptions`.
 ```
 
-For Bun:
+Bun:
 
 ```ts
 import { toSSG } from 'hono/bun'
@@ -112,9 +112,9 @@ import { toSSG } from 'hono/bun'
 toSSG(app) // The second argument is an option typed `ToSSGOptions`.
 ```
 
-### Options
+### オプション
 
-Options are specified in the ToSSGOptions interface.
+オプションは ToSSGOptions インターフェースで指定されます。
 
 ```ts
 export interface ToSSGOptions {
@@ -127,15 +127,15 @@ export interface ToSSGOptions {
 }
 ```
 
-- `dir` is the output destination for Static files. The default value is `./static`.
-- `concurrency` is the concurrent number of files to be generated at the same time. The default value is `2`.
-- `extensionMap` is a map containing the `Content-Type` as a key and the string of the extension as a value. This is used to determine the file extension of the output file.
+- `dir` は静的サイトの出力先です。 デフォルトは `./static` です。
+- `concurrency` は同時に処理・出力されるファイルの数です。 デフォルトは `2` です。
+- `extensionMap` は `Content-Type` を key に、拡張子の文字列を value に持つオブジェクトです。 出力するファイルの拡張子を決めるために使われます。
 
-Each Hook will be described later.
+それぞれのフックについては後で解説します。
 
-### Output
+### 出力
 
-`toSSG` returns the result in the following Result type.
+`toSSG` はこのような型の戻り値を返します。
 
 ```ts
 export interface ToSSGResult {
@@ -145,9 +145,9 @@ export interface ToSSGResult {
 }
 ```
 
-## Hook
+## フック
 
-You can customize the process of `toSSG` by specifying the following custom hooks in options.
+オプションでフックを設定することで `toSSG` の処理をカスタマイズできます。
 
 ```ts
 export type BeforeRequestHook = (req: Request) => Request | false
@@ -159,9 +159,9 @@ export type AfterGenerateHook = (
 
 ### BeforeRequestHook/AfterResponseHook
 
-`toSSG` targets all routes registered in app, but if there are routes you want to exclude, you can filter them by specifying a Hook.
+`toSSG` は app に登録されているすべてのルートを対象にしますが、除外したいルートが有る場合は、フックを指定することでフィルターをかけることができます。
 
-For example, if you want to output only GET requests, filter `req.method` in `beforeRequestHook`.
+例えば、 GET リクエストだけを出力したい場合は、 `beforeRequestHook` で `req.method` を使ってフィルターします。
 
 ```ts
 toSSG(app, fs, {
@@ -174,7 +174,7 @@ toSSG(app, fs, {
 })
 ```
 
-For example, if you want to output only when StatusCode is 200 or 500, filter `res.status` in `afterResponseHook`.
+また、ステータスコードが 200 か 500 の場合のみ出力したい場合は、 `afterResponseHook` で `res.status` を使ってフィルターします。
 
 ```ts
 toSSG(app, fs, {
@@ -189,7 +189,7 @@ toSSG(app, fs, {
 
 ### AfterGenerateHook
 
-Use `afterGenerateHook` if you want to hook the result of `toSSG`.
+`afterGenerateHook` を使うことで、 `toSSG` の結果をフックできます。
 
 ```ts
 toSSG(app, fs, {
@@ -201,21 +201,21 @@ toSSG(app, fs, {
 })
 ```
 
-## Generate File
+## ファイルを作成する
 
-### Route and Filename
+### ルートとファイル名
 
-The following rules apply to the registered route information and the generated file name. The default `./static` behaves as follows:
+このようなルールがルートと作成されるファイル名に適応されます。 デフォルトの出力ディレクトリの `./static` ではこのようになります:
 
 - `/` -> `./static/index.html`
 - `/path` -> `./static/path.html`
 - `/path/` -> `./static/path/index.html`
 
-### File Extension
+### 拡張子
 
-The file extension depends on the `Content-Type` returned by each route. For example, responses from `c.html` are saved as `.html`.
+拡張子はそれぞれのルートが返す `Content-Type` に依存します。 例えば、 `c.html` で返されたレスポンスは `.html` として保存されます。
 
-If you want to customize the file extensions, set the `extensionMap` option.
+拡張子をカスタマイズしたい場合は、 `extensionMap` オプションを指定してください。
 
 ```ts
 import { toSSG, defaultExtensionMap } from 'hono/ssg'
@@ -229,7 +229,7 @@ toSSG(app, fs, {
 })
 ```
 
-Note that paths ending with a slash are saved as index.ext regardless of the extension.
+スラッシュで終わるパスはファイルタイプに関係なく index.拡張子 として保存されることに注意してください。
 
 ```ts
 // save to ./static/html/index.html
@@ -239,15 +239,15 @@ app.get('/html/', (c) => c.html('html'))
 app.get('/text/', (c) => c.text('text'))
 ```
 
-## Middleware
+## ミドルウェア
 
-Introducing built-in middleware that supports SSG.
+これから紹介するビルトインミドルウェアは SSG の処理を補助します。
 
 ### ssgParams
 
-You can use an API like `generateStaticParams` of Next.js.
+Next.js の `generateStaticParams` のようなことをしたい場合に使います。
 
-Example:
+例:
 
 ```ts
 app.get(
@@ -272,7 +272,7 @@ app.get(
 
 ### disableSSG
 
-Routes with the `disableSSG` middleware set are excluded from static file generation by `toSSG`.
+`disableSSG` ミドルウェアを指定されたルートは `toSSG` のファイル生成から除外されます。
 
 ```ts
 app.get('/api', disableSSG(), (c) => c.text('an-api'))
@@ -280,7 +280,7 @@ app.get('/api', disableSSG(), (c) => c.text('an-api'))
 
 ### onlySSG
 
-Routes with the `onlySSG` middleware set will be overridden by `c.notFound()` after `toSSG` execution.
+`onlySSG` ミドルウェアを指定されたルートは `toSSG` 後の `c.notFound()` でオーバーライドされます。
 
 ```ts
 app.get('/static-page', onlySSG(), (c) => c.html(<h1>Welcome to my site</h1>))
