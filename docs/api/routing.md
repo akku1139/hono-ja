@@ -97,7 +97,7 @@ app.get('/posts/:filename{.+\\.png}', async (c) => {
 })
 ```
 
-## 連鎖的なルート
+## メソッドチェーンでルーティングする
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -136,9 +136,9 @@ const app = new Hono()
 app.route('/book', book)
 ```
 
-## Grouping without changing base
+## ベースパスを変更せずにグループ化する
 
-You can also group multiple instances while keeping base.
+ベースパスをそのままに複数のインスタンスをグループ化することもできます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -156,9 +156,9 @@ app.route('/', book) // Handle /book
 app.route('/', user) // Handle /user
 ```
 
-## 基底パス
+## ベースパス
 
-基底パスを指定できます。
+ベースパスを指定できます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -248,7 +248,7 @@ app.use(logger())
 app.get('/foo', (c) => c.text('foo'))
 ```
 
-If you want to have a "_fallback_" handler, write the code below the other handler.
+”_フォールバック_" ハンドラが必要な場合は、他のハンドラの下にコードを書きます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -266,7 +266,7 @@ GET /foo ---> `fallback`
 ## グループの順序
 
 ルーティングのグループ化の間違いは気が付きにくいので気をつけてください。
-The `route()` function takes the stored routing from the second argument (such as `three` or `two`) and adds it to its own (`two` or `app`) routing.
+`rooute()` 関数は2番目の引数 ( `three` や `two` のような) から保存されたルーティングを取得し、自分自身 ( `two` や `app` ) のルートに追加します。
 
 ```ts
 three.get('/hi', (c) => c.text('hi'))
