@@ -184,13 +184,13 @@ MY_NAME = "Hono"
 wrangler kv namespace create MY_KV --preview
 ```
 
-Note down the `preview_id` as the following output:
+このような出力があるので `preview_id` をメモしてください:
 
 ```
 { binding = "MY_KV", preview_id = "abcdef" }
 ```
 
-Specify `preview_id` with the name of Bindings, `MY_KV`:
+`MY_KV` のバインディングで `preview_id` を設定します:
 
 ```toml
 [[kv_namespaces]]
@@ -198,9 +198,9 @@ binding = "MY_KV"
 id = "abcdef"
 ```
 
-### Edit `vite.config.ts`
+### `vite.config.ts` を変更する
 
-Edit the `vite.config.ts`:
+`vite.config.ts` を変更します:
 
 ```ts
 import devServer from '@hono/vite-dev-server'
@@ -219,9 +219,9 @@ export default defineConfig({
 })
 ```
 
-### Use Bindings in your application
+### アプリケーションでバインディングを使用する
 
-Use Variable and KV in your application. Set the types.
+Variable と KV をアプリケーションで使用します。 まずは、型を設定します。
 
 ```ts
 type Bindings = {
@@ -232,7 +232,7 @@ type Bindings = {
 const app = new Hono<{ Bindings: Bindings }>()
 ```
 
-Use them:
+使います:
 
 ```tsx
 app.get('/', async (c) => {
@@ -242,11 +242,11 @@ app.get('/', async (c) => {
 })
 ```
 
-### In production
+### 本番環境では
 
-For Cloudflare Pages, you will use `wrangler.toml` for local development, but for production, you will set up Bindings in the dashboard.
+Cloudflare Pages では、ローカル開発用には `wrangler.toml` を使用しますが、本番環境ではダッシュボードでバインディングを設定します。
 
-## Client-side
+## クライアントサイド
 
 You can write client-side scripts and import them into your application using Vite's features.
 If `/src/client.ts` is the entry point for the client, simply write it in the script tag.
