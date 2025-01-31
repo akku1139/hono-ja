@@ -104,7 +104,7 @@ export class MyAppStack extends cdk.Stack {
 cdk deploy
 ```
 
-## バイナリデータの提供
+## バイナリデータを返す
 
 Hono はバイナリデータのレスポンスもサポートします。
 Lambda ではバイナリデータを base64 でエンコードして返す必要があります。
