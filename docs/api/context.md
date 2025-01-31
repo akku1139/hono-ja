@@ -156,7 +156,7 @@ app.use('/', async (c, next) => {
 
 ## set() / get()
 
-Get and set arbitrary key-value pairs, with a lifetime of the current request. This allows passing specific values between middleware or from middleware to route handlers.
+リクエストの間の寿命を持つ任意のキーバリューのペアを設定、取得できます。 これにより、ミドルウェア間やミドルウェア、ルートハンドラ間でデータを渡すことができます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -185,7 +185,7 @@ type Variables = {
 const app = new Hono<{ Variables: Variables }>()
 ```
 
-The value of `c.set` / `c.get` are retained only within the same request. They cannot be shared or persisted across different requests.
+`c.set` / `c.get` は同じリクエスト内でのみ保持されます。 違うリクエストの間では共有されません。
 
 ## var
 
@@ -223,8 +223,8 @@ app.get('/echo', echoMiddleware, (c) => {
 })
 ```
 
-If you want to use the middleware in multiple handlers, you can use `app.use()`.
-Then, you have to pass the `Env` as Generics to the constructor of `Hono` to make it type-safe.
+複数のハンドラでミドルウェアを使いたい場合、 `app.use()` を使います。
+次に、 `Env` ジェネリクスを `Hono` コンストラクタに渡して型安全にするべきです。
 
 ```ts twoslash
 import { Hono } from 'hono'
