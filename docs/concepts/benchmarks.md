@@ -90,7 +90,7 @@ const routes: (Route & { name: string })[] = [
 
 ### Node.js
 
-The following screenshots show the results on Node.js.
+以下のスクリーンショットは Node.js での結果です。
 
 ![bench](/images/bench01.png)
 
@@ -110,7 +110,7 @@ The following screenshots show the results on Node.js.
 
 ### Bun
 
-The following screenshots show the results on Bun.
+以下のスクリーンショットは Bun での結果です。
 
 ![bench](/images/bench09.png)
 
@@ -130,7 +130,7 @@ The following screenshots show the results on Bun.
 
 ## Cloudflare Workers
 
-Cloudflare Workers の他のルーターと比較して **Hono は最速です**。
+Cloudflare Workers 向けの他のルーターと比較して **Hono は最速です**。
 
 - Machine: Apple MacBook Pro, 32 GiB, M1 Pro
 - Scripts: [benchmarks/handle-event](https://github.com/honojs/hono/tree/main/benchmarks/handle-event)
