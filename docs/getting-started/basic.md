@@ -174,7 +174,7 @@ app.delete('/posts/:id', (c) =>
 
 ## HTML を返す
 
-You can write HTML with [the html Helper](/docs/helpers/html) or using [JSX](/docs/guides/jsx) syntax. If you want to use JSX, rename the file to `src/index.tsx` and configure it (check with each runtime as it is different). Below is an example using JSX.
+[html ヘルパー](/docs/helpers/html) や [JSX](/docs/guides/jsx) を使って HTML を書くことができます。 JSX を使いたい場合、 ファイル名を `src/index.tsx` に変えて、設定 (ランタイムによって違う) を行います。 以下に JSX を使う例を示します。
 
 ```tsx
 const View = () => {
