@@ -77,10 +77,10 @@ app.get('/', (c) => {
 ```
 
 ::: warning
-When `c.req.header()` is called with no arguments, all keys in the returned record are **lowercase**.
+引数無しで `c.req.header()` が呼ばれた場合、すべてのレコードのキーは **小文字** になって返されます。
 
-If you want to get the value of a header with an uppercase name,
-use `c.req.header(“X-Foo”)`.
+大文字を使ったヘッダ名で値を取得したい場合は
+`c.req.header(“X-Foo”)` のように使います。
 
 ```ts
 // ❌ Will not work
@@ -153,11 +153,11 @@ body['foo']
 - `body['foo']` が複数ファイルだった場合、 `(string | File)[]` にパースされます。
 - `body['foo']` が単一ファイルだった場合、 `(string | File)` にパースされます。
 
-### Dot notation
+### ドット表記
 
-If you set the `dot` option `true`, the return value is structured based on the dot notation.
+`dot` オプションを `true` にした場合、戻り値はドット表記基づいて構造化されます。
 
-Imagine receiving the following data:
+このようなデータを受け取ることを考えてください:
 
 ```ts twoslash
 const data = new FormData()
@@ -165,7 +165,7 @@ data.append('obj.key1', 'value1')
 data.append('obj.key2', 'value2')
 ```
 
-You can get the structured value by setting the `dot` option `true`:
+`dot` オプションを `true` にすることで構造化された値を取得することができます:
 
 ```ts twoslash
 import { Context } from 'hono'
@@ -177,7 +177,7 @@ const body = await c.req.parseBody({ dot: true })
 
 ## json()
 
-Parses the request body of type `application/json`
+`application/json` のリクエストボディをパースします。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -219,7 +219,7 @@ app.post('/entry', async (c) => {
 
 ## blob()
 
-Parses the request body as a `Blob`.
+リクエストボディを `Blob` としてパースします。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -233,7 +233,7 @@ app.post('/entry', async (c) => {
 
 ## formData()
 
-Parses the request body as a `FormData`.
+リクエストボディを `FormData` としてパースします。
 
 ```ts twoslash
 import { Hono } from 'hono'
