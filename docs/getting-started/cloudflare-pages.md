@@ -1,16 +1,16 @@
 # Cloudflare Pages
 
-[Cloudflare Pages](https://pages.cloudflare.com) is an edge platform for full-stack web applications.
-It serves static files and dynamic content provided by Cloudflare Workers.
+[Cloudflare Pages](https://pages.cloudflare.com) はフルスタックアプリケーションのためのエッジプラットフォームです。
+静的なファイルと Cloudflare Workes を用いた動的なコンテンツを提供します。
 
-Hono fully supports Cloudflare Pages.
-It introduces a delightful developer experience. Vite's dev server is fast, and deploying with Wrangler is super quick.
+Hono は完璧に Cloudflare Pages をサポートします。
+楽しい開発体験ができます。 Vite の開発サーバーは高速で、 Wrangler を使ったデプロイは爆速です。
 
 ## 1. Setup
 
-A starter for Cloudflare Pages is available.
-Start your project with "create-hono" command.
-Select `cloudflare-pages` template for this example.
+Cloudflare Pages 向けのスターターも準備されています。 
+"create-hono" コマンドでプロジェクトを開始できます。
+この例では、 `cloudflare-pages` テンプレートを選択します。
 
 ::: code-group
 
@@ -36,7 +36,7 @@ deno init --npm hono my-app
 
 :::
 
-Move into `my-app` and install the dependencies.
+`my-app` に移動して依存関係をインストールします。
 
 ::: code-group
 
@@ -62,7 +62,7 @@ bun i
 
 :::
 
-Below is a basic directory structure.
+いかが基本的なディレクトリ構成です。
 
 ```text
 ./
@@ -79,7 +79,7 @@ Below is a basic directory structure.
 
 ## 2. Hello World
 
-Edit `src/index.tsx` like the following:
+`src/index.tsx` をこのように変更します:
 
 ```tsx
 import { Hono } from 'hono'
@@ -96,9 +96,9 @@ app.get('/', (c) => {
 export default app
 ```
 
-## 3. Run
+## 3. 実行
 
-Run the development server locally. Then, access `http://localhost:5173` in your Web browser.
+開発サーバーをローカルで実行して、 Web ブラウザで `http://localhost:5173` にアクセスします。
 
 ::: code-group
 
@@ -120,9 +120,9 @@ bun run dev
 
 :::
 
-## 4. Deploy
+## 4. デプロイ
 
-If you have a Cloudflare account, you can deploy to Cloudflare. In `package.json`, `$npm_execpath` needs to be changed to your package manager of choice.
+Cloudflare アカウントを持っている場合は Cloudflare にデプロイできます。 `package.json` の `$npm_execpath` は選んだパッケージマネージャに変更する必要があります。
 
 ::: code-group
 
@@ -144,11 +144,11 @@ bun run deploy
 
 :::
 
-### Deploy via the Cloudflare dashboard with GitHub
+### Cloudflare ダッシュボードから GitHub 連携でデプロイする
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select Workers & Pages > Create application > Pages > Connect to Git.
-3. Authorize your GitHub account, and select the repository. In Set up builds and deployments, provide the following information:
+1. [Cloudflare dashboard](https://dash.cloudflare.com) にログインしてアカウントを選択します。
+2. Account Home で Workers & Pages > Create application > Pages > Connect to Git を選択します。
+3. GitHub アカウントを認可して、リポジトリを選択します。 ビルドとデプロイの設定は次のようになります:
 
 | Configuration option | Value           |
 | -------------------- | --------------- |
@@ -156,29 +156,29 @@ bun run deploy
 | Build command        | `npm run build` |
 | Build directory      | `dist`          |
 
-## Bindings
+## バインディング
 
-You can use Cloudflare Bindings like Variables, KV, D1, and others.
-In this section, let's use Variables and KV.
+Variables 、 KV 、 D1 などの Cloudflare バインディングを使うことができます。
+このセクションでは Variables と KV のセットアップを解説します。
 
-### Create `wrangler.toml`
+### `wrangler.toml` を作る
 
-First, create `wrangler.toml` for local Bindings:
+まずは、ローカルバインディング用に `wrangler.toml` を作成します:
 
 ```sh
 touch wrangler.toml
 ```
 
-Edit `wrangler.toml`. Specify Variable with the name `MY_NAME`.
+`wrangler.toml` を編集して、 `MY_NAME` の Variable を設定します。
 
 ```toml
 [vars]
 MY_NAME = "Hono"
 ```
 
-### Create KV
+### KV を作る
 
-Next, make the KV. Run the following `wrangler` command:
+次に、 KV を作ります。 以下の `wrangler` コマンドを実行します:
 
 ```sh
 wrangler kv namespace create MY_KV --preview
