@@ -88,7 +88,7 @@ const routes: (Route & { name: string })[] = [
 
 結果を見てみましょう。
 
-### Node.js
+### Node.js では...
 
 以下のスクリーンショットは Node.js での結果です。
 
@@ -108,7 +108,7 @@ const routes: (Route & { name: string })[] = [
 
 ![bench](/images/bench08.png)
 
-### Bun
+### Bun では...
 
 以下のスクリーンショットは Bun での結果です。
 
