@@ -51,7 +51,7 @@ deno task start
 
 ## ポートを変える
 
-You can specify the port number by updating the arguments of `Deno.serve` in `main.ts`:
+`main.ts` の `Deno.serve` の引数を変更することでポート番号を指定できます:
 
 ```ts
 Deno.serve(app.fetch) // [!code --]
@@ -124,7 +124,7 @@ app.get(
 
 ### `onFound`
 
-You can specify handling when the requested file is found with `onFound`:
+要求されたファイルが見つかったときの処理を `onFound` で指定できます:
 
 ```ts
 app.get(
@@ -140,7 +140,7 @@ app.get(
 
 ### `onNotFound`
 
-`onNotFound` を使用して、リクエストされたファイルが見つからない場合の処理を記述できます:
+`onNotFound` を使用して、要求されたファイルが見つからない場合の処理を記述できます:
 
 ```ts
 app.get(
@@ -155,7 +155,7 @@ app.get(
 
 ### `precompressed`
 
-The `precompressed` option checks if files with extensions like `.br` or `.gz` are available and serves them based on the `Accept-Encoding` header. It prioritizes Brotli, then Zstd, and Gzip. If none are available, it serves the original file.
+`precompressed` オプションを使うと `Accept-Encoding` ヘッダに基づいて `.br` や `.gz` といった拡張子を持っているファイルが有るか確認し、提供します。 Brotli 、 Zstd 、 Gzip の順で優先されます。 それらが無ければ元のファイルが提供されます。
 
 ```ts
 app.get(
@@ -203,7 +203,7 @@ deno test hello.ts
 
 ## `npm:` 指定子
 
-`npm:hono` is also available. You can use it by fixing the `deno.json`:
+`npm:hono` も使えます。 これを使うためには `deno.json` を修正します:
 
 ```json
 {
@@ -214,9 +214,9 @@ deno test hello.ts
 }
 ```
 
-You can use either `npm:hono` or `jsr:@hono/hono`.
+`npm:hono` か `jsr:@hono/hono` のどちらかを使うことができます。
 
-If you want to use Third-party Middleware such as `npm:@hono/zod-validator` with the TypeScript Type inferences, you need to use the `npm:` specifier.
+`npm:@hono/zod-validator` といったサードパーティミドルウェアを TypeScript の型推論付きで使用したい場合は、 `npm:` 指定子が必要です。
 
 ```json
 {
