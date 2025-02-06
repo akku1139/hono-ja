@@ -18,7 +18,7 @@ Node.js 18.x 以上で動作します。 具体的に必要な Node.js のバー
 
 スターターは Node.js もサポートしています。
 "create-hono" コマンドで開発を開始しましょう。
-Select `nodejs` template for this example.
+この例では `nodejs` テンプレートを選びます。
 
 ::: code-group
 
