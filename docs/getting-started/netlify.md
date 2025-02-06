@@ -8,7 +8,7 @@ Edge Functions は Deno と TypeScript をサポートしており、 [Netlify C
 
 Netlify 向けのスターターももちろん用意されています。
 "create-hono" コマンドでプロジェクトを始めましょう。
-Select `netlify` template for this example.
+この例では `netlify` テンプレートを選びます。
 
 ::: code-group
 
