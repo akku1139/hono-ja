@@ -11,7 +11,7 @@ Hono を使用すると、他のランタイムと同じ構文で　API を記�
 
 Next.js 向けのスターターもあります。
 "create-hono" コマンドで始めましょう。
-Select `nextjs` template for this example.
+`nextjs` テンプレートを選択します。
 
 ::: code-group
 
@@ -143,7 +143,7 @@ Node.js ランタイム上の Next.js で Hono を使うことも出来ます。
 
 ### App Router
 
-For the App Router, you can simply set the runtime to `nodejs` in your route handler:
+App Router では、ルートハンドラのランタイムを `nodejs` に設定するだけで使用できます:
 
 ```ts
 import { Hono } from 'hono'
@@ -163,9 +163,9 @@ export const GET = handle(app)
 export const POST = handle(app)
 ```
 
-### Page Router
+### Pages Router
 
-For the Page Router, you'll need to install the Node.js adapter first:
+Pages Router では、まず Node.js アダプタをインストールする必要があります:
 
 ::: code-group
 
@@ -211,7 +211,7 @@ app.get('/hello', (c) => {
 export default handle(app)
 ```
 
-In order for this to work with the Page Router, it's important to disable Vercel node.js helpers by setting up an environment variable in your project dashboard or in your `.env` file:
+これを Pages Router で動かすためには、プロジェクトダッシュボードか `.env` ファイルで環境変数を設定して Vercel の Node.js ヘルパーを無効化することが重要です:
 
 ```text
 NODEJS_HELPERS=0
