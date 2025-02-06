@@ -11,7 +11,7 @@ Hono を使った Cloudflare Workers 最初のアプリケーションを作り�
 
 Cloudflare Workers 向けのスターターが使用できます。
 "create-hono" コマンドでプロジェクトを作成してください。
-Select `cloudflare-workers` template for this example.
+`cloudflare-workers` テンプレートを選択します。
 
 ::: code-group
 
@@ -100,12 +100,12 @@ bun run dev
 
 :::
 
-### Change port number
+### ポート番号を変える
 
-If you need to change the port number you can follow the instructions here to update `wrangler.toml` / `wrangler.json` / `wrangler.jsonc` files:
+ポート番号をる必要がある場合は、 `wrangler.toml` / `wrangler.json` / `wrangler.jsonc` を以下のドキュメントに従って変更してください:
 [Wrangler Configuration](https://developers.cloudflare.com/workers/wrangler/configuration/#local-development-settings)
 
-Or, you can follow the instructions here to set CLI options:
+もしくは CLI オプションで設定することもできます:
 [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/commands/#dev)
 
 ## 4. デプロイ
@@ -136,7 +136,7 @@ bun run deploy
 
 ## Service Worker モード / Module Worker モード
 
-Cloudflare Workers には2通りの記法があります。 _Module Worker モード_ と _Service Worker モード_ です。Using Hono, you can write with both syntax, but we recommend using Module Worker mode so that binding variables are localized.
+Cloudflare Workers には2通りの記法があります。 _Module Worker モード_ と _Service Worker モード_ です。 Hono を使うと、どちらの記法でも書くことができますが、バインディング変数がローカライズされるため Module Worker モードを推奨します。
 
 ```ts
 // Module Worker
@@ -165,13 +165,13 @@ export default {
 
 ## 静的ファイルの提供
 
-If you want to serve static files, you can use [the Static Assets feature](https://developers.cloudflare.com/workers/static-assets/) of Cloudflare Workers. Specify the directory for the files in `wrangler.toml`:
+静的ファイルを提供したい場合、 Cloudflare Workers の [Static Assets 機能](https://developers.cloudflare.com/workers/static-assets/) を使うことができます。 `wrangler.toml` でファイルを置くディレクトリを指定します:
 
 ```toml
 assets = { directory = "public" }
 ```
 
-Then create the `public` directory and place the files there. For instance, `./public/static/hello.txt` will be served as `/static/hello.txt`.
+次に `public` ディレクトリを作成し、ファイルを設置します. 例えば、 `./public/static/hello.txt` は `/static/hello.txt` として提供されます。
 
 ```
 .
@@ -187,7 +187,7 @@ Then create the `public` directory and place the files there. For instance, `.
 
 ## 型
 
-workers types が欲しければ `@cloudflare/workers-types` をインストールする必要があります。
+Workers の型が欲しい場合は `@cloudflare/workers-types` をインストールする必要があります。
 
 ::: code-group
 
@@ -283,15 +283,15 @@ app.use('/auth/*', async (c, next) => {
 
 同じように Bearer 認証や JWT 認証などもできます。
 
-## Deploy from Github Action
+## Github Actions からデプロイする
 
-Before deploying code to Cloudflare via CI, you need a cloudflare token. you can manager from here: https://dash.cloudflare.com/profile/api-tokens
+CI で Cloudflare にデプロイする前に、 Cloudflare のトークンが必要です。 ここで管理できます: https://dash.cloudflare.com/profile/api-tokens
 
-If it's a newly created token, select the **Edit Cloudflare Workers** template, if you have already another token, make sure the token has the corresponding permissions(No, token permissions are not shared between cloudflare page and cloudflare worker).
+新しく作られたトークンでは、 **Edit Cloudflare Workers** テンプレートを選択します。 すでにトークンがある場合は、トークンが対応する権限を持っていることを確認してください。 ( Cloudflare Pages と Cloudflare Workers の間で権限が共有されないことに注意してください。
 
-then go to your Github repository settings dashboard: `Settings->Secrets and variables->Actions->Repository secrets`, and add a new secret with the name `CLOUDFLARE_API_TOKEN`.
+次に GitHub リポジトリの設定ダッシュボードで `Settings->Secrets and variables->Actions->Repository secrets` を開き、 `CLOUDFLARE_API_TOKEN` という名前のシークレットを作成します。
 
-then create `.github/workflows/deploy.yml` in your hono project root folder,paste the following code:
+`.github/workflows/deploy.yml` を Hono プロジェクトのルートフォルダに作成し、以下のコードを貼り付けます:
 
 ```yml
 name: Deploy
@@ -320,23 +320,23 @@ main = "src/index.ts"
 minify = true
 ```
 
-Everything is ready! Now push the code and enjoy it.
+準備が整いました! 後はコードを push して楽しんでください。
 
-## Load env when local development
+## ローカル開発環境で環境変数をロードする
 
-To configure the environment variables for local development, create the `.dev.vars` file in the root directory of the project.
-Then configure your environment variables as you would with a normal env file.
+ローカル開発環境で環境変数を設定するには、 `.dev.vars` ファイルをプロジェクトのルートディレクトリに作成します。
+そして環境変数を普通の `.env` ファイルのように設定します。
 
 ```
 SECRET_KEY=value
 API_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ```
 
-> For more about this section you can find in the Cloudflare documentation:
+> 詳しくは Cloudflare のドキュメントをご覧ください:
 > https://developers.cloudflare.com/workers/wrangler/configuration/#secrets
 
-Then we use the `c.env.*` to get the environment variables in our code.  
-**For Cloudflare Workers, environment variables must be obtained via `c`, not via `process.env`.**
+コードの中で `c.env.*` から環境変数にアクセスします。
+**Cloudflare Workers では、環境変数には `c` からアクセスします。 `process.env` ではありません。**
 
 ```ts
 type Bindings = {
@@ -351,7 +351,7 @@ app.get('/env', (c) => {
 })
 ```
 
-Before you deploy your project to cloudflare, remember to set the environment variable/secrets in the Cloudflare Worker project's configuration.
+Cloudflare にプロジェクトをデプロイする前に、環境変数、シークレットを Cloudflare Workers プロジェクトの設定で追加することを忘れないでください。
 
-> For more about this section you can find in the Cloudflare documentation:
+> 詳しくは Cloudflare のドキュメントをご覧ください:
 > https://developers.cloudflare.com/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard
