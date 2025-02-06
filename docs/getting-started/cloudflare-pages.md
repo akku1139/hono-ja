@@ -248,9 +248,9 @@ Cloudflare Pages では、ローカル開発用には `wrangler.toml` を使用�
 
 ## クライアントサイド
 
-You can write client-side scripts and import them into your application using Vite's features.
-If `/src/client.ts` is the entry point for the client, simply write it in the script tag.
-Additionally, `import.meta.env.PROD` is useful for detecting whether it's running on a dev server or in the build phase.
+Vite の機能を使ってクライアントサイドのスクリプトを書いてアプリケーションに組み込むことができます。
+`/src/client.ts` がクライアントのエントリポイントのとき、 script タグに書くだけです。
+更に、 `import.meta.env.PROD` は動作環境が開発サーバーかビルド中かを検出するために有用です。
 
 ```tsx
 app.get('/', (c) => {
@@ -271,7 +271,7 @@ app.get('/', (c) => {
 })
 ```
 
-In order to build the script properly, you can use the example config file `vite.config.ts` as shown below.
+スクリプトをうまくビルドするために、下に示すような設定の例を `vite.config.ts` に使うことができます。
 
 ```ts
 import pages from '@hono/vite-cloudflare-pages'
@@ -303,15 +303,15 @@ export default defineConfig(({ mode }) => {
 })
 ```
 
-You can run the following command to build the server and client script.
+次のコマンドを実行して、サーバーとクライアントスクリプトをビルドします。
 
 ```sh
 vite build --mode client && vite build
 ```
 
-## Cloudflare Pages Middleware
+## Cloudflare Pages のミドルウェア
 
-Cloudflare Pages uses its own [middleware](https://developers.cloudflare.com/pages/functions/middleware/) system that is different from Hono's middleware. You can enable it by exporting `onRequest` in a file named `_middleware.ts` like this:
+Cloudflare Pages は Hono とは違う[ミドルウェア](https://developers.cloudflare.com/pages/functions/middleware/)システムを持っています。 `_middleware.ts` で `onRequest` を export することで有効化できます:
 
 ```ts
 // functions/_middleware.ts
@@ -321,7 +321,7 @@ export async function onRequest(pagesContext) {
 }
 ```
 
-Using `handleMiddleware`, you can use Hono's middleware as Cloudflare Pages middleware.
+`handleMiddleware` を使うことで、 Hono のミドルウェアを Cloudflare Pages のミドルウェアとして使うことができます。
 
 ```ts
 // functions/_middleware.ts
@@ -333,7 +333,7 @@ export const onRequest = handleMiddleware(async (c, next) => {
 })
 ```
 
-You can also use built-in and 3rd party middleware for Hono. For example, to add Basic Authentication, you can use [Hono's Basic Authentication Middleware](/docs/middleware/builtin/basic-auth).
+Hono のビルトイン、サードパーティミドルウェアも使うことができます。 例えば、 Basic 認証を追加するために [Hono の Basic 認証ミドルウェア](/docs/middleware/builtin/basic-auth) を使うことができます。
 
 ```ts
 // functions/_middleware.ts
@@ -348,7 +348,7 @@ export const onRequest = handleMiddleware(
 )
 ```
 
-If you want to apply multiple middleware, you can write it like this:
+このように複数のミドルウェアを使うこともできます:
 
 ```ts
 import { handleMiddleware } from 'hono/cloudflare-pages'
@@ -362,9 +362,9 @@ export const onRequest = [
 ]
 ```
 
-### Accessing `EventContext`
+### `EventContext` へのアクセス
 
-You can access [`EventContext`](https://developers.cloudflare.com/pages/functions/api-reference/#eventcontext) object via `c.env` in `handleMiddleware`.
+[`EventContext`](https://developers.cloudflare.com/pages/functions/api-reference/#eventcontext) オブジェクトには `handleMiddleware` の `c.env` からアクセスできます。
 
 ```ts
 // functions/_middleware.ts
@@ -378,7 +378,7 @@ export const onRequest = [
 ]
 ```
 
-Then, you can access the data value in via `c.env.eventContext` in the handler:
+次に、ハンドラでは `c.env.eventContext` からセットしたデータにアクセスできます:
 
 ```ts
 // functions/api/[[route]].ts
