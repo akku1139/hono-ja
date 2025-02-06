@@ -23,7 +23,7 @@ brew install fastly/tap/fastly
 
 スターターは Fastly Compute でも使用できます。
 "create-hono" コマンドでプロジェクトを開始しましょう。
-Select `fastly` template for this example.
+`fastly` テンプレートを選択します。
 
 ::: code-group
 
