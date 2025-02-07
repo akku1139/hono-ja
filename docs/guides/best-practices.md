@@ -105,25 +105,38 @@ import books from './books'
 
 const app = new Hono()
 
+// 😃
 app.route('/authors', authors)
 app.route('/books', books)
 
 export default app
 ```
 
-上のコードは正しく動作します。 しかし、それでは型安全が失われます。
-`RPC` 機能を使いたい場合、下のようにメソッドチェーンをすることがより良い解決策です。
+### RPC 機能を使いたい場合
+
+上のコードは普通の使い方ではうまく動きます。
+しかし、 `RPC` 機能を使いたい場合は以下のように変更することで正しい型にすることができます。
 
 ```ts
 // authors.ts
-import { Hono } from "hono";
+import { Hono } from 'hono'
 
 const app = new Hono()
-  .get("/", (c) => c.json("list authors"))
-  .post("/", (c) => c.json("create an author", 201))
-  .get("/:id", (c) => c.json(`get ${c.req.param("id")}`));
+  .get('/', (c) => c.json('list authors'))
+  .post('/', (c) => c.json('create an author', 201))
+  .get('/:id', (c) => c.json(`get ${c.req.param('id')}`))
 
-export default app;
+export default app
 ```
 
-このようにすることで、ルートの型を正しく推論できます。
+`app` の型を `hc` に渡すことで、正しい型になります。
+
+```ts
+import app from './authors'
+import { hc } from 'hono/client'
+
+// 😃
+const client = hc<typeof app>('http://localhost') // Typed correctly
+```
+
+詳しくは、 [RPC のページ](/docs/guides/rpc#using-rpc-with-larger-applications) を御覧ください。
