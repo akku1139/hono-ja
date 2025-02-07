@@ -1,6 +1,6 @@
 # Alibaba Cloud Function Compute
 
-[Alibaba Cloud Function Compute](https://www.alibabacloud.com/en/product/function-compute) は完全に管理された、イベント・ドリブンなコンピューティングサービスです。 Function Compute を使用するとサーバーのようなインフラを管理することなく、コードを書いてアップロードすることに集中できます。
+[Alibaba Cloud Function Compute](https://www.alibabacloud.com/en/product/function-compute) はフルマネージドな、イベント・ドリブンなコンピューティングサービスです。 Function Compute を使用するとサーバーのようなインフラを管理することなく、コードを書いてアップロードすることに集中できます。
 
 このガイドではサードパーティアダプタの [rwv/hono-alibaba-cloud-fc3-adapter](https://github.com/rwv/hono-alibaba-cloud-fc3-adapter) を使って Alibaba Cloud Function Compute で Hono を動かします。
 
