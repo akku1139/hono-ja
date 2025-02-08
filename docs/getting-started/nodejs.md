@@ -159,7 +159,7 @@ import { serveStatic } from '@hono/node-server/serve-static'
 app.use('/static/*', serveStatic({ root: './' }))
 ```
 
-`path` オプションを使ってルートにある `favicon.ico` を配信します:
+`path` オプションを使って、ルートにある `favicon.ico` を配信します:
 
 ```ts
 app.use('/favicon.ico', serveStatic({ path: './favicon.ico' }))
