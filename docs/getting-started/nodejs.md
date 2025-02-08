@@ -138,9 +138,9 @@ app.get('/', (c) => {
 serve(app)
 ```
 
-## 静的ファイルの提供
+## 静的ファイルの配信
 
-You can use `serveStatic` to serve static files from the local file system. For example, suppose the directory structure is as follows:
+`serveStatic` を使うことでローカルファイルシステムから静的ファイルを配信できます。 以下のようなディレクトリ構成の場合を考えてみましょう:
 
 ```sh
 ./
@@ -151,7 +151,7 @@ You can use `serveStatic` to serve static files from the local file system. For 
     └── image.png
 ```
 
-If access to the path `/static/*` comes in and returns a file under `./static`, you can write the following:
+`/static/*` にアクセスがあったときに `./static` にあるファイルを返すためには、下のように書けます:
 
 ```ts
 import { serveStatic } from '@hono/node-server/serve-static'
@@ -159,13 +159,13 @@ import { serveStatic } from '@hono/node-server/serve-static'
 app.use('/static/*', serveStatic({ root: './' }))
 ```
 
-Use the `path` option to serve `favicon.ico` in the directory root:
+`path` オプションを使ってルートにある `favicon.ico` を配信します:
 
 ```ts
 app.use('/favicon.ico', serveStatic({ path: './favicon.ico' }))
 ```
 
-If access comes to the path `/hello.txt` or `/image.png` and returns a file named `./static/hello.txt` or `./static/image.png`, you can use the following:
+`/hello.txt` や `/image.png` にアクセスされたときに、 `./static/hello.txt` や `./static/image.png` といったファイル名のファイルを返すには、以下のように書けます:
 
 ```ts
 app.use('*', serveStatic({ root: './static' }))
