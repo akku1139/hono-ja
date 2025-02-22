@@ -285,7 +285,7 @@ app.use('/auth/*', async (c, next) => {
 
 ## Github Actions からデプロイする
 
-CI で Cloudflare にデプロイする前に、 Cloudflare のトークンが必要です。 ここで管理できます: https://dash.cloudflare.com/profile/api-tokens
+CI で Cloudflare にデプロイする前に、 Cloudflare のトークンが必要です。 [User API Tokens](https://dash.cloudflare.com/profile/api-tokens) で管理できます。
 
 新しく作られたトークンでは、 **Edit Cloudflare Workers** テンプレートを選択します。 すでにトークンがある場合は、トークンが対応する権限を持っていることを確認してください。 ( Cloudflare Pages と Cloudflare Workers の間で権限が共有されないことに注意してください。
 
