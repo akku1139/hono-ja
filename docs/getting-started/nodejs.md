@@ -217,9 +217,20 @@ const server = serve({
 })
 ```
 
-## Dockerfile
+## Building & Deployment
 
-Dockerfile の例:
+Complete the following steps to build a simple Hono app. Apps with a front-end framework may need to use [Hono's Vite plugins](https://github.com/honojs/vite-plugins).
+
+1. Add `"outDir": "./dist"` to the `compilerOptions` section `tsconfig.json`.
+2. Add `"exclude": ["node_modules"]` to `tsconfig.json`.
+3. Add `"build": "tsc"` to `script` section of `package.json`.
+4. Run `npm install typescript --save-dev`.
+5. Add `"type": "module"` to `package.json`.
+6. Run `npm run build`!
+
+### Dockerfile
+
+Dockerfile の例です。 You must complete steps 1-5 above before this build and deployment process will work.
 
 ```Dockerfile
 FROM node:20-alpine AS base
@@ -250,11 +261,3 @@ EXPOSE 3000
 
 CMD ["node", "/app/dist/index.js"]
 ```
-
-次に以下の作業をしてください。
-
-1. `"outDir": "./dist"` を `tsconfig.json` の `compilerOptions` に追加する。
-2. `tsconfig.json` に `"exclude": ["node_modules"]` を追加する。
-3. `package.json` の `script` に `"build": "tsc"` を追加する。
-4. `npm install typescript --save-dev` を実行する。
-5. `"type": "module"` を `package.json` に追加する。
