@@ -68,7 +68,7 @@ app.get(
 
 ::: warning
 
-For the RPC to infer routes correctly, all inlcuded methods must be chained, and the endpoint or app type must be inferred from a declared variable. For more, see [Best Practices for RPC](https://hono.dev/docs/guides/best-practices#if-you-want-to-use-rpc-features).
+For the RPC to infer routes correctly, all included methods must be chained, and the endpoint or app type must be inferred from a declared variable. For more, see [Best Practices for RPC](https://hono.dev/docs/guides/best-practices#if-you-want-to-use-rpc-features).
 
 :::
 
@@ -95,7 +95,7 @@ export type AppType = typeof route
 ## クライアント
 
 次はクライアントの実装です。
-AppType ジェネリクスを `hc` に渡してクライアントオブジェクトを作ります。
+`AppType` 型をジェネリクスとして `hc` に渡してクライアントオブジェクトを作ります。
 驚くほど補完が効き、エンドポイントのパスとリクエストの型がサジェストされます。
 
 ![SC](/images/sc03.gif)
