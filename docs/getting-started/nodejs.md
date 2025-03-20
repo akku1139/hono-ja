@@ -151,7 +151,7 @@ serve(app)
     └── image.png
 ```
 
-`/static/*` にアクセスがあったときに `./static` にあるファイルを返すためには、下のように書けます:
+`/static/*` にリクエストがあったときに `./static` にあるファイルを返したい場合は、下のように書けます:
 
 ```ts
 import { serveStatic } from '@hono/node-server/serve-static'
@@ -165,7 +165,7 @@ app.use('/static/*', serveStatic({ root: './' }))
 app.use('/favicon.ico', serveStatic({ path: './favicon.ico' }))
 ```
 
-`/hello.txt` や `/image.png` にアクセスされたときに、 `./static/hello.txt` や `./static/image.png` といったファイル名のファイルを返すには、以下のように書けます:
+`/hello.txt` や `/image.png` がリクエストされたときに、 `./static/hello.txt` や `./static/image.png` といったファイル名のファイルを返すには、以下のように使います:
 
 ```ts
 app.use('*', serveStatic({ root: './static' }))
