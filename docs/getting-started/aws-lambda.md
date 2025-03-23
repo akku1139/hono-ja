@@ -8,7 +8,7 @@ Hono は AWS Lambda の Node.js 18 以上の環境で動作します。
 ## 1. セットアップ
 
 AWS Lambda でアプリケーションを作成する場合、
-[CDK](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-cdk.html)
+[CDK](https://docs.aws.amazon.com/cdk/v2/guide/home.html)
 が IAM ロールや API ゲートウェイなどを設定するのに役立ちます。
 
 `cdl` CLI を使ってプロジェクトを初期化します。
