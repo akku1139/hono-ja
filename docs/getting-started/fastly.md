@@ -1,25 +1,10 @@
 # Fastly Compute
 
-[Fastly's Compute](https://www.fastly.com/products/edge-compute) オファリングによって、大規模なでグローバルスケールのアプリケーションを構築し、 Fastry CDN のエッジで動かすことが出来ます。
+[Fastly Compute](https://www.fastly.com/products/edge-compute) is an advanced edge computing system that runs your code, in your favorite language, on our global edge network. Hono also works on Fastly Compute.
 
-Hono は Fastly Compute でも動きます。
+You can develop the application locally and publish it with a few commands using [Fastly CLI](https://www.fastly.com/documentation/reference/tools/cli/).
 
-## 1. CLI をインストールする
-
-Fastly Compute を使用するために、 [Fastly アカウントを作成](https://www.fastly.com/jp/signup/)する必要があります。
-次に [Fastly CLI](https://github.com/fastly/cli) をインストールします。
-
-macOS
-
-```sh
-brew install fastly/tap/fastly
-```
-
-他の OS では次のドキュメントを参照してください:
-
-- [Compute services | Fastly Developer Hub](https://developer.fastly.com/learning/compute/#download-and-install-the-fastly-cli)
-
-## 2. セットアップ
+## 1. Setup
 
 スターターは Fastly Compute でも使用できます。
 "create-hono" コマンドでプロジェクトを開始しましょう。
@@ -75,7 +60,7 @@ bun i
 
 :::
 
-## 3. Hello World
+## 2. Hello World
 
 `src/index.ts` を変更します:
 
@@ -89,31 +74,35 @@ app.get('/', (c) => c.text('Hello Fastly!'))
 app.fire()
 ```
 
-## 4. Run
+## 3. Run
 
 ローカルで開発サーバーを起動し、ブラウザで `http://localhost:7676` にアクセスしてください。
 
 ::: code-group
 
 ```sh [npm]
-npm run dev
+npm run start
 ```
 
 ```sh [yarn]
-yarn dev
+yarn start
 ```
 
 ```sh [pnpm]
-pnpm dev
+pnpm run start
 ```
 
 ```sh [bun]
-bun run dev
+bun run start
 ```
 
 :::
 
 ## 4. デプロイ
+
+To build and deploy your application to your Fastly account, type the following command. The first time you deploy the application, you will be prompted to create a new service in your account.
+
+If you don't have an account yet, you must [create your Fastly account](https://www.fastly.com/signup/).
 
 ::: code-group
 
@@ -126,7 +115,7 @@ yarn deploy
 ```
 
 ```sh [pnpm]
-pnpm deploy
+pnpm run deploy
 ```
 
 ```sh [bun]
@@ -134,5 +123,3 @@ bun run deploy
 ```
 
 :::
-
-それだけです!!!
