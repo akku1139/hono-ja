@@ -215,4 +215,5 @@ app.get('/echo', echoMiddleware, (c) => {
 ビルトインミドルウェアは外部モジュールに依存しません、しかしサードパーティーミドルウェアはサードパーティー製ライブラリに依存している可能性があります。
 したがって、それらを使用してより複雑なアプリケーションを作成できると思います。
 
+We can explore a variety of [third-party middleware](https://hono.dev/docs/middleware/third-party).
 例えば、 GraphQL サーバーミドルウェア、 Sentry ミドルウェア、 Firebase Auth ミドルウェア等...
