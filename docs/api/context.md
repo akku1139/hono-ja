@@ -1,6 +1,6 @@
 # Context
 
-Request / Response を処理するには、 `Context` オブジェクトを使用します。
+The `Context` object is instantiated for each request and kept until the response is returned. You can put values in it, set headers and a status code you want to return, and access HonoRequest and Response objects.
 
 ## req
 
@@ -19,12 +19,39 @@ app.get('/hello', (c) => {
 })
 ```
 
+## status()
+
+You can set an HTTP status code with `c.status()`. The default is `200`. You don't have to use `c.status()` if the code is `200`.
+
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.post('/posts', (c) => {
+  // Set HTTP status code
+  c.status(201)
+  return c.text('Your post is created!')
+})
+```
+
+## header()
+
+You can set HTTP Headers for the response.
+
+```ts twoslash
+import { Hono } from 'hono'
+const app = new Hono()
+// ---cut---
+app.get('/', (c) => {
+  // Set headers
+  c.header('X-Message', 'My custom message')
+  return c.text('HellO!')
+})
+```
+
 ## body()
 
 HTTP レスポンスを返します。
-
-`c.header()` でヘッダをセットし、 `c.status` で HTTP ステータスコードを指定します。
-これは `c.text()` や `c.json()` などでも同じように設定できます。
 
 ::: info
 **Note**: テキストや HTML を返す場合は、 `c.text()` や `c.html()` を使ってください。
@@ -35,13 +62,7 @@ import { Hono } from 'hono'
 const app = new Hono()
 // ---cut---
 app.get('/welcome', (c) => {
-  // Set headers
-  c.header('X-Message', 'Hello!')
   c.header('Content-Type', 'text/plain')
-
-  // Set HTTP status code
-  c.status(201)
-
   // Return the response body
   return c.body('Thank you for coming')
 })
@@ -61,7 +82,7 @@ app.get('/welcome', (c) => {
 })
 ```
 
-以下と同じです。
+このレスポンスは以下の `Response` オブジェクトと同じです。
 
 ```ts twoslash
 new Response('Thank you for coming', {
@@ -114,7 +135,7 @@ app.get('/', (c) => {
 
 ## notFound()
 
-`Not Found` レスポンスを返します。
+`Not Found` レスポンスを返します。 [`app.notFound()`](/docs/api/hono#not-found) でカスタマイズできます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -142,6 +163,8 @@ app.get('/redirect-permanently', (c) => {
 ```
 
 ## res
+
+You can access the Response object that will be returned.
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -339,6 +362,8 @@ app.get('/pages/my-hobbies', (c) => {
 
 ## executionCtx
 
+You can access Cloudflare Workers' specific [ExecutionContext](https://developers.cloudflare.com/workers/runtime-apis/context/).
+
 ```ts twoslash
 import { Hono } from 'hono'
 const app = new Hono<{
@@ -357,6 +382,8 @@ app.get('/foo', async (c) => {
 ```
 
 ## event
+
+You can access Cloudflare Workers' specific `FetchEvent`. This was used in "Service Worker" syntax. But, it is not recommended now.
 
 ```ts twoslash
 import { Hono } from 'hono'
