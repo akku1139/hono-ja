@@ -348,7 +348,7 @@ export default defineConfig({
   },
   themeConfig: {
     logo: '/images/logo.svg',
-    siteTitle: 'Hono - 非公式日本語版',
+    siteTitle: 'Hono',
     algolia: {
       appId: 'ML5YEKHL8B',
       apiKey: 'bab03cdf5d8f656e15fdf238edb14782',
@@ -365,7 +365,7 @@ export default defineConfig({
       text: 'このページをGitHubで編集する',
     },
     footer: {
-      message: 'Released under the MIT License.',
+      message: 'このドキュメントは非公式の日本語翻訳版です。<br>Released under the MIT License.',
       copyright:
         'Copyright © 2022-present Yusuke Wada & Hono contributors. "kawaii" logo is created by SAWARATSUKI.',
     },
