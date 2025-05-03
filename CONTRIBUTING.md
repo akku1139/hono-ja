@@ -64,6 +64,16 @@ Typo などは issue で教えてください。
 
 > 人生 (結婚は除く)
 
+### 外部リンクされた記事の日本語版が存在する場合は、リンクを日本語版へ書き換えます
+
+英語記事へのリンクを
+
+> https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#basic_authentication_scheme
+
+日本語版へのリンクに変更します。
+
+> https://developer.mozilla.org/ja/docs/Web/HTTP/Guides/Authentication#basic_%E8%AA%8D%E8%A8%BC%E6%96%B9%E5%BC%8F
+
 ### 以下の言葉は翻訳しません。
 
 - Hono
