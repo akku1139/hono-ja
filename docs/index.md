@@ -92,7 +92,7 @@ Do you want to see more? See [Who is using Hono in production?](https://github.c
 
 Hono を使用して Cloudflare Workers 向けのアプリケーションを作成するデモ。
 
-![Demo](/images/sc.gif)
+![A gif showing a hono app being created quickly with fast iteration.](/images/sc.gif)
 
 ## 爆速
 
@@ -202,7 +202,7 @@ Hono は楽しい "**開発体験**" を提供します。
 
 例えば、パスパラメータはリテラル型になります。
 
-![SS](/images/ss.png)
+![A screenshot showing Hono having proper literal typing when URL parameters. The URL "/entry/:date/:id" allows for request parameters to be "date" or "id"](/images/ss.png)
 
 そして、バリデーターと Hono Client `hc` は RPC モードを有効にします。 RPC モードでは、
 Zod などのお気に入りのバリデーターを使用して、サーバーサイド API 仕様をクライアントと簡単に共有してタイプセーフなアプリケーションを構築できます。

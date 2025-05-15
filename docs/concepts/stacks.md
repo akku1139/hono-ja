@@ -39,7 +39,7 @@ app.get('/hello', (c) => {
 
 Zod でクエリパラメータのバリデーションを行ってからデータを受け取ります。
 
-![SC](/images/sc01.gif)
+![](/images/sc01.gif)
 
 ```ts
 import { zValidator } from '@hono/zod-validator'
@@ -98,7 +98,7 @@ export type AppType = typeof route
 `AppType` 型をジェネリクスとして `hc` に渡してクライアントオブジェクトを作ります。
 驚くほど補完が効き、エンドポイントのパスとリクエストの型がサジェストされます。
 
-![SC](/images/sc03.gif)
+![](/images/sc03.gif)
 
 ```ts
 import { AppType } from './server'
@@ -114,7 +114,7 @@ const res = await client.hello.$get({
 
 `Response` は fetch API と互換性がありますが、 `json()` で取得できるデータには型があります。
 
-![SC](/images/sc04.gif)
+![](/images/sc04.gif)
 
 ```ts
 const data = await res.json()
@@ -123,7 +123,7 @@ console.log(`${data.message}`)
 
 API 仕様を共用できるということは、サーバーサイドの変更を認識することが出来ます。
 
-![SS](/images/ss03.png)
+![](/images/ss03.png)
 
 ## React といっしょ
 

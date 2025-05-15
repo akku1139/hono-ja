@@ -92,41 +92,41 @@ const routes: (Route & { name: string })[] = [
 
 以下のスクリーンショットは Node.js での結果です。
 
-![bench](/images/bench01.png)
+![](/images/bench01.png)
 
-![bench](/images/bench02.png)
+![](/images/bench02.png)
 
-![bench](/images/bench03.png)
+![](/images/bench03.png)
 
-![bench](/images/bench04.png)
+![](/images/bench04.png)
 
-![bench](/images/bench05.png)
+![](/images/bench05.png)
 
-![bench](/images/bench06.png)
+![](/images/bench06.png)
 
-![bench](/images/bench07.png)
+![](/images/bench07.png)
 
-![bench](/images/bench08.png)
+![](/images/bench08.png)
 
 ### Bun では...
 
 以下のスクリーンショットは Bun での結果です。
 
-![bench](/images/bench09.png)
+![](/images/bench09.png)
 
-![bench](/images/bench10.png)
+![](/images/bench10.png)
 
-![bench](/images/bench11.png)
+![](/images/bench11.png)
 
-![bench](/images/bench12.png)
+![](/images/bench12.png)
 
-![bench](/images/bench13.png)
+![](/images/bench13.png)
 
-![bench](/images/bench14.png)
+![](/images/bench14.png)
 
-![bench](/images/bench15.png)
+![](/images/bench15.png)
 
-![bench](/images/bench16.png)
+![](/images/bench16.png)
 
 ## Cloudflare Workers
 

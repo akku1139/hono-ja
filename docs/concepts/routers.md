@@ -12,12 +12,12 @@ Hono は5つのルーターを持ちます。
 それらは線形ループを使用します。
 そのため、全てのルートに対して正規表現が照合が実行されルートが増えるほどパフォーマンスが悪化します。
 
-![Router Linear](/images/router-linear.jpg)
+![](/images/router-linear.jpg)
 
 Hono の RegExpRouter はルートパターンを "ひとつの巨大な正規表現" に変換します。
 そのため一回の照合で結果を取得できます。
 
-![Router RegExp](/images/router-regexp.jpg)
+![](/images/router-regexp.jpg)
 
 これはほとんどの場合、 radix-tree などのツリーベースのアルゴリズムより高速に動作します。
 
@@ -26,7 +26,7 @@ Hono の RegExpRouter はルートパターンを "ひとつの巨大な正規�
 **TrieRouter** は Trie 木を使用するルーターです。
 RegExpRouter と同様に線形ループを使用しません。
 
-![Router Tree](/images/router-tree.jpg)
+![](/images/router-tree.jpg)
 
 これは RegExpRouter ほど速くはありませんが、 Express よりは圧倒的に高速です。
 TrieRouter は全てのルートパターンをサポートしますが RegExpRouter はしません。

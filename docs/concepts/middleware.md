@@ -4,7 +4,7 @@
 "Middleware" はハンドラの前後で使用され `Request` と `Response` を処理します。
 玉ねぎのような構造です。
 
-![Onion](/images/onion.png)
+![](/images/onion.png)
 
 例えば、 "X-Response-Time" ヘッダを付与するミドルウェアはこのようになります。
 
