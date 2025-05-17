@@ -138,7 +138,9 @@ body['foo[]']
 
 `[]` ポストフィックスが必要です。
 
-### 同じ名前の複数ファイル
+### 同じ名前の複数ファイルやフィールド
+
+If you have a input field that allows multiple `<input type="file" multiple />` or multiple checkboxes with the same name `<input type="checkbox" name="favorites" value="Hono"/>`.
 
 ```ts twoslash
 import { Context } from 'hono'
