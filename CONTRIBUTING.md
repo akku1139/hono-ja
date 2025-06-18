@@ -124,6 +124,7 @@ https://typescriptbook.jp/writing/japanese-english-table
 - コントローラー
 - イベントリスナー
 - サードパーティー
+- サービスワーカー
 
 ## 上流の変更
 

@@ -269,7 +269,11 @@ app.post('/posts', async (c) => {
 
 [バリデーションセクション](/docs/guides/validation)で利用例を見てください。
 
-## routePath()
+## routePath
+
+::: warning
+**Deprecated in v4.8.0**: This property is deprecated. Use `routePath()` from [Route Helper](/docs/helpers/route) instead.
+:::
 
 ハンドラ内で定義されたパスをこのように取得できます:
 
@@ -288,7 +292,11 @@ app.get('/posts/:id', (c) => {
 { "path": "/posts/:id" }
 ```
 
-## matchedRoutes()
+## matchedRoutes
+
+::: warning
+**Deprecated in v4.8.0**: This property is deprecated. Use `matchedRoutes()` from [Route Helper](/docs/helpers/route) instead.
+:::
 
 ハンドラで一致したルートを返します、デバッグに適しています。
 

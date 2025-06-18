@@ -60,6 +60,10 @@ app.onError((err, c) => {
 
 ## fire()
 
+::: warning
+**`app.fire()` は非推奨です**。代わりに `hono/service-worker` から `fire()` を使ってください。 詳しくは[サービスワーカーのドキュメント](/docs/getting-started/service-worker) を読んでください。
+:::
+
 `app.fire()` は自動で `fetch` イベントリスナーを追加します。
 
 これは [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) を使用している [non-ES module Cloudflare Workers](https://developers.cloudflare.com/workers/reference/migrate-to-module-workers/) のような環境で上手く機能します。

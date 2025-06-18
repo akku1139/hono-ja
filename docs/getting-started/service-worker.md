@@ -126,6 +126,20 @@ app.get('/', (c) => c.text('Hello World'))
 self.addEventListener('fetch', handle(app))
 ```
 
+### `fire()` を使う
+
+`fire()` 関数は自動で `addEventListener('fetch', handle(app))` を呼び、 コードをより簡潔にします。
+
+```ts
+import { Hono } from 'hono'
+import { fire } from 'hono/service-worker'
+
+const app = new Hono().basePath('/sw')
+app.get('/', (c) => c.text('Hello World'))
+
+fire(app)
+```
+
 ## 3. 実行
 
 開発サーバーを起動します
