@@ -21,6 +21,8 @@ Hono の RegExpRouter はルートパターンを "ひとつの巨大な正規�
 
 これはほとんどの場合、 radix-tree などのツリーベースのアルゴリズムより高速に動作します。
 
+However, RegExpRouter doesn't support all routing patterns, so it's usually used in combination with one of the other routers below that support all routing patterns.
+
 ## TrieRouter
 
 **TrieRouter** は Trie 木を使用するルーターです。
@@ -29,15 +31,12 @@ RegExpRouter と同様に線形ループを使用しません。
 ![](/images/router-tree.jpg)
 
 これは RegExpRouter ほど速くはありませんが、 Express よりは圧倒的に高速です。
-TrieRouter は全てのルートパターンをサポートしますが RegExpRouter はしません。
+TrieRouter は全てのルートパターンをサポートします。
 
 ## SmartRouter
 
-RegExpRouter は全てのルートパターンをサポートするわけではありません。
-そのため、全てのパターンをサポートする他のルーターと組み合わせて使うことが一般的です。
-
-**SmartRouter** は登録済みのルーターから最適なルーターを推測して選択します。
-Hono は SmartRouter と2つのルーターをデフォルトで使用します:
+**SmartRouter** is useful when you're using multiple routers. It selects the best router by inferring from the registered routers.
+Hono uses SmartRouter, RegExpRouter, and TrieRouter by default:
 
 ```ts
 // Inside the core of Hono.
