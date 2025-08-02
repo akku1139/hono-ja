@@ -1,17 +1,14 @@
 # Vercel
 
-Vercel はフロントエンド開発者のためのプラットフォームで、イノベーターがインスピレーションの瞬間に制作をするために必要なスピードと信頼性を提供します。 このセクションでは Vercel 上で実行される Next.js 紹介します。
+Vercel is the AI cloud, providing the developer tools and cloud infrastructure to build, scale, and secure a faster, more personalized web.
 
-Next.js は、高速な　Web アプリケーションを作成するための要素を提供する柔軟な React フレームワークです。
-
-Next.js では [Edge Functions](https://vercel.com/docs/concepts/functions/edge-functions) を使用して Vercel などのエッジランタイムに動的 API を作成できます。
-Hono を使用すると、他のランタイムと同じ構文で　API を記述し、多くのミドルウェアが使用できます。
+Hono can be deployed to Vercel with zero-configuration.
 
 ## 1. セットアップ
 
-Next.js 向けのスターターもあります。
+Vercel 向けのスターターもあります。
 "create-hono" コマンドで始めましょう。
-`nextjs` テンプレートを選択します。
+`vercel` テンプレートを選択します。
 
 ::: code-group
 
@@ -63,28 +60,34 @@ bun i
 
 :::
 
+We will use Vercel CLI to work on the app locally in the next step. If you haven't already, install it globally following [the Vercel CLI documentation](https://vercel.com/docs/cli).
+
 ## 2. Hello World
 
+<<<<<<< HEAD
 App Router を使用している場合 `app/api/[[...route]]/route.ts` に書いてください。 [Supported HTTP Methods](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#supported-http-methods) も参照してください。
+=======
+In the `index.ts` or `src/index.ts` of your project, export the Hono application as a default export.
+>>>>>>> origin/sync
 
 ```ts
 import { Hono } from 'hono'
-import { handle } from 'hono/vercel'
 
-export const runtime = 'edge'
+const app = new Hono()
 
-const app = new Hono().basePath('/api')
+const welcomeStrings = [
+  'Hello Hono!',
+  'To learn more about Hono on Vercel, visit https://vercel.com/docs/frameworks/hono',
+]
 
-app.get('/hello', (c) => {
-  return c.json({
-    message: 'Hello Next.js!',
-  })
+app.get('/', (c) => {
+  return c.text(welcomeStrings.join('\n\n'))
 })
 
-export const GET = handle(app)
-export const POST = handle(app)
+export default app
 ```
 
+<<<<<<< HEAD
 Pages Router を使用している場合は `pages/api/[[...route]].ts` に記述します。
 
 ```ts
@@ -110,13 +113,19 @@ export default handle(app)
 ## 3. Run
 
 開発サーバーをローカルで動かし、ブラウザで `http://localhost:3000` にアクセスしましょう。
+=======
+If you started with the `vercel` template, this is already set up for you.
 
-::: code-group
+## 3. Run
 
-```sh [npm]
-npm run dev
+To run the development server locally:
+>>>>>>> origin/sync
+
+```sh
+vercel dev
 ```
 
+<<<<<<< HEAD
 ```sh [yarn]
 yarn dev
 ```
@@ -132,9 +141,13 @@ bun run dev
 :::
 
 今は `/api/hello` で JSON を返すだけですが、 React で UI を作成すれば Hono でフルスタックアプリケーションを作成できます。
+=======
+Visiting `localhost:3000` will respond with a text response.
+>>>>>>> origin/sync
 
 ## 4. デプロイ
 
+<<<<<<< HEAD
 Vercel アカウントを持っている場合は Git 連携でデプロイ出来ます。
 
 ## Node.js
@@ -161,10 +174,17 @@ app.get('/hello', (c) => {
 
 export const GET = handle(app)
 export const POST = handle(app)
+=======
+Deploy to Vercel using `vc deploy`.
+
+```sh
+vercel deploy
+>>>>>>> origin/sync
 ```
 
-### Pages Router
+## Further reading
 
+<<<<<<< HEAD
 Pages Router では、まず Node.js アダプタをインストールする必要があります:
 
 ::: code-group
@@ -216,3 +236,6 @@ export default handle(app)
 ```text
 NODEJS_HELPERS=0
 ```
+=======
+[Learn more about Hono in the Vercel documentation](https://vercel.com/docs/frameworks/hono).
+>>>>>>> origin/sync
