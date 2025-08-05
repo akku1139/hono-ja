@@ -1,17 +1,14 @@
 # Vercel
 
-Vercel はフロントエンド開発者のためのプラットフォームで、イノベーターがインスピレーションの瞬間に制作をするために必要なスピードと信頼性を提供します。 このセクションでは Vercel 上で実行される Next.js 紹介します。
+Vercel is the AI cloud, providing the developer tools and cloud infrastructure to build, scale, and secure a faster, more personalized web.
 
-Next.js は、高速な　Web アプリケーションを作成するための要素を提供する柔軟な React フレームワークです。
-
-Next.js では [Edge Functions](https://vercel.com/docs/concepts/functions/edge-functions) を使用して Vercel などのエッジランタイムに動的 API を作成できます。
-Hono を使用すると、他のランタイムと同じ構文で　API を記述し、多くのミドルウェアが使用できます。
+Hono can be deployed to Vercel with zero-configuration.
 
 ## 1. セットアップ
 
-Next.js 向けのスターターもあります。
+Vercel 向けのスターターもあります。
 "create-hono" コマンドで始めましょう。
-`nextjs` テンプレートを選択します。
+`vercel` テンプレートを選択します。
 
 ::: code-group
 
@@ -63,156 +60,49 @@ bun i
 
 :::
 
+We will use Vercel CLI to work on the app locally in the next step. If you haven't already, install it globally following [the Vercel CLI documentation](https://vercel.com/docs/cli).
+
 ## 2. Hello World
 
-App Router を使用している場合 `app/api/[[...route]]/route.ts` に書いてください。 [Supported HTTP Methods](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#supported-http-methods) も参照してください。
+In the `index.ts` or `src/index.ts` of your project, export the Hono application as a default export.
 
 ```ts
 import { Hono } from 'hono'
-import { handle } from 'hono/vercel'
 
-export const runtime = 'edge'
+const app = new Hono()
 
-const app = new Hono().basePath('/api')
+const welcomeStrings = [
+  'Hello Hono!',
+  'To learn more about Hono on Vercel, visit https://vercel.com/docs/frameworks/hono',
+]
 
-app.get('/hello', (c) => {
-  return c.json({
-    message: 'Hello Next.js!',
-  })
+app.get('/', (c) => {
+  return c.text(welcomeStrings.join('\n\n'))
 })
 
-export const GET = handle(app)
-export const POST = handle(app)
+export default app
 ```
 
-Pages Router を使用している場合は `pages/api/[[...route]].ts` に記述します。
-
-```ts
-import { Hono } from 'hono'
-import { handle } from 'hono/vercel'
-import type { PageConfig } from 'next'
-
-export const config: PageConfig = {
-  runtime: 'edge',
-}
-
-const app = new Hono().basePath('/api')
-
-app.get('/hello', (c) => {
-  return c.json({
-    message: 'Hello Next.js!',
-  })
-})
-
-export default handle(app)
-```
+If you started with the `vercel` template, this is already set up for you.
 
 ## 3. Run
 
-開発サーバーをローカルで動かし、ブラウザで `http://localhost:3000` にアクセスしましょう。
+To run the development server locally:
 
-::: code-group
-
-```sh [npm]
-npm run dev
+```sh
+vercel dev
 ```
 
-```sh [yarn]
-yarn dev
-```
-
-```sh [pnpm]
-pnpm dev
-```
-
-```sh [bun]
-bun run dev
-```
-
-:::
-
-今は `/api/hello` で JSON を返すだけですが、 React で UI を作成すれば Hono でフルスタックアプリケーションを作成できます。
+Visiting `localhost:3000` will respond with a text response.
 
 ## 4. デプロイ
 
-Vercel アカウントを持っている場合は Git 連携でデプロイ出来ます。
+Deploy to Vercel using `vc deploy`.
 
-## Node.js
-
-Node.js ランタイム上の Next.js で Hono を使うことも出来ます。
-
-### App Router
-
-App Router では、ルートハンドラのランタイムを `nodejs` に設定するだけで使用できます:
-
-```ts
-import { Hono } from 'hono'
-import { handle } from 'hono/vercel'
-
-export const runtime = 'nodejs'
-
-const app = new Hono().basePath('/api')
-
-app.get('/hello', (c) => {
-  return c.json({
-    message: 'Hello from Hono!',
-  })
-})
-
-export const GET = handle(app)
-export const POST = handle(app)
+```sh
+vercel deploy
 ```
 
-### Pages Router
+## Further reading
 
-Pages Router では、まず Node.js アダプタをインストールする必要があります:
-
-::: code-group
-
-```sh [npm]
-npm i @hono/node-server
-```
-
-```sh [yarn]
-yarn add @hono/node-server
-```
-
-```sh [pnpm]
-pnpm add @hono/node-server
-```
-
-```sh [bun]
-bun add @hono/node-server
-```
-
-:::
-
-次に、 `@hono/node-server/vercel` からインポートした `handle` を使用します:
-
-```ts
-import { Hono } from 'hono'
-import { handle } from '@hono/node-server/vercel'
-import type { PageConfig } from 'next'
-
-export const config: PageConfig = {
-  api: {
-    bodyParser: false,
-  },
-}
-
-const app = new Hono().basePath('/api')
-
-app.get('/hello', (c) => {
-  return c.json({
-    message: 'Hello from Hono!',
-  })
-})
-
-export default handle(app)
-```
-
-これを Pages Router で動かすためには、プロジェクトダッシュボードか `.env` ファイルで環境変数を設定して Vercel の Node.js ヘルパーを無効化することが重要です:
-
-```text
-NODEJS_HELPERS=0
-```
+[Learn more about Hono in the Vercel documentation](https://vercel.com/docs/frameworks/backend/hono).
