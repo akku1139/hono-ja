@@ -252,6 +252,10 @@ export const sidebarsExamples = (): DefaultTheme.SidebarItem[] => [
         link: '/examples/file-upload',
       },
       {
+        text: 'Bind a reverse proxy',
+        link: '/examples/behind-reverse-proxy',
+      },
+      {
         text: 'バリデーターでエラーハンドリング',
         link: '/examples/validator-error-handling',
       },
