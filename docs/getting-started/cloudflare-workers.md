@@ -134,20 +134,6 @@ bun run deploy
 
 それだけです!
 
-## Service Worker モード / Module Worker モード
-
-Cloudflare Workers には2通りの記法があります。 _Module Worker モード_ と _Service Worker モード_ です。 Hono を使うと、どちらの記法でも書くことができますが、バインディング変数がローカライズされるため Module Worker モードを推奨します。
-
-```ts
-// Module Worker
-export default app
-```
-
-```ts
-// Service Worker
-app.fire()
-```
-
 ## 他のイベントハンドラとともに Hono を使う
 
 _Module Worker モード_ で他のイベントハンドラ( `scheduled` など)を統合できます。
@@ -324,8 +310,8 @@ minify = true
 
 ## ローカル開発環境で環境変数をロードする
 
-ローカル開発環境で環境変数を設定するには、 `.dev.vars` ファイルをプロジェクトのルートディレクトリに作成します。
-そして環境変数を普通の `.env` ファイルのように設定します。
+ローカル開発環境で環境変数を設定するには、 `.dev.vars` か `.env` ファイルをプロジェクトのルートディレクトリに作成します。
+これらのファイルは [dotenv](https://hexdocs.pm/dotenvy/dotenv-file-format.html) の構文を使用します。 以下に例を示します:
 
 ```
 SECRET_KEY=value
@@ -336,7 +322,10 @@ API_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 > https://developers.cloudflare.com/workers/wrangler/configuration/#secrets
 
 コードの中で `c.env.*` から環境変数にアクセスします。
-**Cloudflare Workers では、環境変数には `c` からアクセスします。 `process.env` ではありません。**
+
+::: info
+By default, `process.env` is not available in Cloudflare Workers, so it is recommended to get environment variables from `c.env`. If you want to use it, you need to enable [`nodejs_compat_populate_process_env`](https://developers.cloudflare.com/workers/configuration/compatibility-flags/#enable-auto-populating-processenv) flag. You can also import `env` from `cloudflare:workers`. For details, please see [How to access `env` on Cloudflare docs](https://developers.cloudflare.com/workers/runtime-apis/bindings/#how-to-access-env)
+:::
 
 ```ts
 type Bindings = {
