@@ -11,7 +11,7 @@ AWS Lambda でアプリケーションを作成する場合、
 [CDK](https://docs.aws.amazon.com/cdk/v2/guide/home.html)
 が IAM ロールや API ゲートウェイなどを設定するのに役立ちます。
 
-`cdl` CLI を使ってプロジェクトを初期化します。
+`cdk` CLI を使ってプロジェクトを初期化します。
 
 ::: code-group
 
