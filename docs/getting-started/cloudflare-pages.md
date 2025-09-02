@@ -8,7 +8,7 @@ Hono は完璧に Cloudflare Pages をサポートします。
 
 ## 1. Setup
 
-Cloudflare Pages 向けのスターターも準備されています。 
+Cloudflare Pages 向けのスターターも準備されています。
 "create-hono" コマンドでプロジェクトを開始できます。
 この例では、 `cloudflare-pages` テンプレートを選択します。
 
