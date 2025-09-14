@@ -2,7 +2,7 @@
 
 [Google Cloud Run](https://cloud.google.com/run) は Google Cloud 上に構築されたサーバーレスプラットフォームです。 イベントに対してコードを実行でき、基盤となるコンピューティングリソースは Google が自動で管理します。
 
-Google Cloud Run はサービスを実行するためにコンテナを使用します。 つまり、 Dockerfile を設定することで好きなランタイム  (Deno や Bun 等) を使用できることを意味します。 Dockerfile が無かった場合、 Google Cloud Run はデフォルトの Node.js ビルドパックを使用します。
+Google Cloud Run はサービスを実行するためにコンテナを使用します。 つまり、 Dockerfile を設定することで好きなランタイム (Deno や Bun 等) を使用できることを意味します。 Dockerfile が無かった場合、 Google Cloud Run はデフォルトの Node.js ビルドパックを使用します。
 
 このガイドは、あなたがすでに Google Cloud アカウントと請求先アカウントを持っていることを前提にしています。
 
