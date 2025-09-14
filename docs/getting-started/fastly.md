@@ -1,8 +1,8 @@
 # Fastly Compute
 
-[Fastly Compute](https://www.fastly.com/products/edge-compute) is an advanced edge computing system that runs your code, in your favorite language, on our global edge network. Hono also works on Fastly Compute.
+[Fastly Compute](https://www.fastly.com/products/edge-compute) は好きな言語で書かれたコードをグローバルネットワーク上で実行できる高度なエッジコンピューティングシステムです。 Hono はもちろん Fastly Compute 上でも動作します。
 
-You can develop the application locally and publish it with a few commands using [Fastly CLI](https://www.fastly.com/documentation/reference/tools/cli/).
+[Fastly CLI](https://www.fastly.com/documentation/reference/tools/cli/) を使用すると、少しのコマンドでアプリケーションをローカルで開発して、公開できます。
 
 ## 1. Setup
 
@@ -102,9 +102,9 @@ bun run start
 
 ## 4. デプロイ
 
-To build and deploy your application to your Fastly account, type the following command. The first time you deploy the application, you will be prompted to create a new service in your account.
+ビルドして、あなたの Fastly アカウントにデプロイするには以下のコマンドを実行します。 あなたがアプリケーションを始めてデプロイする場合、アカウントに新しいサービスを作成するように求められます。
 
-If you don't have an account yet, you must [create your Fastly account](https://www.fastly.com/signup/).
+まだアカウントを持っていない場合は、[作成する必要があります](https://www.fastly.com/signup/)。
 
 ::: code-group
 
