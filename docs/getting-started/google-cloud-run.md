@@ -125,7 +125,7 @@ gcloud run deploy my-app --source . --allow-unauthenticated
 
 ## ランタイムを変更する
 
-Deno や Bun (または、カスタム Node.js コンテナ) を使用してデプロイを行いたい場合、 `Dockerfile` (と、必要に応じて `.dockerignore` ) を燒死體環境に合わせて設定してください。
+Deno や Bun (または、カスタム Node.js コンテナ) を使用してデプロイを行いたい場合、 `Dockerfile` (と、必要に応じて `.dockerignore` ) を使用したい環境に合わせて設定してください。
 
 コンテナ化の詳細は以下のドキュメントを参照してください:
 
