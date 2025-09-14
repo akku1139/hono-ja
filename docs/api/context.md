@@ -1,6 +1,6 @@
 # Context
 
-The `Context` object is instantiated for each request and kept until the response is returned. You can put values in it, set headers and a status code you want to return, and access HonoRequest and Response objects.
+`Context` オブジェクトはリクエストごとにインスタンス化され、レスポンスを返すまで使用されます。 ここにデータを置いたり、レスポンスのヘッダやステータスコードを設定したり、 HonoRequest や Response オブジェクトにアクセスしたりします。
 
 ## req
 
@@ -21,7 +21,7 @@ app.get('/hello', (c) => {
 
 ## status()
 
-You can set an HTTP status code with `c.status()`. The default is `200`. You don't have to use `c.status()` if the code is `200`.
+HTTP ステータスコードをを `c.status()` で設定できます。 デフォルトは 200 です。 ステータスコードを 200 に設定する場合、 `c.status()` を使用する必要はありません。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -36,7 +36,7 @@ app.post('/posts', (c) => {
 
 ## header()
 
-You can set HTTP Headers for the response.
+レスポンスに HTTP ヘッダを設定できます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -164,7 +164,7 @@ app.get('/redirect-permanently', (c) => {
 
 ## res
 
-You can access the Response object that will be returned.
+送信される Response オブジェクトにアクセスできます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -362,7 +362,7 @@ app.get('/pages/my-hobbies', (c) => {
 
 ## executionCtx
 
-You can access Cloudflare Workers' specific [ExecutionContext](https://developers.cloudflare.com/workers/runtime-apis/context/).
+Cloudflare Workers の [ExecutionContext](https://developers.cloudflare.com/workers/runtime-apis/context/) にアクセスできます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -383,7 +383,7 @@ app.get('/foo', async (c) => {
 
 ## event
 
-You can access Cloudflare Workers' specific `FetchEvent`. This was used in "Service Worker" syntax. But, it is not recommended now.
+Cloudflare Workers の `FetchEvent` にアクセスできます。 これは "Service Worker" 構文で使用されていましたが、現在は非推奨です。
 
 ```ts twoslash
 import { Hono } from 'hono'
