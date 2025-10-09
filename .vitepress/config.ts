@@ -93,6 +93,7 @@ const sidebars = (): DefaultTheme.SidebarItem[] => [
     text: 'ガイド',
     collapsed: true,
     items: [
+      { text: 'create-hono', link: '/docs/guides/create-hono' },
       { text: 'ミドルウェア', link: '/docs/guides/middleware' },
       { text: 'ヘルパー', link: '/docs/guides/helpers' },
       {
