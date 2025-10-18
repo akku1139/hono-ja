@@ -1,11 +1,11 @@
 # Bun
 
-[Bun](https://bun.sh) はもう一つの JavaScript ランタイムです。 Node.js でも Deno でもありません。 Bun はトランスコンパイラが内蔵されており、 TypeScript でコードを書くことが出来ます。
+[Bun](https://bun.com) はもう一つの JavaScript ランタイムです。 Node.js でも Deno でもありません。 Bun はトランスコンパイラが内蔵されており、 TypeScript でコードを書くことが出来ます。
 Hono はもちろん Bun でも動作します。
 
 ## 1. Bun のインストール
 
-`bun` コマンドをインストールするために[公式サイト](https://bun.sh)を確認してください。
+`bun` コマンドをインストールするために[公式サイト](https://bun.com)を確認してください。
 
 ## 2. セットアップ
 

@@ -130,5 +130,5 @@ Deno や Bun (または、カスタム Node.js コンテナ) を使用してデ�
 コンテナ化の詳細は以下のドキュメントを参照してください:
 
 - [Nodejs](/docs/getting-started/nodejs#building-deployment)
-- [Bun](https://bun.sh/guides/ecosystem/docker)
+- [Bun](https://bun.com/guides/ecosystem/docker)
 - [Deno](https://docs.deno.com/examples/google_cloud_run_tutorial)
