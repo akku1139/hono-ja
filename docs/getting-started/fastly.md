@@ -67,7 +67,7 @@ bun i
 ```ts
 // src/index.ts
 import { Hono } from 'hono'
-import { fire } from 'hono/service-worker'
+import { fire } from '@fastly/hono-fastly-compute'
 
 const app = new Hono()
 
@@ -75,6 +75,9 @@ app.get('/', (c) => c.text('Hello Fastly!'))
 
 fire(app)
 ```
+
+> [!NOTE]
+> When using `fire` (or `buildFire()`) from `@fastly/hono-fastly-compute'` at the top level of your application, it is suitable to use `Hono` from `'hono'` rather than `'hono/quick'`, because `fire` causes its router to build its internal data during the application initialization phase.
 
 ## 3. Run
 
@@ -125,3 +128,29 @@ bun run deploy
 ```
 
 :::
+
+## Bindings
+
+In Fastly Compute, you can bind Fastly platform resources, such as KV Stores, Config Stores, Secret Stores, Backends, Access Control Lists, Named Log Streams, and Environment Variables. You can access them through `c.env`, and will have their individual SDK types.
+
+To use these bindings, import `buildFire` instead of `fire` from `@fastly/hono-fastly-compute`. Define your [bindings](https://github.com/fastly/compute-js-context?tab=readme-ov-file#typed-bindings-with-buildcontextproxy) and pass them to [`buildFire()`](https://github.com/fastly/hono-fastly-compute?tab=readme-ov-file#basic-example) to obtain `fire`. Then use `fire.Bindings` to define your `Env` type as you construct `Hono`.
+
+```ts
+// src/index.ts
+import { buildFire } from '@fastly/hono-fastly-compute'
+
+const fire = buildFire({
+  siteData: 'KVStore:site-data', // I have a KV Store named "site-data"
+})
+
+const app = new Hono<{ Bindings: typeof fire.Bindings }>()
+
+app.put('/upload/:key', async (c, next) => {
+  // e.g., Access the KV Store
+  const key = c.req.param('key')
+  await c.env.siteData.put(key, c.req.body)
+  return c.text(`Put ${key} successfully!`)
+})
+
+fire(app)
+```
