@@ -16,7 +16,7 @@ Deno でもスターターを使用できます。
 [`deno init`](https://docs.deno.com/runtime/reference/cli/init/) コマンドでプロジェクトを作成してください。
 
 ```sh
-deno init --npm hono my-app --template=deno
+deno init --npm hono --template=deno my-app
 ```
 
 `my-app` に移動しますが、 Deno では Hono を明示的にインストールする必要はありません。
