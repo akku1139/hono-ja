@@ -25,9 +25,13 @@ Hono は Web 標準のみを使用します。 つまり Hono は Web 標準 API
 - AWS Lambda
 - Node.js
 - Vercel (edge-light)
+- WebAssembly (w/ [WebAssembly System Interface (WASI)][wasi] via [`wasi:http`][wasi-http])
 
 Netlify やその他のプラットフォームでも動作します。
 同じコードがすべてのプラットフォームで実行されます。
 
 Cloudflare Workers 、 Deno 、 Shopify などが [WinterCG](https://wintercg.org) を立ち上げ、 Web 標準を使用した "Web 相互運用性" を実現する可能性を議論しました。
 Hono はその手順に従い **"Web 標準の標準"**を目指します。
+
+[wasi]: https://github.com/WebAssembly/wasi
+[wasi-http]: https://github.com/WebAssembly/wasi-http
