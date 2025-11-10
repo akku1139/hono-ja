@@ -33,6 +33,18 @@ bun install
 bun add hono
 ```
 
+Then add the `dev` command to your existing `package.json`.
+
+```json
+{
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  }
+}
+```
+
+See the [Bun starter template](https://github.com/honojs/starter/tree/main/templates/bun) for a minimal example setup. This is the output of running `bun create hono@latest`.
+
 ## 3. Hello World
 
 "Hello World" スクリプトは以下の通りです。 他のプラットフォームと良く似ていますね。
@@ -45,6 +57,8 @@ app.get('/', (c) => c.text('Hello Bun!'))
 
 export default app
 ```
+
+If you are setting up Hono on an existing project, the `bun run dev` command expects the "Hello World" script to be placed in `src/index.tx`
 
 ## 4. Run
 
