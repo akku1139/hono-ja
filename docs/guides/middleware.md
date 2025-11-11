@@ -1,11 +1,11 @@
 # ミドルウェア
 
-ミドルウェアはハンドラの前後で動作します。 ディスパッチ前に `Request` を取得したり、ディスパッチ後に `Response` を操作したりできます。
+ミドルウェアはエンドポイントのハンドラの前後で動作します。 ディスパッチ前に `Request` を取得したり、ディスパッチ後に `Response` を操作したりできます。
 
 ## ミドルウェアの定義
 
 - ハンドラ - `Response` オブジェクトを返す必要があります。 一つのヘルパーのみが実行されます。
-- ミドルウェア - 何も返さないはずです。 `await next()` で次のミドルウェアに進みます。
+- Middleware - should `await next()` and return nothing to call the next Middleware, **or** return a `Response` to early-exit.
 
 ミドルウェアの登録には `app.use` か `app.HTTP_METHOD` をハンドラと同じように登録できます。 この方法ではパスや HTTP メソッドを簡単に指定できます。
 
