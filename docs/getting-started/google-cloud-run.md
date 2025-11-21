@@ -13,7 +13,7 @@ Google Cloud Platform での作業は、 [gcloud CLI](https://cloud.google.com/s
 例えば、 MacOS で Homebrew を使用するとき:
 
 ```sh
-brew install --cask google-cloud-sdk
+brew install --cask gcloud-cli
 ```
 
 CLI で認証します。
