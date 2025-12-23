@@ -122,7 +122,7 @@ export class MyAppStack extends cdk.Stack {
 }
 ```
 
-最後に、以下のコマンドをを実行してデプロイします:
+最後に、以下のコマンドを実行してデプロイします:
 
 ```sh
 cdk deploy

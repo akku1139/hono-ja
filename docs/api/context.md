@@ -21,7 +21,7 @@ app.get('/hello', (c) => {
 
 ## status()
 
-HTTP ステータスコードをを `c.status()` で設定できます。 デフォルトは 200 です。 ステータスコードを 200 に設定する場合、 `c.status()` を使用する必要はありません。
+HTTP ステータスコードを `c.status()` で設定できます。 デフォルトは 200 です。 ステータスコードを 200 に設定する場合、 `c.status()` を使用する必要はありません。
 
 ```ts twoslash
 import { Hono } from 'hono'
