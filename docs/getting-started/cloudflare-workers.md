@@ -222,7 +222,7 @@ describe('Test the application', () => {
 
 ## バインディング
 
-Cloudflare Workers では環境変数、 KV ネームスペース、 R2 バケット、 Durable Object などをバインドし、 `c.env` からアクセスできます。 `Hono` のジェネリクスとしてバインディングの型データを渡します。
+Cloudflare Workers では環境変数、 KV ネームスペース、 R2 バケット、 Durable Object などをバインドし、 `c.env` からアクセスできます。 `Hono` のジェネリクスとしてバインディングの型定義を渡します。
 
 ```ts
 type Bindings = {
