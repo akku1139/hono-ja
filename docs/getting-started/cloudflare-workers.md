@@ -102,7 +102,7 @@ bun run dev
 
 ### ポート番号を変える
 
-ポート番号をる必要がある場合は、 `wrangler.toml` / `wrangler.json` / `wrangler.jsonc` を以下のドキュメントに従って変更してください:
+ポート番号を変える必要がある場合は、 `wrangler.toml` / `wrangler.json` / `wrangler.jsonc` を以下のドキュメントに従って変更してください:
 [Wrangler Configuration](https://developers.cloudflare.com/workers/wrangler/configuration/#local-development-settings)
 
 もしくは CLI オプションで設定することもできます:
