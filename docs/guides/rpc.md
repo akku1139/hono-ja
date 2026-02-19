@@ -158,6 +158,53 @@ type ResponseType200 = InferResponseType<
 >
 ```
 
+## Global Response
+
+Hono RPC client doesn't automatically infer response types from global error handlers like `app.onError()` or global middleware. You can use the `ApplyGlobalResponse` type helper to merge global error response types into all routes.
+
+```ts
+import type { ApplyGlobalResponse } from 'hono/client'
+
+const app = new Hono()
+  .get('/api/users', (c) => c.json({ users: ['alice', 'bob'] }, 200))
+  .onError((err, c) => c.json({ error: err.message }, 500))
+
+type AppWithErrors = ApplyGlobalResponse<
+  typeof app,
+  {
+    500: { json: { error: string } }
+  }
+>
+
+const client = hc<AppWithErrors>('http://localhost')
+```
+
+Now the client knows about both success and error responses:
+
+```ts
+const res = await client.api.users.$get()
+
+if (res.ok) {
+  const data = await res.json() // { users: string[] }
+}
+
+// InferResponseType includes the global error type
+type ResType = InferResponseType<typeof client.api.users.$get>
+// { users: string[] } | { error: string }
+```
+
+You can also define multiple global error status codes at once:
+
+```ts
+type AppWithErrors = ApplyGlobalResponse<
+  typeof app,
+  {
+    401: { json: { error: string; message: string } }
+    500: { json: { error: string; message: string } }
+  }
+>
+```
+
 ## Not Found
 
 If you want to use a client, you should not use `c.notFound()` for the Not Found response. The data that the client gets from the server cannot be inferred correctly.
@@ -471,6 +518,40 @@ const url = client.api.posts.$url()
 ```
 
 This is useful when you want to use the URL as a type-safe key for libraries like SWR.
+
+## `$path()`
+
+`$path()` is similar to `$url()`, but returns a path string instead of a `URL` object. Unlike `$url()`, it does not include the base URL origin, so it works regardless of the base URL you pass to `hc`.
+
+```ts
+const route = app
+  .get('/api/posts', (c) => c.json({ posts }))
+  .get('/api/posts/:id', (c) => c.json({ post }))
+
+const client = hc<typeof route>('http://localhost:8787/')
+
+let path = client.api.posts.$path()
+console.log(path) // `/api/posts`
+
+path = client.api.posts[':id'].$path({
+  param: {
+    id: '123',
+  },
+})
+console.log(path) // `/api/posts/123`
+```
+
+You can also pass query parameters:
+
+```ts
+const path = client.api.posts.$path({
+  query: {
+    page: '1',
+    limit: '10',
+  },
+})
+console.log(path) // `/api/posts?page=1&limit=10`
+```
 
 ## File Uploads
 

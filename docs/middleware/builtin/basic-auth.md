@@ -91,6 +91,28 @@ The domain name of the realm, as part of the returned WWW-Authenticate challenge
 
 `MessageFunction` は `(c: Context) => string | object | Promise<string | object>` 。 ユーザーが無効だったときのメッセージ。
 
+### <Badge type="info" text="optional" /> onAuthSuccess: `(c: Context, username: string) => void | Promise<void>`
+
+A callback function invoked after successful authentication. This allows you to set context variables or perform side effects without re-parsing the Authorization header.
+
+```ts
+app.use(
+  '/auth/*',
+  basicAuth({
+    username: 'hono',
+    password: 'acoolproject',
+    onAuthSuccess: (c, username) => {
+      c.set('username', username)
+    },
+  })
+)
+
+app.get('/auth/page', (c) => {
+  const username = c.get('username')
+  return c.text(`Hello, ${username}!`)
+})
+```
+
 ## More Options
 
 ### <Badge type="info" text="optional" /> ...users: `{ username: string, password: string }[]`

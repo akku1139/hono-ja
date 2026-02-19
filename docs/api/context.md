@@ -383,6 +383,18 @@ app.get('/foo', async (c) => {
 })
 ```
 
+The `ExecutionContext` also has an [`exports`](https://developers.cloudflare.com/workers/runtime-apis/context/#exports) field. To get autocomplete with Wrangler's generated types, you can use module augmentation:
+
+```ts
+import 'hono'
+
+declare module 'hono' {
+  interface ExecutionContext {
+    readonly exports: Cloudflare.Exports
+  }
+}
+```
+
 ## event
 
 Cloudflare Workers の `FetchEvent` にアクセスできます。 これは "Service Worker" 構文で使用されていましたが、現在は非推奨です。
