@@ -115,12 +115,12 @@ app.use(
 
 #### <Badge type="info" text="optional" /> verifyOptions.nbf: `boolean`
 
-`nbf`（not before）クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
+`nbf` (not before) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
 
 #### <Badge type="info" text="optional" /> verifyOptions.iat: `boolean`
 
-`iat` （not before）クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
+`iat` (not before) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
 
 #### <Badge type="info" text="optional" /> verifyOptions.exp: `boolean`
 
-`exp` （not before）クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
+`exp` (not before) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
