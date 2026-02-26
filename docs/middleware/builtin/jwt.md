@@ -119,8 +119,8 @@ app.use(
 
 #### <Badge type="info" text="optional" /> verifyOptions.iat: `boolean`
 
-`iat` (not before) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
+`iat` (issued at) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
 
 #### <Badge type="info" text="optional" /> verifyOptions.exp: `boolean`
 
-`exp` (not before) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
+`exp` (expiration time) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
