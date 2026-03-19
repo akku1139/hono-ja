@@ -201,7 +201,7 @@ app.get('/', (c) => {
   return c.html(
     <html>
       <head>
-        {/* Set the `nonce` attribute on the css helpers `style` and `script` elements */}
+        {/* Set the `nonce` attribute on the CSS helpers `style` and `script` elements */}
         <Style nonce={c.get('secureHeadersNonce')} />
       </head>
       <body>
@@ -214,6 +214,6 @@ app.get('/', (c) => {
 
 ## Tips
 
-VS Code を使用している場合は、 [vscode-styled-components](https://marketplace.visualstudio.com/items?itemName=styled-components.vscode-styled-components) を使用することによって css タグ付きリテラルにシンタックスハイライトと IntelliSense が提供されます。
+VS Code を使用している場合は、 [vscode-styled-components](https://marketplace.visualstudio.com/items?itemName=styled-components.vscode-styled-components) を使用することによって CSS タグ付きリテラルにシンタックスハイライトと IntelliSense が提供されます。
 
 ![](/images/css-ss.png)

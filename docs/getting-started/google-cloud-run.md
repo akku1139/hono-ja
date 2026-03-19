@@ -127,8 +127,8 @@ gcloud run deploy my-app --source . --allow-unauthenticated
 
 Deno や Bun (または、カスタム Node.js コンテナ) を使用してデプロイを行いたい場合、 `Dockerfile` (と、必要に応じて `.dockerignore` ) を使用したい環境に合わせて設定してください。
 
-コンテナ化の詳細は以下のドキュメントを参照してください:
+コンテナ化の詳細は、以下のドキュメントを参照してください:
 
-- [Nodejs](/docs/getting-started/nodejs#building-deployment)
+- [Node.js](/docs/getting-started/nodejs#building-deployment)
 - [Bun](https://bun.com/guides/ecosystem/docker)
 - [Deno](https://docs.deno.com/examples/google_cloud_run_tutorial)

@@ -140,11 +140,9 @@ app.use('/message/*', async (c, next) => {
 app.get('/message/hello', (c) => c.text('Hello Middleware!'))
 ```
 
-However, embedding middleware directly within `app.use()` can limit its reusability. Therefore, we can separate our
-middleware into different files.
+However, embedding middleware directly within `app.use()` can limit its reusability. Therefore, we can separate our middleware into different files.
 
-To ensure we don't lose type definitions for `context` and `next`, when separating middleware, we can use
-[`createMiddleware()`](/docs/helpers/factory#createmiddleware) from Hono's factory. This also allows us to type-safely [access data we've `set` in `Context`](https://hono.dev/docs/api/context#set-get) from downstream handlers.
+To ensure we don't lose type definitions for `context` and `next`, when separating middleware, we can use [`createMiddleware()`](/docs/helpers/factory#createmiddleware) from Hono's factory. This also allows us to type-safely [access data we've `set` in `Context`](https://hono.dev/docs/api/context#set-get) from downstream handlers.
 
 ```ts
 import { createMiddleware } from 'hono/factory'
@@ -214,8 +212,7 @@ app.get('/echo', echoMiddleware, (c) => {
 
 ## サードパーティーミドルウェア
 
-ビルトインミドルウェアは外部モジュールに依存しません、しかしサードパーティーミドルウェアはサードパーティー製ライブラリに依存している可能性があります。
-したがって、それらを使用してより複雑なアプリケーションを作成できると思います。
+ビルトインミドルウェアは外部モジュールに依存しません、しかしサードパーティーミドルウェアはサードパーティー製ライブラリに依存している可能性があります。そのため、それらを使用してより複雑なアプリケーションを作成できるでしょう。
 
 We can explore a variety of [third-party middleware](https://hono.dev/docs/middleware/third-party).
 例えば、 GraphQL サーバーミドルウェア、 Sentry ミドルウェア、 Firebase Auth ミドルウェア等...

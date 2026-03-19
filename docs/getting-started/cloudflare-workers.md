@@ -273,7 +273,7 @@ app.use('/auth/*', async (c, next) => {
 
 CI で Cloudflare にデプロイする前に、 Cloudflare のトークンが必要です。 [User API Tokens](https://dash.cloudflare.com/profile/api-tokens) で管理できます。
 
-新しく作られたトークンでは、 **Edit Cloudflare Workers** テンプレートを選択します。 すでにトークンがある場合は、トークンが対応する権限を持っていることを確認してください。 ( Cloudflare Pages と Cloudflare Workers の間で権限が共有されないことに注意してください。
+新しく作られたトークンでは、 **Edit Cloudflare Workers** テンプレートを選択し、すでにトークンがある場合は、トークンが対応する権限を持っていることを確認してください。 (Note: Cloudflare Pages と Cloudflare Workers の間で権限が共有されないことに注意してください。
 
 次に GitHub リポジトリの設定ダッシュボードで `Settings->Secrets and variables->Actions->Repository secrets` を開き、 `CLOUDFLARE_API_TOKEN` という名前のシークレットを作成します。
 

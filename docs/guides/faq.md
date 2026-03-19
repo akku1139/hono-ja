@@ -4,7 +4,7 @@ Hono のよくある質問 (FAQ) と解決方法をまとめたガイド。
 
 ## Hono 公式の Renovate 設定はありますか?
 
-Hono チームは現在 [Renovate](https://github.com/renovatebot/renovate) 設定をメンテナンスしていません。
+Hono チームは現在 [Renovate](https://github.com/renovatebot/renovate) の設定をメンテナンスしていません。
 そのため、下のようにサードパーティーの renovate-config を使用してください。
 
 `renovate.json` :
