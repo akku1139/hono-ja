@@ -5,8 +5,8 @@ titleTemplate: ':title'
 
 # Hono
 
-Hono - _**\[炎\] 🔥**_ - は小さく、シンプルで爆速なエッジ向けWebフレームワークです。
-あらゆるJavaScriptランタイムで動作します: Cloudflare Workers 、 Fastly Compute 、 Deno 、 Bun 、 Vercel 、 Netlify 、 AWS Lambda 、 Lambda@Edge そして Node.js。
+Hono - _**\[炎\] 🔥**_ - は小さく、シンプルで爆速なエッジ向け Web フレームワークです。
+あらゆる JavaScript ランタイムで動作します: Cloudflare Workers 、 Fastly Compute 、 Deno 、 Bun 、 Vercel 、 Netlify 、 AWS Lambda 、 Lambda@Edge そして Node.js。
 
 Honoは速いけど、速いだけではありません。
 
