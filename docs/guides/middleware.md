@@ -210,6 +210,44 @@ app.get('/echo', echoMiddleware, (c) => {
 })
 ```
 
+### Type Inference Across Chained Middleware
+
+When you chain multiple middleware using `.use()`, Hono automatically accumulates the `Variables` types. Route handlers that follow the middleware chain can access all variables from every preceding middleware in a type-safe way:
+
+```ts
+import { createMiddleware } from 'hono/factory'
+
+const authMiddleware = createMiddleware<{
+  Variables: { user: { id: string; name: string } }
+}>(async (c, next) => {
+  c.set('user', { id: '123', name: 'Alice' })
+  await next()
+})
+
+const dbMiddleware = createMiddleware<{
+  Variables: { db: { query: (sql: string) => Promise<unknown> } }
+}>(async (c, next) => {
+  c.set('db', {
+    query: async (sql) => {
+      /* ... */
+    },
+  })
+  await next()
+})
+
+const app = new Hono()
+  .use(authMiddleware)
+  .use(dbMiddleware)
+  .get('/', (c) => {
+    // Both `user` and `db` are available and type-safe
+    const user = c.var.user // { id: string; name: string }
+    const db = c.var.db // { query: (sql: string) => Promise<unknown> }
+    return c.json({ user })
+  })
+```
+
+This works because each `.use()` call returns a new Hono instance with the merged type, so the type grows as middleware is chained. This eliminates the need to manually declare a combined `Env` type upfront for most use cases.
+
 ## サードパーティーミドルウェア
 
 ビルトインミドルウェアは外部モジュールに依存しません、しかしサードパーティーミドルウェアはサードパーティー製ライブラリに依存している可能性があります。そのため、それらを使用してより複雑なアプリケーションを作成できるでしょう。
