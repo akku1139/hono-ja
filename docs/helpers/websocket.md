@@ -1,7 +1,7 @@
 # WebSocket ヘルパー
 
 WebSocket ヘルパーは、 Hono アプリケーションのサーバーサイド WebSocket のヘルパーです。
-現在、 Cloudflare Workers / Pages 、 Deno 、および Bun アダプタが利用可能です。
+現在、 Cloudflare Workers / Pages 、 Deno 、 Bun および Node.js アダプタが利用可能です。
 
 ## Import
 
@@ -29,9 +29,17 @@ export default {
 }
 ```
 
+```ts [Node.js]
+import { serve, upgradeWebSocket } from '@hono/node-server'
+import { Hono } from 'hono'
+import { WebSocketServer } from 'ws'
+```
+
 :::
 
-Node.js なら: [@hono/node-ws](https://github.com/honojs/middleware/tree/main/packages/node-ws)
+On Node.js, WebSocket support is built into `@hono/node-server`. To enable it, install `ws` and, if you use TypeScript, `@types/ws`. Then create a `WebSocketServer` with `{ noServer: true }` and pass it to `serve()` via the `websocket` option.
+
+`@hono/node-ws` is deprecated.
 
 ## `upgradeWebSocket()`
 
@@ -183,4 +191,30 @@ export default {
   fetch: app.fetch,
   websocket,
 }
+```
+
+### Node.js
+
+```ts
+import { serve, upgradeWebSocket } from '@hono/node-server'
+import { Hono } from 'hono'
+import { WebSocketServer } from 'ws'
+
+const app = new Hono()
+
+app.get(
+  '/ws',
+  upgradeWebSocket(() => ({
+    onMessage(event, ws) {
+      ws.send(event.data)
+    },
+  }))
+)
+
+const wss = new WebSocketServer({ noServer: true })
+
+serve({
+  fetch: app.fetch,
+  websocket: { server: wss },
+})
 ```
