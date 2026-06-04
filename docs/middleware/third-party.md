@@ -56,6 +56,7 @@
 ### Server / Adapter
 
 - [GraphQL Server](https://github.com/honojs/middleware/tree/main/packages/graphql-server)
+- [oRPC](https://orpc.dev/docs/adapters/hono)
 - [tRPC Server](https://github.com/honojs/middleware/tree/main/packages/trpc-server)
 
 ### Transpiler
