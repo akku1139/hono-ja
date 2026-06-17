@@ -30,7 +30,7 @@ app.get('/stream', (c) => {
 
 ## `streamText()`
 
-`Content-Type:text/plain` 、 `Transfer-Encoding:chunked` 、 `X-Content-Type-Options:nosniff` をヘッダーにもつストリーミングレスポンスを返します。
+`Content-Type: text/plain` 、 `Transfer-Encoding: chunked` 、 `X-Content-Type-Options: nosniff` をヘッダーにもつストリーミングレスポンスを返します。
 
 ```ts
 app.get('/streamText', (c) => {
@@ -47,7 +47,7 @@ app.get('/streamText', (c) => {
 
 ::: warning
 
-If you are developing an application for Cloudflare Workers, a streaming may not work well on Wrangler. If so, add `Identity` for `Content-Encoding` header.
+If you are developing an application for Cloudflare Workers, streaming may not work well on Wrangler. If so, add `Identity` for `Content-Encoding` header.
 
 ```ts
 app.get('/streamText', (c) => {
