@@ -48,7 +48,10 @@ app.use(
   jwt({
     secret: 'it-is-very-secret',
     alg: 'HS256',
-    issuer: 'my-trusted-issuer',
+    verification: {
+      iss: 'my-trusted-issuer',
+      aud: 'my-api',
+    },
   })
 )
 
@@ -105,22 +108,28 @@ app.use(
 )
 ```
 
-### <Badge type="info" text="optional" /> verifyOptions: `VerifyOptions`
+### <Badge type="info" text="optional" /> verification: `VerifyOptions`
 
 トークンの検証を制御するオプション。
 
-#### <Badge type="info" text="optional" /> verifyOptions.iss: `string | RexExp`
+[Keep in sync with jwk.md]: #
+
+#### <Badge type="info" text="optional" /> VerifyOptions.iss: `string | RegExp`
 
 期待される検証トークンの発行者。 この値が設定されていない場合、 `iss` クレームはチェック**されません**。
 
-#### <Badge type="info" text="optional" /> verifyOptions.nbf: `boolean`
+#### <Badge type="info" text="optional" /> VerifyOptions.aud: `string | string[] | RegExp`
+
+The expected audience used for token verification. If this is set, the token must include an `aud` claim and at least one audience value must match.
+
+#### <Badge type="info" text="optional" /> VerifyOptions.nbf: `boolean`
 
 `nbf` (not before) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
 
-#### <Badge type="info" text="optional" /> verifyOptions.iat: `boolean`
+#### <Badge type="info" text="optional" /> VerifyOptions.iat: `boolean`
 
 `iat` (issued at) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
 
-#### <Badge type="info" text="optional" /> verifyOptions.exp: `boolean`
+#### <Badge type="info" text="optional" /> VerifyOptions.exp: `boolean`
 
 `exp` (expiration time) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
