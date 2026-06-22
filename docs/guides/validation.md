@@ -51,10 +51,10 @@ app.post(
 バリデーションの対象としては、`form` だけでなく、`json`, `query`, `header`, `param` , `cookie` などがあります。
 
 ::: warning
-`json` または `form` をバリデートする際に、リクエストはマッチする `content-type` ヘッダを含んでいる _必要があります_。（例．`json` の場合は、`Content-Type: application/json`）
-もしそうでない場合、リクエストボディはパースされず、コールバック内で値として空のオブジェクト(`{}`)を受け取るでしょう。
+`json` または `form` をバリデートする際に、リクエストはマッチする `content-type` ヘッダを含んでいる _必要があります_。（例．`json` の場合は、`Content-Type: application/json`） もしそうでない場合、リクエストボディはパースされず、コールバック内で値として空のオブジェクト(`{}`)を受け取るでしょう。
 
-[`app.request()`](../api/request.md) を使用してテストをする際に、`content-type` をセットすることは重要です。
+[`app.request()`](../api/request.md)
+を使用してテストをする際に、`content-type` をセットすることは重要です。
 
 アプリケーションは以下のようになります。
 
@@ -277,8 +277,7 @@ const route = app.post(
 
 ## Standard Schema Validator ミドルウェア
 
-[Standard Schema](https://standardschema.dev/) は、TypeScript のバリデーションライブラリの共通のインタフェースを提供する特徴があります。
-Zod, Valibot, ArkType のメンテナによって作成されており、エコシステムツールが独自のアダプタを必要とせず、どんなバリデーションライブラリでも動作するようになっています。
+[Standard Schema](https://standardschema.dev/) は、TypeScript のバリデーションライブラリの共通のインタフェースを提供する特徴があります。 Zod, Valibot, ArkType のメンテナによって作成されており、エコシステムツールが独自のアダプタを必要とせず、どんなバリデーションライブラリでも動作するようになっています。
 
 Hono では、[Standard Schema Validator ミドルウェア](https://github.com/honojs/middleware/tree/main/packages/standard-validator) が Standard Schema 互換のバリデーションライブラリを使用することを強制します。
 
@@ -352,7 +351,6 @@ app.post('/author', sValidator('json', schema), (c) => {
 
 ### Valibot を使う
 
-[Valibot](https://valibot.dev/) is a lightweight alternative to Zod with a modular design:
 [Valibot](https://valibot.dev/) は、モジュール形式の Zod に対する軽量な別の選択肢です。
 
 ::: code-group
