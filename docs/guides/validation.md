@@ -2,7 +2,7 @@
 
 Hono はとても軽量なバリデータだけを提供しています。
 しかしながら、サードパーティのバリデータを組み合わせると強力になります。
-さらに、RPC 機能を使うと、型を通してクライアントと API の仕様を共有することができます。
+さらに、 RPC 機能を使うと、型を通してクライアントと API の仕様を共有することができます。
 
 ## Manual validator
 
@@ -33,7 +33,7 @@ app.post(
   //...
 ```
 
-ハンドラ内では、`c.req.valid('form')` を使用してバリデートされた値を取得できます。
+ハンドラ内では、 `c.req.valid('form')` を使用してバリデートされた値を取得できます。
 
 ```ts
 , (c) => {
@@ -48,13 +48,13 @@ app.post(
 }
 ```
 
-バリデーションの対象としては、`form` だけでなく、`json`, `query`, `header`, `param` , `cookie` などがあります。
+バリデーションの対象としては、 `form` だけでなく、`json`, `query`, `header`, `param` , `cookie` などがあります。
 
 ::: warning
-`json` または `form` をバリデートする際に、リクエストはマッチする `content-type` ヘッダを含んでいる _必要があります_。（例．`json` の場合は、`Content-Type: application/json`） もしそうでない場合、リクエストボディはパースされず、コールバック内で値として空のオブジェクト(`{}`)を受け取るでしょう。
+`json` または `form` をバリデートする際に、リクエストはマッチする `content-type` ヘッダを含んでいる _必要があります_。（例. `json` の場合は、 `Content-Type: application/json`） もしそうでない場合、リクエストボディはパースされず、コールバック内で値として空のオブジェクト (`{}`) を受け取るでしょう。
 
 [`app.request()`](../api/request.md)
-を使用してテストをする際に、`content-type` をセットすることは重要です。
+を使用してテストをする際に、 `content-type` をセットすることは重要です。
 
 アプリケーションは以下のようになります。
 
@@ -277,9 +277,9 @@ const route = app.post(
 
 ## Standard Schema Validator ミドルウェア
 
-[Standard Schema](https://standardschema.dev/) は、TypeScript のバリデーションライブラリの共通のインタフェースを提供する特徴があります。 Zod, Valibot, ArkType のメンテナによって作成されており、エコシステムツールが独自のアダプタを必要とせず、どんなバリデーションライブラリでも動作するようになっています。
+[Standard Schema](https://standardschema.dev/) は、 TypeScript のバリデーションライブラリの共通のインタフェースを提供する特徴があります。 Zod, Valibot, ArkType のメンテナによって作成されており、エコシステムツールが独自のアダプタを必要とせず、どんなバリデーションライブラリでも動作するようになっています。
 
-Hono では、[Standard Schema Validator ミドルウェア](https://github.com/honojs/middleware/tree/main/packages/standard-validator) が Standard Schema 互換のバリデーションライブラリを使用することを強制します。
+Hono では、 [Standard Schema Validator ミドルウェア](https://github.com/honojs/middleware/tree/main/packages/standard-validator) が Standard Schema 互換のバリデーションライブラリを使用することを強制します。
 
 ::: code-group
 
