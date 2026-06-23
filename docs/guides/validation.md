@@ -1,22 +1,22 @@
-# Validation
+# バリデーション
 
-Hono provides only a very thin Validator.
-However, it can be powerful when combined with a third-party Validator.
-In addition, the RPC feature allows you to share API specifications with your clients through types.
+Hono はとても軽量なバリデータだけを提供しています。
+しかしながら、サードパーティのバリデータを組み合わせると強力になります。
+さらに、 RPC 機能を使うと、型を通してクライアントと API の仕様を共有することができます。
 
 ## Manual validator
 
-First, introduce a way to validate incoming values without using the third-party Validator.
+はじめに、サードパーティのバリデータを使用せずに、受信した値をバリデートする方法を紹介します。
 
-Import `validator` from `hono/validator`.
+`hono/validator` から `validator` をインポートします。
 
 ```ts
 import { validator } from 'hono/validator'
 ```
 
-To validate form data, specify `form` as the first argument and a callback as the second argument.
-In the callback, validates the value and return the validated values at the end.
-The `validator` can be used as middleware.
+フォームデータをバリデータするためには、第 1 引数に `form` を、第 2 引数にコールバックを指定します。
+コールバック内の処理では、値をバリデートし、最後にバリデートされた値を返します。
+`validator` をミドルウェアとして使用することができます。
 
 ```ts
 app.post(
@@ -33,12 +33,12 @@ app.post(
   //...
 ```
 
-Within the handler, you can get the validated value with `c.req.valid('form')`.
+ハンドラ内では、 `c.req.valid('form')` を使用してバリデートされた値を取得できます。
 
 ```ts
 , (c) => {
   const { body } = c.req.valid('form')
-  // ... do something
+  // 何か処理をする...
   return c.json(
     {
       message: 'Created!',
@@ -48,22 +48,22 @@ Within the handler, you can get the validated value with `c.req.valid('form')`.
 }
 ```
 
-Validation targets include `json`, `query`, `header`, `param` and `cookie` in addition to `form`.
+バリデーションの対象としては、 `form` だけでなく、`json`, `query`, `header`, `param` , `cookie` などがあります。
 
 ::: warning
-When you validate `json` or `form`, the request _must_ contain a matching `content-type` header (e.g. `Content-Type: application/json` for `json`). Otherwise, the request body will not be parsed and you will receive an empty object (`{}`) as value in the callback.
+`json` または `form` をバリデートする際に、リクエストはマッチする `content-type` ヘッダを含んでいる _必要があります_。（例. `json` の場合は、 `Content-Type: application/json`） もしそうでない場合、リクエストボディはパースされず、コールバック内で値として空のオブジェクト (`{}`) を受け取るでしょう。
 
-It is important to set the `content-type` header when testing using
-[`app.request()`](../api/request.md).
+[`app.request()`](../api/request.md)
+を使用してテストをする際に、 `content-type` をセットすることは重要です。
 
-Given an application like this.
+アプリケーションは以下のようになります。
 
 ```ts
 const app = new Hono()
 app.post(
   '/testing',
   validator('json', (value, c) => {
-    // pass-through validator
+    // 何もせずそのまま受け渡すバリデータ
     return value
   }),
   (c) => {
@@ -73,10 +73,10 @@ app.post(
 )
 ```
 
-Your tests can be written like this.
+テストは以下のように記述できます。
 
 ```ts
-// ❌ this will not work
+// ❌ これは動作しません
 const res = await app.request('/testing', {
   method: 'POST',
   body: JSON.stringify({ key: 'value' }),
@@ -84,7 +84,7 @@ const res = await app.request('/testing', {
 const data = await res.json()
 console.log(data) // {}
 
-// ✅ this will work
+// ✅ これは動作します
 const res = await app.request('/testing', {
   method: 'POST',
   body: JSON.stringify({ key: 'value' }),
@@ -97,17 +97,17 @@ console.log(data) // { key: 'value' }
 :::
 
 ::: warning
-When you validate `header`, you need to use **lowercase** name as the key.
+`header` をバリデートする際、キーは **小文字** で指定する必要があります。
 
-If you want to validate the `Idempotency-Key` header, you need to use `idempotency-key` as the key.
+`Idempotency-Key` ヘッダをバリデートしたい場合、キーは `idempotency-key` のように指定する必要があります。
 
 ```ts
-// ❌ this will not work
+// ❌ これは動作しません
 app.post(
   '/api',
   validator('header', (value, c) => {
-    // idempotencyKey is always undefined
-    // so this middleware always return 400 as not expected
+    // idempotencyKey は常に undefined
+    // そのためこのミドルウェアは常に not expected として 400 を返す
     const idempotencyKey = value['Idempotency-Key']
 
     if (idempotencyKey == undefined || idempotencyKey === '') {
@@ -123,11 +123,11 @@ app.post(
   }
 )
 
-// ✅ this will work
+// ✅ これは動作します
 app.post(
   '/api',
   validator('header', (value, c) => {
-    // can retrieve the value of the header as expected
+    // 期待通りにヘッダの値を取得できる
     const idempotencyKey = value['idempotency-key']
 
     if (idempotencyKey == undefined || idempotencyKey === '') {
@@ -148,7 +148,7 @@ app.post(
 
 ## Multiple validators
 
-You can also include multiple validators to validate different parts of request:
+リクエストの異なる箇所をバリデートするために、複数のバリデータを指定することができます:
 
 ```ts
 app.post(
@@ -161,12 +161,12 @@ app.post(
   }
 ```
 
-## With Zod
+## Zod を使う
 
-You can use [Zod](https://zod.dev), one of third-party validators.
-We recommend using a third-party validator.
+サードパーティのバリデータの１つとして [Zod](https://zod.dev) を使用できます。
+サードパーティのバリデータを使用することを推奨します。
 
-Install from the Npm registry.
+Npm レジストリからインストールします。
 
 ::: code-group
 
@@ -188,13 +188,13 @@ bun add zod
 
 :::
 
-Import `z` from `zod`.
+`zod` から `z` をインポートします
 
 ```ts
 import * as z from 'zod'
 ```
 
-Write your schema.
+スキーマを記述します。
 
 ```ts
 const schema = z.object({
@@ -202,7 +202,7 @@ const schema = z.object({
 })
 ```
 
-You can use the schema in the callback function for validation and return the validated value.
+バリデーションのコールバック関数内でスキーマを使用し、バリデートした値を返すことができます。
 
 ```ts
 const route = app.post(
@@ -216,7 +216,7 @@ const route = app.post(
   }),
   (c) => {
     const { body } = c.req.valid('form')
-    // ... do something
+    // なにか処理をする...
     return c.json(
       {
         message: 'Created!',
@@ -227,9 +227,9 @@ const route = app.post(
 )
 ```
 
-## Zod Validator Middleware
+## Zod Validator ミドルウェア
 
-You can use the [Zod Validator Middleware](https://github.com/honojs/middleware/tree/main/packages/zod-validator) to make it even easier.
+[Zod Validator ミドルウェア](https://github.com/honojs/middleware/tree/main/packages/zod-validator) を使用してより簡単に扱うことができます。
 
 ::: code-group
 
@@ -251,13 +251,13 @@ bun add @hono/zod-validator
 
 :::
 
-And import `zValidator`.
+`zValidator` をインポートします。
 
 ```ts
 import { zValidator } from '@hono/zod-validator'
 ```
 
-And write as follows.
+以下のように記述します。
 
 ```ts
 const route = app.post(
@@ -275,11 +275,11 @@ const route = app.post(
 )
 ```
 
-## Standard Schema Validator Middleware
+## Standard Schema Validator ミドルウェア
 
-[Standard Schema](https://standardschema.dev/) is a specification that provides a common interface for TypeScript validation libraries. It was created by the maintainers of Zod, Valibot, and ArkType to allow ecosystem tools to work with any validation library without needing custom adapters.
+[Standard Schema](https://standardschema.dev/) は、 TypeScript のバリデーションライブラリの共通のインタフェースを提供する特徴があります。 Zod, Valibot, ArkType のメンテナによって作成されており、エコシステムツールが独自のアダプタを必要とせず、どんなバリデーションライブラリでも動作するようになっています。
 
-The [Standard Schema Validator Middleware](https://github.com/honojs/middleware/tree/main/packages/standard-validator) lets you use any Standard Schema-compatible validation library with Hono, giving you the flexibility to choose your preferred validator while maintaining consistent type safety.
+Hono では、 [Standard Schema Validator ミドルウェア](https://github.com/honojs/middleware/tree/main/packages/standard-validator) が Standard Schema 互換のバリデーションライブラリを使用することを強制します。
 
 ::: code-group
 
@@ -301,15 +301,15 @@ bun add @hono/standard-validator
 
 :::
 
-Import `sValidator` from the package:
+パッケージから `sValidator` をインポートします:
 
 ```ts
 import { sValidator } from '@hono/standard-validator'
 ```
 
-### With Zod
+### Zod を使う
 
-You can use Zod with the Standard Schema validator:
+Standard Schema バリデータとして Zod を使用できます:
 
 ::: code-group
 
@@ -349,9 +349,9 @@ app.post('/author', sValidator('json', schema), (c) => {
 })
 ```
 
-### With Valibot
+### Valibot を使う
 
-[Valibot](https://valibot.dev/) is a lightweight alternative to Zod with a modular design:
+[Valibot](https://valibot.dev/) は、モジュール形式の Zod に対する軽量な別の選択肢です。
 
 ::: code-group
 
@@ -391,9 +391,9 @@ app.post('/author', sValidator('json', schema), (c) => {
 })
 ```
 
-### With ArkType
+### ArkType を使う
 
-[ArkType](https://arktype.io/) offers TypeScript-native syntax for runtime validation:
+[ArkType](https://arktype.io/) は、ランタイムのバリデーションに対して TypeScript ネイティブな構文を提供します。
 
 ::: code-group
 
