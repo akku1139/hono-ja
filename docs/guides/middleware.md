@@ -5,7 +5,7 @@
 ## ミドルウェアの定義
 
 - ハンドラ - `Response` オブジェクトを返す必要があります。 一つのヘルパーのみが実行されます。
-- ミドルウェア - `await next()` を実行するべきです。次のミドルウェアをコールするには何も返さない、**または** 途中で exit するために `Response` を返します。
+- ミドルウェア - `await next()` を実行するべきです。 次のミドルウェアをコールするには何も返さない、**または** 途中で exit するために `Response` を返します。
 
 ミドルウェアの登録には `app.use` か `app.HTTP_METHOD` をハンドラと同じように登録できます。 この方法ではパスや HTTP メソッドを簡単に指定できます。
 
@@ -74,7 +74,7 @@ middleware 1 start
 middleware 1 end
 ```
 
-ハンドラあるいはミドルウェアがエラーをスローした場合、hono はエラーをキャッチし、[app.onError() コールバック](/docs/api/hono#error-handling) に渡されるか、自動的にレスポンスコード 500 に変換してミドルウェアチェーンの上位に返します。つまり、next() は決してスローしないので、try/catch/finally でラップする必要はありません。
+ハンドラあるいはミドルウェアがエラーをスローした場合、 hono はエラーをキャッチし、 [app.onError() コールバック](/docs/api/hono#error-handling) に渡されるか、自動的にレスポンスコード 500 に変換してミドルウェアチェーンの上位に返します。 つまり、next() は決してスローしないので、 try/catch/finally でラップする必要はありません。
 
 ## ビルトインミドルウェア
 
@@ -101,7 +101,8 @@ app.use(
 ```
 
 ::: warning
-Deno では、Hono のバージョンとミドルウェアのバージョンが異なったものを使用することができます。しかし、これはバグを引き起こす可能性があります。たとえば、バージョンが異なっているためこのコードは動作しません。
+Deno では、 Hono のバージョンとミドルウェアのバージョンが異なったものを使用することができます。 しかし、これはバグを引き起こす可能性があります。
+たとえば、バージョンが異なっているためこのコードは動作しません。
 
 ```ts
 import { Hono } from 'jsr:@hono/hono@4.4.0'
@@ -139,9 +140,9 @@ app.use('/message/*', async (c, next) => {
 app.get('/message/hello', (c) => c.text('Hello Middleware!'))
 ```
 
-しかし、 `app.use()` 内で直接ミドルウェアを挿入すると、再利用性に制限がかかります。そのため、別ファイルにミドルウェアを分けることができます。
+しかし、 `app.use()` 内で直接ミドルウェアを挿入すると、再利用性に制限がかかります。 そのため、別ファイルにミドルウェアを分けることができます。
 
-`context` や `next` に対して型定義を失わないことを保証するために、ミドルウェアを分割する際に、Hono の factory から [`createMiddleware()`](/docs/helpers/factory#createmiddleware)を使用することができます。下位のハンドラから型安全に  [`Context` で `set` したデータにアクセス](https://hono.dev/docs/api/context#set-get) することができます。
+`context` や `next` に対して型定義を失わないことを保証するために、ミドルウェアを分割する際に、 Hono の factory から [`createMiddleware()`](/docs/helpers/factory#createmiddleware) を使用することができます。 下位のハンドラから型安全に [`Context` で `set` したデータにアクセス](https://hono.dev/docs/api/context#set-get) することができます。
 
 ```ts
 import { createMiddleware } from 'hono/factory'
@@ -175,7 +176,7 @@ const stripRes = createMiddleware(async (c, next) => {
 
 ## ミドルウェア引数の Context にアクセスする
 
-ミドルウェアの引数の context にアクセスするために、`app.use` で提供される context パラメータを直接使用します。下記のサンプルをみてください。
+ミドルウェアの引数の context にアクセスするために、 `app.use` で提供される context パラメータを直接使用します。 下記のサンプルをみてください。
 
 ```ts
 import { cors } from 'hono/cors'
@@ -190,7 +191,7 @@ app.use('*', async (c, next) => {
 
 ### ミドルウェア内で Context を拡張する
 
-ミドルウェア内で Context を拡張するには、`c.set` を使用します。`createMiddleware` 関数に `{ Variables: { yourVariable: YourVariableType } }` というジェネリクス引数を渡すことで型安全に拡張が可能です。
+ミドルウェア内で Context を拡張するには、 `c.set` を使用します。 `createMiddleware` 関数に `{ Variables: { yourVariable: YourVariableType } }` というジェネリクス引数を渡すことで型安全に拡張が可能です。
 
 ```ts
 import { createMiddleware } from 'hono/factory'
@@ -211,7 +212,7 @@ app.get('/echo', echoMiddleware, (c) => {
 
 ### チェーンされたミドルウェアを渡る型インタフェース
 
-`.use()` を使用して複数のミドルウェアをチェーンする際に、Hono は自動的に `Variables` 型を蓄積します。ミドルウェアチェーンに従うルートハンドラは、型安全な方法で先に実行されているミドルウェアのすべての変数にアクセスすることができます:
+`.use()` を使用して複数のミドルウェアをチェーンする際に、 Hono は自動的に `Variables` 型を蓄積します。 ミドルウェアチェーンに従うルートハンドラは、型安全な方法で先に実行されているミドルウェアのすべての変数にアクセスすることができます:
 
 ```ts
 import { createMiddleware } from 'hono/factory'
@@ -245,11 +246,11 @@ const app = new Hono()
   })
 ```
 
-これは動作します。それぞれの `.use()` コールは、マージされた型を持つ新しい Hono インスタンスを返します。そして、ミドルウェアはチェーンされるので型が成長します。このおかげで、多くの場合に結合された `Env` 型を事前に手動で宣言する必要性がなくなります。
+これは動作します。 それぞれの `.use()` コールは、マージされた型を持つ新しい Hono インスタンスを返します。 そして、ミドルウェアはチェーンされるので型が成長します。 このおかげで、多くの場合に結合された `Env` 型を事前に手動で宣言する必要性がなくなります。
 
 ## サードパーティーミドルウェア
 
 ビルトインミドルウェアは外部モジュールに依存しません、しかしサードパーティーミドルウェアはサードパーティー製ライブラリに依存している可能性があります。そのため、それらを使用してより複雑なアプリケーションを作成できるでしょう。
 
-様々な [サードパーティミドルウェア](https://hono.dev/docs/middleware/third-party) を調べることができます。
+様々な[サードパーティミドルウェア](https://hono.dev/docs/middleware/third-party) を調べることができます。
 例えば、 GraphQL サーバーミドルウェア、 Sentry ミドルウェア、 Firebase Auth ミドルウェア等...
