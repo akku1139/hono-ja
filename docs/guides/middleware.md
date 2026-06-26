@@ -5,18 +5,18 @@
 ## ミドルウェアの定義
 
 - ハンドラ - `Response` オブジェクトを返す必要があります。 一つのヘルパーのみが実行されます。
-- Middleware - should `await next()` and return nothing to call the next Middleware, **or** return a `Response` to early-exit.
+- ミドルウェア - `await next()` を実行するべきです。 次のミドルウェアをコールするには何も返さない、**または** 途中で exit するために `Response` を返します。
 
 ミドルウェアの登録には `app.use` か `app.HTTP_METHOD` をハンドラと同じように登録できます。 この方法ではパスや HTTP メソッドを簡単に指定できます。
 
 ```ts
-// match any method, all routes
+// あらゆるメソッドと全てのルートにマッチする
 app.use(logger())
 
-// specify path
+// パスを指定する
 app.use('/posts/*', cors())
 
-// specify method and path
+// メソッドトパスを指定する
 app.post('/posts/*', basicAuth())
 ```
 
@@ -74,7 +74,7 @@ middleware 1 start
 middleware 1 end
 ```
 
-Note that if the handler or any middleware throws, hono will catch it and either pass it to [your app.onError() callback](/docs/api/hono#error-handling) or automatically convert it to a 500 response before returning it up the chain of middleware. This means that next() will never throw, so there is no need to wrap it in a try/catch/finally.
+ハンドラあるいはミドルウェアがエラーをスローした場合、 hono はエラーをキャッチし、 [app.onError() コールバック](/docs/api/hono#error-handling) に渡されるか、自動的にレスポンスコード 500 に変換してミドルウェアチェーンの上位に返します。 つまり、next() は決してスローしないので、 try/catch/finally でラップする必要はありません。
 
 ## ビルトインミドルウェア
 
@@ -101,8 +101,8 @@ app.use(
 ```
 
 ::: warning
-In Deno, it is possible to use a different version of middleware than the Hono version, but this can lead to bugs.
-For example, this code is not working because the version is different.
+Deno では、 Hono のバージョンとミドルウェアのバージョンが異なったものを使用することができます。 しかし、これはバグを引き起こす可能性があります。
+たとえば、バージョンが異なっているためこのコードは動作しません。
 
 ```ts
 import { Hono } from 'jsr:@hono/hono@4.4.0'
@@ -125,13 +125,13 @@ app.get(
 独自のミドルウェアを作成できます。
 
 ```ts
-// Custom logger
+// カスタムロガー
 app.use(async (c, next) => {
   console.log(`[${c.req.method}] ${c.req.url}`)
   await next()
 })
 
-// Add a custom header
+// カスタムヘッダを追加
 app.use('/message/*', async (c, next) => {
   await next()
   c.header('x-message', 'This is middleware!')
@@ -140,9 +140,9 @@ app.use('/message/*', async (c, next) => {
 app.get('/message/hello', (c) => c.text('Hello Middleware!'))
 ```
 
-However, embedding middleware directly within `app.use()` can limit its reusability. Therefore, we can separate our middleware into different files.
+しかし、 `app.use()` 内で直接ミドルウェアを挿入すると、再利用性に制限がかかります。 そのため、別ファイルにミドルウェアを分けることができます。
 
-To ensure we don't lose type definitions for `context` and `next`, when separating middleware, we can use [`createMiddleware()`](/docs/helpers/factory#createmiddleware) from Hono's factory. This also allows us to type-safely [access data we've `set` in `Context`](https://hono.dev/docs/api/context#set-get) from downstream handlers.
+`context` や `next` に対して型定義を失わないことを保証するために、ミドルウェアを分割する際に、 Hono の factory から [`createMiddleware()`](/docs/helpers/factory#createmiddleware) を使用することができます。 下位のハンドラから型安全に [`Context` で `set` したデータにアクセス](https://hono.dev/docs/api/context#set-get) することができます。
 
 ```ts
 import { createMiddleware } from 'hono/factory'
@@ -154,7 +154,7 @@ const logger = createMiddleware(async (c, next) => {
 ```
 
 :::info
-Type generics can be used with `createMiddleware`:
+`createMiddleware` で型ジェネリクスを使用することができます:
 
 ```ts
 createMiddleware<{Bindings: Bindings}>(async (c, next) =>
@@ -162,9 +162,9 @@ createMiddleware<{Bindings: Bindings}>(async (c, next) =>
 
 :::
 
-### Modify the Response After Next
+### Next の後で Response を変更する
 
-Additionally, middleware can be designed to modify responses if necessary:
+さらに、ミドルウェアは必要があればレスポンスを変更できるようにデザインされています:
 
 ```ts
 const stripRes = createMiddleware(async (c, next) => {
@@ -174,9 +174,9 @@ const stripRes = createMiddleware(async (c, next) => {
 })
 ```
 
-## Context access inside Middleware arguments
+## ミドルウェア引数の Context にアクセスする
 
-To access the context inside middleware arguments, directly use the context parameter provided by `app.use`. See the example below for clarification.
+ミドルウェアの引数の context にアクセスするために、 `app.use` で提供される context パラメータを直接使用します。 下記のサンプルをみてください。
 
 ```ts
 import { cors } from 'hono/cors'
@@ -189,9 +189,9 @@ app.use('*', async (c, next) => {
 })
 ```
 
-### Extending the Context in Middleware
+### ミドルウェア内で Context を拡張する
 
-To extend the context inside middleware, use `c.set`. You can make this type-safe by passing a `{ Variables: { yourVariable: YourVariableType } }` generic argument to the `createMiddleware` function.
+ミドルウェア内で Context を拡張するには、 `c.set` を使用します。 `createMiddleware` 関数に `{ Variables: { yourVariable: YourVariableType } }` というジェネリクス引数を渡すことで型安全に拡張が可能です。
 
 ```ts
 import { createMiddleware } from 'hono/factory'
@@ -210,9 +210,9 @@ app.get('/echo', echoMiddleware, (c) => {
 })
 ```
 
-### Type Inference Across Chained Middleware
+### チェーンされたミドルウェアを渡る型インタフェース
 
-When you chain multiple middleware using `.use()`, Hono automatically accumulates the `Variables` types. Route handlers that follow the middleware chain can access all variables from every preceding middleware in a type-safe way:
+`.use()` を使用して複数のミドルウェアをチェーンする際に、 Hono は自動的に `Variables` 型を蓄積します。 ミドルウェアチェーンに従うルートハンドラは、型安全な方法で先に実行されているミドルウェアのすべての変数にアクセスすることができます:
 
 ```ts
 import { createMiddleware } from 'hono/factory'
@@ -239,18 +239,18 @@ const app = new Hono()
   .use(authMiddleware)
   .use(dbMiddleware)
   .get('/', (c) => {
-    // Both `user` and `db` are available and type-safe
+    // `user` と `db` 両方が有効で型安全
     const user = c.var.user // { id: string; name: string }
     const db = c.var.db // { query: (sql: string) => Promise<unknown> }
     return c.json({ user })
   })
 ```
 
-This works because each `.use()` call returns a new Hono instance with the merged type, so the type grows as middleware is chained. This eliminates the need to manually declare a combined `Env` type upfront for most use cases.
+これは動作します。 それぞれの `.use()` コールは、マージされた型を持つ新しい Hono インスタンスを返します。 そして、ミドルウェアはチェーンされるので型が成長します。 このおかげで、多くの場合に結合された `Env` 型を事前に手動で宣言する必要性がなくなります。
 
 ## サードパーティーミドルウェア
 
 ビルトインミドルウェアは外部モジュールに依存しません、しかしサードパーティーミドルウェアはサードパーティー製ライブラリに依存している可能性があります。そのため、それらを使用してより複雑なアプリケーションを作成できるでしょう。
 
-We can explore a variety of [third-party middleware](https://hono.dev/docs/middleware/third-party).
+様々な[サードパーティミドルウェア](https://hono.dev/docs/middleware/third-party) を調べることができます。
 例えば、 GraphQL サーバーミドルウェア、 Sentry ミドルウェア、 Firebase Auth ミドルウェア等...
