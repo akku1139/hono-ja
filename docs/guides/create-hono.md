@@ -1,84 +1,84 @@
 # Create-hono
 
-Command-line options supported by `create-hono` - the project initializer that runs when you run `npm create hono@latest`, `npx create-hono@latest`, or `pnpm create hono@latest`.
+`create-hono` でサポートされるコマンドラインオプションです。`npm create hono@latest`, `npx create-hono@latest`, `pnpm create hono@latest` を実行すると、プロジェクトを初期化します。
 
 > [!NOTE]
-> **Why this page?** The installation / quick-start examples often show a minimal `npm create hono@latest my-app` command. `create-hono` supports several useful flags you can pass to automate and customize project creation (select templates, skip prompts, pick a package manager, use local cache, and more).
+**なぜこのページがあるのか？** インストールやクイックスタートのサンプルでは、`npm create hono@latest my-app` のような最小限のコマンドが示されています。`create-hono` はいくつかの有用なフラグをサポートしており、自動化やカスタマイズしたプロジェクト作成（テンプレートの選択・プロンプトのスキップ・パッケージマネージャの選択・ローカルキャッシュの使用など）をすることができます。
 
-## Passing arguments:
+## 引数を渡す:
 
-When you use `npm create` (or `npx`) arguments intended for the initializer script must be placed **after** `--`. Anything after `--` is forwarded to the initializer.
+`npm create` (あるいは `npx`) を使用する際、初期化スクリプトに渡す引数は  `--` **の後に** 置かなければなりません。`--` の後のすべてのものが初期化スクリプトに送られます。
 
 ::: code-group
 
 ```sh [npm]
-# Forwarding arguments to create-hono (npm requires `--`)
+# create-hono (npm は `--` が必要です) に引数を送ります
 npm create hono@latest my-app -- --template cloudflare-workers
 ```
 
 ```sh [yarn]
-# "--template cloudflare-workers" selects the Cloudflare Workers template
+# "--template cloudflare-workers" は Cloudflare Workers テンプレートを選択します
 yarn create hono my-app --template cloudflare-workers
 ```
 
 ```sh [pnpm]
-# "--template cloudflare-workers" selects the Cloudflare Workers template
+# "--template cloudflare-workers" は Cloudflare Workers テンプレートを選択します
 pnpm create hono@latest my-app --template cloudflare-workers
 ```
 
 ```sh [bun]
-# "--template cloudflare-workers" selects the Cloudflare Workers template
+# "--template cloudflare-workers" は Cloudflare Workers テンプレートを選択します
 bun create hono@latest my-app --template cloudflare-workers
 ```
 
 ```sh [deno]
-# "--template cloudflare-workers" selects the Cloudflare Workers template
+# "--template cloudflare-workers" は Cloudflare Workers テンプレートを選択します
 deno init --npm hono@latest my-app --template cloudflare-workers
 ```
 
 :::
 
-## Commonly used arguments
+## 一般的に使用される引数
 
 | Argument                | Description                                                                                                                                      | Example                         |
 | :---------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------ |
-| `--template <template>` | Select a starter template and skip the interactive template prompt. Templates may include names like `bun`, `cloudflare-workers`, `vercel`, etc. | `--template cloudflare-workers` |
-| `--install`             | Automatically install dependencies after the template is created.                                                                                | `--install`                     |
-| `--pm <packageManager>` | Specify which package manager to run when installing dependencies. Common values: `npm`, `pnpm`, `yarn`.                                         | `--pm pnpm`                     |
-| `--offline`             | Use the local cache/templates instead of fetching the latest remote templates. Useful for offline environments or deterministic local runs.      | `--offline`                     |
+| `--template <template>` | 開始テンプレートを選択して、インタラクティブなテンプレートプロンプトをスキップします。テンプレートは、`bun`, `cloudflare-workers`, `vercel` のような名称がある可能性があります。 | `--template cloudflare-workers` |
+| `--install`             | テンプレートを生成後に、自動的に依存関係をインストールします。                                                                                        | `--install`                     |
+| `--pm <packageManager>` | 依存関係をインストールする際に、どのパッケージマネージャを実行するかを指定します。一般的な値: `npm`, `pnpm`, `yarn`                                      | `--pm pnpm`                     |
+| `--offline`             | 最新のリモートテンプレートを取得する代わりに、ローカルのキャッシュまたはテンプレートを使用します。オフライン環境やローカル実行が決まっている場合に有用です。   | `--offline`                     |
 
 > [!NOTE]
-> The exact set of templates and available options is maintained by the `create-hono` project. This docs page summarizes the most-used flags — see the linked repository below for the full, authoritative reference.
+> 正確なテンプレートのセットや有効なオプションは、 `create-hono` プロジェクトでメンテナンスされています。この文書では、よく使用されるフラグをまとめています。完全で信頼のあるリファレンスは、以下のリポジトリを参照してください。
 
-## Example flows
+## フローのサンプル
 
-### Minimal, interactive
+### インタラクティブを最小限に
 
 ```bash
 npm create hono@latest my-app
 ```
 
-This prompts you for template and options.
+これはテンプレートとオプションを掲示します。
 
-### Non-interactive, pick template and package manager
+### インタラクティブなしで、テンプレートとパッケージマネージャを選択する
 
 ```bash
 npm create hono@latest my-app -- --template vercel --pm npm --install
 ```
 
-This creates `my-app` using the `vercel` template, installs dependencies using `npm`, and skips the interactive prompts.
+これは、`vercel` テンプレートを使用して `my-app` を生成し、`npm` を使用して依存関係をインストールします。インタラクティブなプロンプトはスキップします。
 
-### Use offline cache (no network)
+### オフラインキャッシュを使用する (ネットワークを使用しない)
 
 ```bash
 pnpm create hono@latest my-app --template deno --offline
 ```
 
-## Troubleshooting & tips
+## トラブルシューティングとコツ
 
-- If an option appears not to be recognized, make sure you're forwarding it with `--` when using `npm create` / `npx` .
-- To see the most current list of templates and flags, consult the `create-hono` repository or run the initializer locally and follow its help output.
+- オプションが認識されていない場合、`npm create` / `npx` を使用する際に `--` でオプションを送っているかどうかを確認してください
+- テンプレートやフラグの最新のリストを確認するには、`create-hono` リポジトリを確認するか、ローカルで初期化スクリプトを実行してヘルプの出力に従ってください
 
-## Links & references
+## リンクとリファレンス
 
 - `create-hono` repository : [create-hono](https://github.com/honojs/create-hono)
