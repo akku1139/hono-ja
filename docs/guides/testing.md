@@ -1,25 +1,25 @@
-# Testing
+# テスト
 
 [Vitest]: https://vitest.dev/
 
-Testing is important.
-In actuality, it is easy to test Hono's applications.
-The way to create a test environment differs from each runtime, but the basic steps are the same.
-In this section, let's test with Cloudflare Workers and [Vitest].
+テストは重要です。
+実際に、Hono のアプリケーションをテストするのは簡単です。
+テスト環境を構築する方法は、実行環境により異なりますが、基本の流れは同じです。
+このセクションでは、Cloudflare Workers と [Vitest] を使ってテストしましょう。
 
 ::: tip
-Cloudflare recommends using [Vitest] with [@cloudflare/vitest-pool-workers](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers). For more details, please refer to [Vitest integration](https://developers.cloudflare.com/workers/testing/vitest-integration/) in the Cloudflare Workers docs.
+Cloudflare は、[@cloudflare/vitest-pool-workers](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers) で [Vitest] を使用することを推奨しています。詳細については、Cloudflare Workers のドキュメント内の [Vitest integration](https://developers.cloudflare.com/workers/testing/vitest-integration/) を参照してください。
 :::
 
-## Request and Response
+## Request と Response
 
-All you need to do is create a Request and pass it to the Hono application to validate the Response. You can then use the useful `app.request` method.
+しなければならないことは、リクエストを生成して、レスポンスをバリデートするために Hono アプリケーションに渡すことだけです。`app.request` を使用することができます。
 
 ::: tip
-For a typed test client see the [testing helper](/docs/helpers/testing).
+テストクライントについては、[testing helper](/docs/helpers/testing) を参照してください。
 :::
 
-For example, consider an application that provides the following REST API.
+たとえば、次のような REST API を提供するアプリケーションを考えます。
 
 ```ts
 app.get('/posts', (c) => {
@@ -39,7 +39,7 @@ app.post('/posts', (c) => {
 })
 ```
 
-Make a request to `GET /posts` and test the response.
+`GET /posts` にリクエストを送り、レスポンスをテストします。
 
 ```ts
 describe('Example', () => {
@@ -51,7 +51,7 @@ describe('Example', () => {
 })
 ```
 
-To make a request to `POST /posts`, do the following.
+`POST /posts` にリクエストを送り、次のようにします。
 
 ```ts
 test('POST /posts', async () => {
@@ -66,7 +66,7 @@ test('POST /posts', async () => {
 })
 ```
 
-To make a request to `POST /posts` with `JSON` data, do the following.
+ `POST /posts` に `JSON` データのリクエストを送り、次のようにします。
 
 ```ts
 test('POST /posts', async () => {
@@ -83,7 +83,7 @@ test('POST /posts', async () => {
 })
 ```
 
-To make a request to `POST /posts` with `multipart/form-data` data, do the following.
+ `POST /posts` に `multipart/form-data` データのリクエストを送り、次のようにします。
 
 ```ts
 test('POST /posts', async () => {
@@ -101,7 +101,7 @@ test('POST /posts', async () => {
 })
 ```
 
-You can also pass an instance of the Request class.
+リクエストクラスのインスタンスを渡すこともできます。
 
 ```ts
 test('POST /posts', async () => {
@@ -117,11 +117,11 @@ test('POST /posts', async () => {
 })
 ```
 
-In this way, you can test it as like an End-to-End.
+このようにしてエンドツーエンドのようにテストすることができます。
 
 ## Env
 
-To set `c.env` for testing, you can pass it as the 3rd parameter to `app.request`. This is useful for mocking values like [Cloudflare Workers Bindings](https://hono.dev/getting-started/cloudflare-workers#bindings):
+テスト用に `c.env` をセットするために、`app.request` の第 3 パラメータとしてその値を渡すことができます。これは [Cloudflare Workers Bindings](https://hono.dev/getting-started/cloudflare-workers#bindings) のような値のモックを使用する際に有用です:
 
 ```ts
 const MOCK_ENV = {
