@@ -3,20 +3,20 @@
 [Vitest]: https://vitest.dev/
 
 テストは重要です。
-実際に、Hono のアプリケーションをテストするのは簡単です。
+実際に、 Hono のアプリケーションをテストするのは簡単です。
 テスト環境を構築する方法は、実行環境により異なりますが、基本の流れは同じです。
-このセクションでは、Cloudflare Workers と [Vitest] を使ってテストしましょう。
+このセクションでは、 Cloudflare Workers と [Vitest] を使ってテストしましょう。
 
 ::: tip
-Cloudflare は、[@cloudflare/vitest-pool-workers](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers) で [Vitest] を使用することを推奨しています。詳細については、Cloudflare Workers のドキュメント内の [Vitest integration](https://developers.cloudflare.com/workers/testing/vitest-integration/) を参照してください。
+Cloudflare は、 [@cloudflare/vitest-pool-workers](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers) で [Vitest] を使用することを推奨しています。詳細については、Cloudflare Workers のドキュメント内の [Vitest integration](https://developers.cloudflare.com/workers/testing/vitest-integration/) を参照してください。
 :::
 
 ## Request と Response
 
-しなければならないことは、リクエストを生成して、レスポンスをバリデートするために Hono アプリケーションに渡すことだけです。`app.request` を使用することができます。
+しなければならないことは、リクエストを生成して、レスポンスをバリデートするために Hono アプリケーションに渡すことだけです。 `app.request` を使用することができます。
 
 ::: tip
-テストクライントについては、[testing helper](/docs/helpers/testing) を参照してください。
+テストクライントについては、 [testing helper](/docs/helpers/testing) を参照してください。
 :::
 
 たとえば、次のような REST API を提供するアプリケーションを考えます。
@@ -121,7 +121,7 @@ test('POST /posts', async () => {
 
 ## Env
 
-テスト用に `c.env` をセットするために、`app.request` の第 3 パラメータとしてその値を渡すことができます。これは [Cloudflare Workers Bindings](https://hono.dev/getting-started/cloudflare-workers#bindings) のような値のモックを使用する際に有用です:
+テスト用に `c.env` をセットするために、 `app.request` の第 3 パラメータとしてその値を渡すことができます。これは [Cloudflare Workers Bindings](https://hono.dev/getting-started/cloudflare-workers#bindings) のような値のモックを使用する際に有用です:
 
 ```ts
 const MOCK_ENV = {
