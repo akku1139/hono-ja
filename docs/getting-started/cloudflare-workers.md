@@ -151,10 +151,10 @@ export default {
 
 ## 静的ファイルの提供
 
-静的ファイルを提供したい場合、 Cloudflare Workers の [Static Assets 機能](https://developers.cloudflare.com/workers/static-assets/) を使うことができます。 `wrangler.toml` でファイルを置くディレクトリを指定します:
+静的ファイルを提供したい場合、 Cloudflare Workers の [Static Assets 機能](https://developers.cloudflare.com/workers/static-assets/) を使うことができます。 `wrangler.jsonc` でファイルを置くディレクトリを指定します:
 
-```toml
-assets = { directory = "public" }
+```jsonc
+"assets": { "directory": "public" }
 ```
 
 次に `public` ディレクトリを作成し、ファイルを設置します. 例えば、 `./public/static/hello.txt` は `/static/hello.txt` として提供されます。
@@ -168,7 +168,7 @@ assets = { directory = "public" }
 │       └── hello.txt
 ├── src
 │   └── index.ts
-└── wrangler.toml
+└── wrangler.jsonc
 ```
 
 ## 型
@@ -241,6 +241,26 @@ app.put('/upload/:key', async (c, next) => {
 })
 ```
 
+### Generating Bindings Types Automatically
+
+Instead of defining bindings types by hand, you can auto-generate them from your `wrangler.toml` using the `wrangler types` command. Use the `--env-interface` flag to avoid a naming collision with Hono's built-in `Env` type:
+
+```sh
+wrangler types --env-interface CloudflareBindings
+```
+
+This generates a `worker-configuration.d.ts` file with the interface name you specify. Then pass it to Hono:
+
+```ts
+const app = new Hono<{ Bindings: CloudflareBindings }>()
+
+app.put('/upload/:key', async (c, next) => {
+  const key = c.req.param('key')
+  await c.env.MY_BUCKET.put(key, c.req.body)
+  return c.text(`Put ${key} successfully!`)
+})
+```
+
 ## ミドルウェアで環境変数を使用する
 
 Module Worker モードのみで使用できます。
@@ -273,7 +293,7 @@ app.use('/auth/*', async (c, next) => {
 
 CI で Cloudflare にデプロイする前に、 Cloudflare のトークンが必要です。 [User API Tokens](https://dash.cloudflare.com/profile/api-tokens) で管理できます。
 
-新しく作られたトークンでは、 **Edit Cloudflare Workers** テンプレートを選択し、すでにトークンがある場合は、トークンが対応する権限を持っていることを確認してください。 (Note: Cloudflare Pages と Cloudflare Workers の間で権限が共有されないことに注意してください。
+新しく作られたトークンでは、 **Edit Cloudflare Workers** テンプレートを選択し、すでにトークンがある場合は、トークンが対応する権限を持っていることを確認してください。
 
 次に GitHub リポジトリの設定ダッシュボードで `Settings->Secrets and variables->Actions->Repository secrets` を開き、 `CLOUDFLARE_API_TOKEN` という名前のシークレットを作成します。
 
@@ -299,11 +319,11 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 ```
 
-then edit `wrangler.toml`, and add this code after `compatibility_date` line.
+then edit `wrangler.jsonc`, and add this code after the `compatibility_date` line.
 
-```toml
-main = "src/index.ts"
-minify = true
+```jsonc
+"main": "src/index.ts",
+"minify": true
 ```
 
 準備が整いました! 後はコードを push して楽しんでください。

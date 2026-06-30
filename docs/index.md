@@ -138,7 +138,6 @@ Total Upload: 11.47 KiB / gzip: 4.34 KiB
 **Web 標準**を使用しているおかげで、 Hono は沢山のプラットフォーム上で動作します。
 
 - Cloudflare Workers
-- Cloudflare Pages
 - Fastly Compute
 - Deno
 - Bun
