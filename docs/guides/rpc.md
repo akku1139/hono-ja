@@ -162,7 +162,6 @@ type ResponseType200 = InferResponseType<
 
 Hono の RPC クライアントは、`app.onError()` や グローバルミドルウェアのようなグローバルのエラーハンドラから、自動的にレスポンスの型を推論しません。全てのルートにグローバルなエラーレスポンス型をマージするために `ApplyGlobalResponse` 型ヘルパーを使用することができます。
 
-
 ```ts
 import type { ApplyGlobalResponse } from 'hono/client'
 
