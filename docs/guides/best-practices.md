@@ -198,11 +198,9 @@ app.on('HEAD', '/api/users', (c) => {
 
 ### パフォーマンスの考慮
 
-- **Middleware compatibility**: Most middleware works with HEAD, but body-processing middleware (like compression) automatically skips HEAD requests
 - **多くの HEAD リクエストを期待している場合、GET ハンドラで重い処理を避ける**: HEAD を検知し、ボディの生成をスキップするためにミドルウェアを使用します
 - **キャッシュヘッダは同様に動作します**: HEAD レスポンスは GET と同じキャッシュルールに従います
 - **ミドルウェアの互換性**: 大抵のミドルウェアは、HEAD を処理します。しかし、(圧縮のような) ボディを処理するミドルウェアは自動的に HEAD リクエストをスキップします
-
 
 ### HEAD リクエストをテストする
 
