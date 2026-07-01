@@ -142,70 +142,72 @@ const client = hc<AppType>('http://localhost') // Typed correctly
 
 詳しくは、 [RPC のページ](/docs/guides/rpc#using-rpc-with-larger-applications) を御覧ください。
 
-## HEAD Request Best Practices
+## HEAD リクエストのベストプラクティス
 
-### Understanding Hono's HEAD Handling
+### Hono の HEAD 処理を理解する
 
-Hono automatically handles HEAD requests by converting them to GET requests and stripping the response body. This behavior is built into the framework's dispatch layer and happens before route matching occurs.
+Hono は、自動的に HEAD リクエストを GET リクエストに変更し、レスポンスボディを除去することで HEAD リクエストを処理します。この振る舞いはフレームワークのディスパッチ層に組み込まれており、ルートマッチングが起きる前に行われます。
 
-### ✅ Do: Use GET Routes for HEAD Requests
+### ✅ 動作する: HEAD リクエスト用に GET ルートを使用する
 
 ```typescript
-// GOOD: This GET route automatically handles HEAD requests
+// GOOD: この GET ルートは自動的に HEAD リクエストを処理します
 app.get('/api/users', async (c) => {
   const users = await getUsers()
   c.header('X-Total-Count', users.length.toString())
   return c.json(users)
 })
 
-// HEAD /api/users will return:
-// - Same headers as GET (including X-Total-Count)
+// HEAD /api/users リクエストは次の内容を返します:
+// - GET と同じヘッダ (X-Total-Count を含む)
 // - Status 200
 // - No body (null)
 ```
 
-### ✅ Do: Use Middleware for HEAD-Specific Logic
+### ✅ 動作する: HEAD 固有のロジック用にミドルウェアを使用する
 
 ```typescript
-// GOOD: Use middleware when HEAD needs different behavior
+// GOOD: HEAD が異なる振る舞いが必要な際にミドルウェアを使用する
 app.use('/api/resource', async (c, next) => {
   await next()
 
-  // Add HEAD-specific headers after the handler
+  // ハンドラの後処理で HEAD 固有のヘッダを追加
   if (c.req.method === 'HEAD') {
     c.header('X-HEAD-Processed', 'true')
-    // Don't compute expensive body content for HEAD
+    // HEAD 用に過度なボディの内容を計算しない
     c.res = new Response(null, c.res)
   }
 })
 ```
 
-### ❌ Don't: Try to Create Dedicated HEAD Handlers
+### ❌ 動作しない: HEAD 専用のハンドラを生成してみる
 
 ```typescript
-// BAD: This won't work as expected
+// BAD: これは期待通りには動作しません
 app.head('/api/users', (c) => {
-  // This handler will NEVER be called
+  // このハンドラは決して呼ばれません
   c.header('X-Custom', 'value')
   return c.text('ignored')
 })
 
-// BAD: Using on() also won't work
+// BAD: on() を使用しても動作しません
 app.on('HEAD', '/api/users', (c) => {
-  // Still converted to GET before route matching
+  // ルートマッチングする前に GET に変換されます
 })
 ```
 
-### Performance Considerations
+### パフォーマンスの考慮
 
-- **Avoid expensive operations in GET handlers if you expect many HEAD requests**: Use middleware to detect HEAD and skip body generation
-- **Cache headers work identically**: HEAD responses respect the same caching rules as GET
 - **Middleware compatibility**: Most middleware works with HEAD, but body-processing middleware (like compression) automatically skips HEAD requests
+- **多くの HEAD リクエストを期待している場合、GET ハンドラで重い処理を避ける**: HEAD を検知し、ボディの生成をスキップするためにミドルウェアを使用します
+- **キャッシュヘッダは同様に動作します**: HEAD レスポンスは GET と同じキャッシュルールに従います
+- **ミドルウェアの互換性**: 大抵のミドルウェアは、HEAD を処理します。しかし、(圧縮のような) ボディを処理するミドルウェアは自動的に HEAD リクエストをスキップします
 
-### Testing HEAD Requests
+
+### HEAD リクエストをテストする
 
 ```typescript
-// Always test both GET and HEAD responses
+// 常に GET と HEAD 両方のレスポンスをテストします
 it('handles HEAD requests correctly', async () => {
   const getRes = await app.request('/api/users')
   const headRes = await app.request('/api/users', { method: 'HEAD' })
@@ -218,8 +220,8 @@ it('handles HEAD requests correctly', async () => {
 })
 ```
 
-### Notes
+### 注記
 
-- The automatic HEAD conversion ensures consistent headers between GET and HEAD responses
-- This behavior is consistent across all Hono runtimes (Cloudflare Workers, Deno, Bun, Node.js)
-- If you need completely different logic for HEAD vs GET, consider using different endpoints rather than trying to override the framework's HEAD handling
+- 自動的な HEAD の変換は、GET と HEAD レスポンス間でヘッダの一貫性を保証します
+- この振る舞いは、すべての Hono ランタイム(Cloudflare Workers, Deno, Bun, Node.js)で一貫性があります
+- HEAD と GET で全く異なるロジックが必要な場合、フレームワークの HEAD 処理をオーバーライドするよりもエンドポイントを分けて使用することを考慮してください
