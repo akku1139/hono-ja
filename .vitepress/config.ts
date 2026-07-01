@@ -122,7 +122,7 @@ const sidebars = (): DefaultTheme.SidebarItem[] => [
         link: '/docs/guides/best-practices',
       },
       {
-        text: '例',
+        text: 'その他',
         link: '/docs/guides/others',
       },
       {
