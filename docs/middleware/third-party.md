@@ -94,5 +94,6 @@
 - [MCP](https://github.com/honojs/middleware/tree/main/packages/mcp)
 - [RONIN (Database)](https://github.com/ronin-co/hono-client)
 - [Session](https://github.com/honojs/middleware/tree/main/packages/session)
+- [StitchAPI (Typed, resilient API calls + SSE)](https://github.com/rejifald/StitchAPI/tree/main/packages/hono)
 - [tsyringe](https://github.com/honojs/middleware/tree/main/packages/tsyringe)
 - [User Agent based Blocker](https://github.com/honojs/middleware/tree/main/packages/ua-blocker)
