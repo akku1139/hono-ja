@@ -383,7 +383,7 @@ app.get('/foo', async (c) => {
 })
 ```
 
-`ExecutionContext` には、 [`exports`](https://developers.cloudflare.com/workers/runtime-apis/context/#exports) フィールドもあります。Wrangler が生成する型でオートコンプリートさせるには、モジュール拡張を使用することができます:
+`ExecutionContext` には、 [`exports`](https://developers.cloudflare.com/workers/runtime-apis/context/#exports) フィールドもあります。 Wrangler が生成する型でオートコンプリートさせるには、モジュール拡張を使用することができます:
 
 ```ts
 import 'hono'
@@ -462,7 +462,7 @@ app.use(async (c, next) => {
 ## ContextVariableMap
 
 ::: warning
-`ContextVariableMap` は、変数をセットしたミドルウェアが実際に実行しているかどうかにかかわらず、すべてのコンテキストに  **グローバルに** 型を追加します。`c.get('result')` が、ミドルウェアが何も登録されていないハンドラ内であっても型安全であり、ランタイム側で部分的に `undefined` バグを隠しているということが言えます。
+`ContextVariableMap` は、変数をセットしたミドルウェアが実際に実行しているかどうかにかかわらず、すべてのコンテキストに**グローバルに**型を追加します。 `c.get('result')` が、ミドルウェアが何も登録されていないハンドラ内であっても型安全であり、ランタイム側で部分的に `undefined` バグを隠しているということが言えます。
 
 次の例を見てください:
 
@@ -482,18 +482,18 @@ const app = new Hono()
 
 // ハンドラはミドルウェアを使用します
 app.get('/foo', mw, (c) => {
-  const val = c.get('result') // ✅ val は文字列で、文字列に型づけされる。期待どおり。
+  const val = c.get('result') // ✅ val は文字列で、文字列に型づけされる。 期待どおり。
 })
 
 // ハンドラはミドルウェアを使用しない
 app.get('/bar', (c) => {
-  const val = c.get('result') // ❌ val は undefined だが、文字列に型づけされる。ランタイムエラーになる可能性がある。
+  const val = c.get('result') // ❌ val は undefined だが、文字列に型づけされる。 ランタイムエラーになる可能性がある。
 })
 ```
 
 :::
 
-アプリケーション全体に渡ってグローバルにコンテキストの変数として型を定義するために `ContextVariableMap` インタフェースを拡張することができます。変数がアプリケーション全体に適用されるミドルウェアでセットされて、コンテキスト内に確実に存在することが保証される場合に適しています。
+アプリケーション全体に渡ってグローバルにコンテキストの変数として型を定義するために `ContextVariableMap` インタフェースを拡張することができます。 変数がアプリケーション全体に適用されるミドルウェアでセットされて、コンテキスト内に確実に存在することが保証される場合に適しています。
 
 例:
 
