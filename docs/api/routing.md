@@ -198,7 +198,7 @@ const app = new Hono({
 
 app.get('/www1.example.com/hello', (c) => c.text('hello www1'))
 
-// A following request will match the route:
+// 以下のリクエストはルートにマッチします:
 // new Request('http://www1.example.com/hello', {
 //  headers: { host: 'www1.example.com' },
 // })

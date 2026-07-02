@@ -140,7 +140,7 @@ body['foo[]']
 
 ### 同じ名前の複数ファイルやフィールド
 
-If you have an input field that allows multiple `<input type="file" multiple />` or multiple checkboxes with the same name `<input type="checkbox" name="favorites" value="Hono"/>`.
+複数の `<input type="file" multiple />` や同じ名前 `<input type="checkbox" name="favorites" value="Hono"/>` を持つ複数のチェックボックスを有効とする input フィールドがある場合
 
 ```ts twoslash
 import { Context } from 'hono'
@@ -272,7 +272,7 @@ app.post('/posts', async (c) => {
 ## routePath
 
 ::: warning
-**Deprecated in v4.8.0**: This property is deprecated. Use `routePath()` from [Route Helper](/docs/helpers/route) instead.
+**Deprecated in v4.8.0**: このプロパティは非推奨です。代わりに [Route Helper](/docs/helpers/route) から `routePath()` を使用してください
 :::
 
 ハンドラ内で定義されたパスをこのように取得できます:
@@ -295,7 +295,7 @@ app.get('/posts/:id', (c) => {
 ## matchedRoutes
 
 ::: warning
-**Deprecated in v4.8.0**: This property is deprecated. Use `matchedRoutes()` from [Route Helper](/docs/helpers/route) instead.
+**Deprecated in v4.8.0**: このプロパティは非推奨です。代わりに [Route Helper](/docs/helpers/route) から `matchedRoutes()` を使用してください
 :::
 
 ハンドラで一致したルートを返します、デバッグに適しています。
@@ -378,7 +378,7 @@ app.post('/', async (c) => {
 
 ## cloneRawRequest()
 
-Clones the raw Request object from a HonoRequest. Works even after the request body has been consumed by validators or HonoRequest methods.
+HonoRequest から生のリクエストオブジェクトをクローンします。リクエストボディがバリデータや HonoRequest メソッドによって処理された後でも動作します。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -391,9 +391,9 @@ app.post(
   '/forward',
   validator('json', (data) => data),
   async (c) => {
-    // Clone after validation
+    // バリデーションの後にクローンする
     const clonedReq = await cloneRawRequest(c.req)
-    // Does not throw the error
+    // エラーをスローしない
     await clonedReq.json()
     // ...
   }

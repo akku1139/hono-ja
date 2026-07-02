@@ -45,7 +45,7 @@ app.notFound((c) => {
 ```
 
 :::warning
-The `notFound` method is only called from the top-level app. For more information, see this [issue](https://github.com/honojs/hono/issues/3465#issuecomment-2381210165).
+`notFound` メソッドは、トップレベルのアプリケーションからのみコールされます。詳細については [issue](https://github.com/honojs/hono/issues/3465#issuecomment-2381210165) を参照してください。
 :::
 
 ## エラーハンドリング
@@ -63,7 +63,7 @@ app.onError((err, c) => {
 ```
 
 ::: info
-If both a parent app and its routes have `onError` handlers, the route-level handlers get priority.
+親アプリケーションとそのルートの両方に `onError` ハンドラがある場合、ルートレベルのハンドラが優先されます。
 :::
 
 ## fire()

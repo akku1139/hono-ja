@@ -383,7 +383,7 @@ app.get('/foo', async (c) => {
 })
 ```
 
-The `ExecutionContext` also has an [`exports`](https://developers.cloudflare.com/workers/runtime-apis/context/#exports) field. To get autocomplete with Wrangler's generated types, you can use module augmentation:
+`ExecutionContext` には、 [`exports`](https://developers.cloudflare.com/workers/runtime-apis/context/#exports) フィールドもあります。Wrangler が生成する型でオートコンプリートさせるには、モジュール拡張を使用することができます:
 
 ```ts
 import 'hono'
@@ -462,9 +462,9 @@ app.use(async (c, next) => {
 ## ContextVariableMap
 
 ::: warning
-`ContextVariableMap` adds types **globally** to all contexts, regardless of whether the middleware that sets the variable has actually run. This means `c.get('result')` will appear type-safe even in handlers where your middleware was never registered, potentially hiding `undefined` bugs at runtime.
+`ContextVariableMap` は、変数をセットしたミドルウェアが実際に実行しているかどうかにかかわらず、すべてのコンテキストに  **グローバルに** 型を追加します。`c.get('result')` が、ミドルウェアが何も登録されていないハンドラ内であっても型安全であり、ランタイム側で部分的に `undefined` バグを隠しているということが言えます。
 
-Take a look at the following example:
+次の例を見てください:
 
 ```ts
 declare module 'hono' {
@@ -480,22 +480,22 @@ const mw = createMiddleware(async (c, next) => {
 
 const app = new Hono()
 
-// handler uses the middleware
+// ハンドラはミドルウェアを使用します
 app.get('/foo', mw, (c) => {
-  const val = c.get('result') // ✅ val is a string and typed as such, as expected
+  const val = c.get('result') // ✅ val は文字列で、文字列に型づけされる。期待どおり。
 })
 
-// handler doesn't use the middleware
+// ハンドラはミドルウェアを使用しない
 app.get('/bar', (c) => {
-  const val = c.get('result') // ❌ val is undefined but typed as a string, which can lead to runtime errors
+  const val = c.get('result') // ❌ val は undefined だが、文字列に型づけされる。ランタイムエラーになる可能性がある。
 })
 ```
 
 :::
 
-You can augment the `ContextVariableMap` interface to define types for context variables globally across your entire application. This is appropriate when a variable is set by middleware that is applied app-wide and is guaranteed to exist in the context.
+アプリケーション全体に渡ってグローバルにコンテキストの変数として型を定義するために `ContextVariableMap` インタフェースを拡張することができます。変数がアプリケーション全体に適用されるミドルウェアでセットされて、コンテキスト内に確実に存在することが保証される場合に適しています。
 
-For example:
+例:
 
 ```ts
 declare module 'hono' {
