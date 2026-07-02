@@ -1,6 +1,6 @@
 # HTTPException
 
-致命的なエラーが発生した際に、Hono (や多くのエコシステムミドルウェア)は、`HTTPException` をスローするかもしれません。これは、[エラーレスポンスを返す](#handling-httpexceptions) を簡素化したカスタム Hono `Error` です。
+致命的なエラーが発生した際に、Hono (や多くのエコシステムミドルウェア) は、`HTTPException` をスローするかもしれません。 これは、[エラーレスポンスを返す](#handling-httpexceptions) を簡素化したカスタム Hono `Error` です。
 
 ## HTTPException をスローする
 
@@ -18,7 +18,7 @@ throw new HTTPException(401, { message: 'Unauthorized' })
 
 ### カスタムレスポンス
 
-他のレスポンス型のために、あるいはレスポンスヘッダをセットするために、`res` オプションを使用します。_コンストラクタに渡されたステータスは、レスポンスを生成するために使用されたものであることに注意してください_
+他のレスポンス型のために、あるいはレスポンスヘッダをセットするために、 `res` オプションを使用します。_コンストラクタに渡されたステータスは、レスポンスを生成するために使用されたものであることに注意してください_
 
 ```ts twoslash
 import { HTTPException } from 'hono/http-exception'
@@ -35,7 +35,7 @@ throw new HTTPException(401, { res: errorResponse })
 
 ### Cause
 
-いずれの場合も、HTTPException に任意のデータを追加するために [`cause`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) オプションを使用することができます。
+いずれの場合も、 HTTPException に任意のデータを追加するために [`cause`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) オプションを使用することができます。
 
 ```ts twoslash
 import { Hono, Context } from 'hono'
@@ -56,7 +56,7 @@ app.post('/login', async (c) => {
 
 ## HTTPException を処理する
 
-[`app.onError`](/docs/api/hono#error-handling) を使用して、捕捉されなかった HTTPException を処理することができます。HTTPException は `getResponse` メソッドを持っており、エラー `status` をもとに生成された新しい `Response` を返します。エラーがスローされた際に、エラー `message` あるいは [カスタムレスポンス](#custom-response) のどちらかがセットされます。
+[`app.onError`](/docs/api/hono#error-handling) を使用して、捕捉されなかった HTTPException を処理することができます。 HTTPException は `getResponse` メソッドを持っており、エラー `status` をもとに生成された新しい `Response` を返します。 エラーがスローされた際に、エラー `message` あるいは[カスタムレスポンス](#custom-response)のどちらかがセットされます。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -78,5 +78,5 @@ app.onError((err, c) => {
 ```
 
 ::: warning
-**`HTTPException.getResponse` は、`Context` を認識しません** `Context` で既にセットされたヘッダを含めるには、新しい `Response` にヘッダを適用しなければなりません。
+**`HTTPException.getResponse` は、 `Context` を認識しません** `Context` で既にセットされたヘッダを含めるには、新しい `Response` にヘッダを適用しなければなりません。
 :::
