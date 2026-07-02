@@ -45,7 +45,7 @@ app.notFound((c) => {
 ```
 
 :::warning
-`notFound` メソッドは、トップレベルのアプリケーションからのみコールされます。詳細については [issue](https://github.com/honojs/hono/issues/3465#issuecomment-2381210165) を参照してください。
+`notFound` メソッドは、トップレベルのアプリケーションからのみコールされます。 詳細については [issue](https://github.com/honojs/hono/issues/3465#issuecomment-2381210165) を参照してください。
 :::
 
 ## エラーハンドリング
