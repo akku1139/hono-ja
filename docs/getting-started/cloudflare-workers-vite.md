@@ -1,15 +1,15 @@
 # Cloudflare Workers + Vite
 
-You can build a full-stack application on [Cloudflare Workers](https://workers.cloudflare.com) with [Vite](https://vite.dev) using the [`@cloudflare/vite-plugin`](https://developers.cloudflare.com/workers/vite-plugin/).
-This setup gives you a fast Vite dev server, server-side rendering with Hono's JSX renderer, and client-side scripts bundled by Vite — all running on Cloudflare Workers.
+[`@cloudflare/vite-plugin`](https://developers.cloudflare.com/workers/vite-plugin/) を使用して、 [Vite](https://vite.dev) と共に [Cloudflare Workers](https://workers.cloudflare.com) 上にフルスタックアプリケーションを構築することができます。
+このセットアップは、高速な Vite 開発サーバ, Hono の JSX レンダラを使用したサーバサイドレンダリング, Vite にバンドルされたクライアントサイドスクリプトなどを提供します - すべて Cloudflare Workers 上で動作します。
 
-This is the recommended way to start a new full-stack project on Cloudflare.
+これは、 Cloudflare 上に新しいフルスタックプロジェクトを開始するために推奨されている方法です。
 
-## 1. Setup
+## 1. セットアップ
 
-A starter for Cloudflare Workers with Vite is available.
-Start your project with the "create-hono" command.
-Select the `cloudflare-workers+vite` template for this example.
+Vite を含んだ Cloudflare Workers 用のスターターが使用可能です。
+"create-hono" コマンドを使って、プロジェクトを開始します。
+この例では、 `cloudflare-workers+vite` を選択しています。
 
 ::: code-group
 
@@ -35,7 +35,7 @@ deno init --npm hono my-app
 
 :::
 
-Move into `my-app` and install the dependencies.
+`my-app` に移動し、依存関係をインストールします。
 
 ::: code-group
 
@@ -61,7 +61,7 @@ bun i
 
 :::
 
-Below is a basic directory structure.
+以下は基本的なディレクトリ構成です。
 
 ```text
 ./
@@ -76,7 +76,7 @@ Below is a basic directory structure.
 └── wrangler.jsonc
 ```
 
-The `vite.config.ts` combines the Cloudflare plugin with `vite-ssr-components` for SSR:
+`vite.config.ts` は、 Cloudflare プラグインと SSR 用の `vite-ssr-components` を結合します:
 
 ```ts
 import { cloudflare } from '@cloudflare/vite-plugin'
@@ -90,7 +90,7 @@ export default defineConfig({
 
 ## 2. Hello World
 
-Edit `src/index.tsx` like the following:
+次のように `src/index.tsx` を編集します:
 
 ```tsx
 import { Hono } from 'hono'
@@ -107,7 +107,7 @@ app.get('/', (c) => {
 export default app
 ```
 
-The `renderer` is defined in `src/renderer.tsx` using Hono's [JSX renderer middleware](/docs/middleware/builtin/jsx-renderer) together with `vite-ssr-components`, which wires up Vite's client and assets:
+`renderer` は、  `vite-ssr-components` といっしょに Hono の [JSX renderer ミドルウェア](/docs/middleware/builtin/jsx-renderer) を使用して `src/renderer.tsx` で定義されます。
 
 ```tsx
 import { jsxRenderer } from 'hono/jsx-renderer'
@@ -126,9 +126,9 @@ export const renderer = jsxRenderer(({ children }) => {
 })
 ```
 
-## 3. Run
+## 3. 実行
 
-Run the development server locally. Then, access `http://localhost:5173` in your web browser.
+開発サーバをローカルで実行します。ウェブブラウザで `http://localhost:5173` にアクセスします。
 
 ::: code-group
 
@@ -150,9 +150,9 @@ bun run dev
 
 :::
 
-## 4. Deploy
+## 4. デプロイ
 
-If you have a Cloudflare account, you can deploy to Cloudflare. The `deploy` script builds with Vite and then publishes with Wrangler.
+Cloudflare アカウントを持っている場合、 Cloudflare にデプロイすることができます。 `deploy` スクリプトは、 Vite でビルドされ、 Wrangler で公開します。
 
 ::: code-group
 
@@ -174,10 +174,10 @@ bun run deploy
 
 :::
 
-## Bindings
+## バインディング
 
-You can use Cloudflare Bindings like Variables, KV, D1, and others.
-Configure them in `wrangler.jsonc`. For example, to add a Variable named `MY_NAME`:
+変数, KV, D1 などのような Cloudflare バインディングを使用することができます。
+`wrangler.jsonc` で設定します。たとえば、 `MY_NAME` という名前の変数を追加するには以下のようにします:
 
 ```jsonc
 {
@@ -191,7 +191,7 @@ Configure them in `wrangler.jsonc`. For example, to add a Variable named `MY_NAM
 }
 ```
 
-To generate the types for your Bindings, run the `cf-typegen` script:
+バインディング用に型を生成するために、 `cf-typegen` スクリプトを実行します:
 
 ::: code-group
 
@@ -213,13 +213,13 @@ bun run cf-typegen
 
 :::
 
-This generates a `CloudflareBindings` interface. Pass it to `Hono` as generics:
+`CloudflareBindings` が生成されるので、ジェネリクスとして `Hono` にそれを渡します:
 
 ```ts
 const app = new Hono<{ Bindings: CloudflareBindings }>()
 ```
 
-Then access the Bindings via `c.env`:
+`c.env` を通してバインディングにアクセスします:
 
 ```tsx
 app.get('/', (c) => {
@@ -227,10 +227,10 @@ app.get('/', (c) => {
 })
 ```
 
-## Client-side
+## クライアントサイド
 
-`vite-ssr-components` lets you load client-side scripts through Vite.
-Add a `Script` component pointing to your client entry point, and Vite handles bundling for both dev and production:
+`vite-ssr-components` は、Vite を通してクライアントサイドスクリプトをロードさせます。
+クライアントのエントリポイントを示す `Script` コンポーネントを追加してください。 Vite は、 dev と production のどちらでもバンドルを処理します:
 
 ```tsx
 import { jsxRenderer } from 'hono/jsx-renderer'
@@ -249,4 +249,4 @@ export const renderer = jsxRenderer(({ children }) => {
 })
 ```
 
-For more details, see the [`@cloudflare/vite-plugin` documentation](https://developers.cloudflare.com/workers/vite-plugin/) and [`vite-ssr-components`](https://github.com/yusukebe/vite-ssr-components).
+詳細については、 [`@cloudflare/vite-plugin` documentation](https://developers.cloudflare.com/workers/vite-plugin/) や [`vite-ssr-components`](https://github.com/yusukebe/vite-ssr-components) を参照してください。
