@@ -1,8 +1,8 @@
 # Vercel
 
-Vercel is the AI cloud, providing the developer tools and cloud infrastructure to build, scale, and secure a faster, more personalized web.
+Vercel は、 AI クラウドであり、より高速でパーソナライズされたウェブを構築し、拡張し、安全にする開発ツールやクラウドインフラを提供しています。
 
-Hono can be deployed to Vercel with zero-configuration.
+Hono は設定なしで Vercel にデプロイすることができます。
 
 ## 1. セットアップ
 
@@ -60,11 +60,11 @@ bun i
 
 :::
 
-We will use Vercel CLI to work on the app locally in the next step. If you haven't already, install it globally following [the Vercel CLI documentation](https://vercel.com/docs/cli).
+次のステップでは、ローカル環境のアプリケーション上で動作する Vercel CLI を使用します。まだインストールされていない場合は、 [Vercel CLI ドキュメント](https://vercel.com/docs/cli) に従ってグローバルにインストールしてください。
 
 ## 2. Hello World
 
-In the `index.ts` or `src/index.ts` of your project, export the Hono application as a default export.
+プロジェクトの `index.ts` あるいは `src/index.ts` 内で、 default export として Hono　アプリケーションをエクスポートします。
 
 ```ts
 import { Hono } from 'hono'
@@ -83,26 +83,26 @@ app.get('/', (c) => {
 export default app
 ```
 
-If you started with the `vercel` template, this is already set up for you.
+`vercel` テンプレートを使用している場合は、すでにセットアップされています。
 
 ## 3. Run
 
-To run the development server locally:
+ローカルで開発サーバを実行するには:
 
 ```sh
 vercel dev
 ```
 
-Visiting `localhost:3000` will respond with a text response.
+`localhost:3000` にアクセスするとテキストレスポンスを返します。
 
 ## 4. デプロイ
 
-Deploy to Vercel using `vc deploy`.
+`vc deploy` を使用して Vercel にデプロイします。
 
 ```sh
 vercel deploy
 ```
 
-## Further reading
+## 参考文献
 
-[Learn more about Hono in the Vercel documentation](https://vercel.com/docs/frameworks/backend/hono).
+[Vercel ドキュメントで Hono について学ぶ](https://vercel.com/docs/frameworks/backend/hono).
