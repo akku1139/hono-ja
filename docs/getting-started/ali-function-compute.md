@@ -63,7 +63,7 @@ export const handler = handle(app)
 
 ## 3. serverless-devs をセットアップする
 
-> [serverless-devs](https://github.com/Serverless-Devs/Serverless-Devs) is an open source and open serverless developer platform dedicated to providing developers with a powerful tool chain system. Through this platform, developers can not only experience multi cloud serverless products with one click and rapidly deploy serverless projects, but also manage projects in the whole life cycle of serverless applications, and combine serverless devs with other tools / platforms very simply and quickly to further improve the efficiency of R & D, operation and maintenance.
+> [serverless-devs](https://github.com/Serverless-Devs/Serverless-Devs) はオープンソースであり、オープンなサーバレス開発プラットフォームです。強力なツールチェーンシステムを開発者に提供しています。このプラットフォームを活用して、開発者は、ワンクリックでマルチクラウド対応のサーバレス製品を試用し、高速にサーバレスプロジェクトをデプロイできるだけでなく、サーバレスアプリケーションのライフサイクル全体にわたってプロジェクトを管理できます。さらに、研究開発や運用保守の効率を高めるために、サーバレス開発を他のツールやプラットフォームを使ってとても簡単にかつ迅速に連携することができます。
 
 Alibaba Cloud AccessKeyID と AccessKeySecret を追加します。
 
@@ -113,6 +113,6 @@ resources:
 最後に、コマンドでデプロイしましょう:
 
 ```sh
-npm run build # Compile the TypeScript code to JavaScript
-npm run deploy # Deploy the function to Alibaba Cloud Function Compute
+npm run build # TypeScript コードを JavaScript にコンパイルします
+npm run deploy # Alibaba Cloud Function Compute に関数をデプロイします
 ```
