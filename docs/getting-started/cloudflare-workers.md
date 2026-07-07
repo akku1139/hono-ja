@@ -241,15 +241,15 @@ app.put('/upload/:key', async (c, next) => {
 })
 ```
 
-### Generating Bindings Types Automatically
+### 自動的にバインディングの型を生成する
 
-Instead of defining bindings types by hand, you can auto-generate them from your `wrangler.toml` using the `wrangler types` command. Use the `--env-interface` flag to avoid a naming collision with Hono's built-in `Env` type:
+手動でバインディングの型を定義する代わりに、 `wrangler types` コマンドを使用して、 `wrangler.toml` から自動生成することができます。 Hono のビルトインである `Env` 型との名前の衝突を避けるために `--env-interface` フラグを使用してください。
 
 ```sh
 wrangler types --env-interface CloudflareBindings
 ```
 
-This generates a `worker-configuration.d.ts` file with the interface name you specify. Then pass it to Hono:
+指定したインタフェース名をもつ `worker-configuration.d.ts` ファイルを生成します。 これを Hono に渡します:
 
 ```ts
 const app = new Hono<{ Bindings: CloudflareBindings }>()

@@ -1,15 +1,15 @@
 # Next.js
 
-Next.js is a flexible React framework that gives you building blocks to create fast web applications.
+Next.js は、フレキシブルな React フレームワークで、高速な Web アプリケーションを構築するための構成要素を提供します。
 
-You can run Hono on Next.js when using the Node.js runtime.\
-On Vercel, deploying Hono with Next.js is easy by using Vercel Functions.
+Node.js ランタイムを使用している場合、 Next.js 上で Hono を実行することができます。 \
+Vercel 上では、 Vercel Functions を使用することで Next.js と一緒に Hono をデプロイすることが簡単にできます。
 
-## 1. Setup
+## 1. セットアップ
 
-A starter for Next.js is available.
-Start your project with "create-hono" command.
-Select `nextjs` template for this example.
+Next.js 用のスターターが使用可能です。
+"create-hono" コマンドでプロジェクトを開始します。
+この例では、 `nextjs` テンプレートを選択します。
 
 ::: code-group
 
@@ -35,7 +35,7 @@ deno init --npm hono my-app
 
 :::
 
-Move into `my-app` and install the dependencies.
+`my-app` フォルダに移動し、依存関係をインストールします。
 
 ::: code-group
 
@@ -63,7 +63,7 @@ bun i
 
 ## 2. Hello World
 
-If you use the App Router, Edit `app/api/[[...route]]/route.ts`. Refer to the [Supported HTTP Methods](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#supported-http-methods) section for more options.
+App ルータを使用している場合、 `app/api/[[...route]]/route.ts` を編集します。 他のオプションについては、 [Supported HTTP Methods](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#supported-http-methods) セクションを参照してください。
 
 ```ts
 import { Hono } from 'hono'
@@ -83,7 +83,7 @@ export const POST = handle(app)
 
 ## 3. Run
 
-Run the development server locally. Then, access `http://localhost:3000` in your Web browser.
+ローカルで開発サーバを実行し、ウェブブラウザで `http://localhost:3000` にアクセスします。
 
 ::: code-group
 
@@ -105,15 +105,15 @@ bun run dev
 
 :::
 
-Now, `/api/hello` just returns JSON, but if you build React UIs, you can create a full-stack application with Hono.
+`/api/hello` にアクセスすると、 JSON を返します。 しかし、 React UI を構築している場合、 Hono でフルスタックアプリケーションを作成することができます。
 
-## 4. Deploy
+## 4. デプロイ
 
-If you have a Vercel account, you can deploy by linking the Git repository.
+Vercel のアカウントがある場合、 Git リポジトリをリンクすることでデプロイすることができます。
 
 ## Pages Router
 
-If you use the Pages Router, you'll need to install the Node.js adapter first.
+Pages ルータを使用している場合、まず Node.js アダプタをインストールする必要があります。
 
 ::: code-group
 
@@ -135,7 +135,7 @@ bun add @hono/node-server
 
 :::
 
-Then, you can utilize the `getRequestListener` function imported from `@hono/node-server` in `pages/api/[[...route]].ts`.
+`pages/api/[[...route]].ts` 内で `@hono/node-server` からインポートした `getRequestListener` 関数を利用することができます。
 
 ```ts
 import { getRequestListener } from '@hono/node-server'
@@ -159,7 +159,7 @@ app.get('/hello', (c) => {
 export default getRequestListener(app.fetch)
 ```
 
-In order for this to work with the Pages Router, it's important to disable Vercel Node.js helpers by setting up an environment variable in your project dashboard or in your `.env` file.
+Pages ルータを動作させるには、プロジェクトのダッシュボードの環境変数か `.env` ファイルで Vercel Node.js ヘルパーを無効に設定することが重要です。
 
 ```text
 NODEJS_HELPERS=0

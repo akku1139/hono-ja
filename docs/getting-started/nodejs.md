@@ -83,7 +83,7 @@ app.get('/', (c) => c.text('Hello Node.js!'))
 serve(app)
 ```
 
-If you want to gracefully shut down the server, write it like this:
+サーバをグレースフルシャットダウンしたい場合、次のように記述します:
 
 ```ts
 const server = serve(app)
@@ -137,9 +137,9 @@ serve({
 
 ## WebSocket
 
-WebSocket support is built into `@hono/node-server`. Install `ws` and, if you use TypeScript, `@types/ws`. Then create a `WebSocketServer` with `{ noServer: true }` and pass it to `serve()` with the `websocket` option.
+WebSocket サポートは `@hono/node-server` 内で実装されています。 `ws` をインストールします。 TypeScript を使用している場合は、 `@types/ws` もインストールします。 `{ noServer: true }` を指定して `WebSocketServer` を生成し、 `websocket` オプションを使用して `serve()` に渡します。
 
-`@hono/node-ws` is deprecated.
+`@hono/node-ws` は非推奨です。
 
 ```ts
 import { serve, upgradeWebSocket } from '@hono/node-server'
@@ -211,9 +211,9 @@ app.use('/static/*', serveStatic({ root: './' }))
 ```
 
 ::: warning
-The `root` option resolves paths relative to the current working directory (`process.cwd()`). This means the behavior depends on **where you run your Node.js process from**, not where your source file is located. If you start your server from a different directory, file resolution may fail.
+`root` オプションは、カレントの作業ディレクトリ (`process.cwd()`) からの相対パスで解決します。 振る舞いが、ソースファイルがどこに置かれているかではなく、**どこで Node.js を実行しているか**に依存しているということです。 異なるディレクトリからサーバを起動した場合は、ファイル解決が失敗します。
 
-For reliable path resolution that always points to the same directory as your source file, use `import.meta.url`:
+ソースファイルと常に同じディレクトリを指し示すように確実にパスを解決するには、 `import.meta.url` を使用します:
 
 ```ts
 import { fileURLToPath } from 'node:url'
@@ -306,7 +306,7 @@ bun run build
 ```
 
 ::: info
-Apps with a front-end framework may need to use [Hono's Vite plugins](https://github.com/honojs/vite-plugins).
+フロントエンドのフレームワークをもつアプリケーションは [Hono's Vite plugins](https://github.com/honojs/vite-plugins) を使用する必要があるかもしれません。
 :::
 
 ### Dockerfile

@@ -77,7 +77,7 @@ fire(app)
 ```
 
 > [!NOTE]
-> When using `fire` (or `buildFire()`) from `@fastly/hono-fastly-compute'` at the top level of your application, it is suitable to use `Hono` from `'hono'` rather than `'hono/quick'`, because `fire` causes its router to build its internal data during the application initialization phase.
+> アプリケーションのトップレベルで、 `@fastly/hono-fastly-compute'` から `fire` (または `buildFire()`) を使用する際に、 `'hono/quick'` よりはむしろ `'hono'` から `Hono` を使用する方が適切です。 `fire` を使用すると、アプリケーションの初期化段階でルータが内部データを構築してしまうためです。
 
 ## 3. Run
 
@@ -129,24 +129,24 @@ bun run deploy
 
 :::
 
-## Bindings
+## バインディング
 
-In Fastly Compute, you can bind Fastly platform resources, such as KV Stores, Config Stores, Secret Stores, Backends, Access Control Lists, Named Log Streams, and Environment Variables. You can access them through `c.env`, and will have their individual SDK types.
+Fastly Compute では、高速なプラットフォームリソースをバインドすることができます。 たとえば、KV ストア、 Config ストア、 Secret ストア、バックエンド、アクセス制御リスト、名前付きログストリーム、環境変数 などです。 `c.env` を通してアクセスすることができ、個々の SDK の型があります。
 
-To use these bindings, import `buildFire` instead of `fire` from `@fastly/hono-fastly-compute`. Define your [bindings](https://github.com/fastly/compute-js-context?tab=readme-ov-file#typed-bindings-with-buildcontextproxy) and pass them to [`buildFire()`](https://github.com/fastly/hono-fastly-compute?tab=readme-ov-file#basic-example) to obtain `fire`. Then use `fire.Bindings` to define your `Env` type as you construct `Hono`.
+これらのバインディングを使用するには、 `@fastly/hono-fastly-compute` から `fire` の代わりに `buildFire` を import します。[bindings](https://github.com/fastly/compute-js-context?tab=readme-ov-file#typed-bindings-with-buildcontextproxy) を定義して、 [`buildFire()`](https://github.com/fastly/hono-fastly-compute?tab=readme-ov-file#basic-example) に渡して `fire`を取得します。 `Hono` を構築する際に、 `Env` 型を定義するために `fire.Bindings` を使用してください。
 
 ```ts
 // src/index.ts
 import { buildFire } from '@fastly/hono-fastly-compute'
 
 const fire = buildFire({
-  siteData: 'KVStore:site-data', // I have a KV Store named "site-data"
+  siteData: 'KVStore:site-data', // "site-data" という名前の KV ストアがあります
 })
 
 const app = new Hono<{ Bindings: typeof fire.Bindings }>()
 
 app.put('/upload/:key', async (c, next) => {
-  // e.g., Access the KV Store
+  // 例. KV ストア にアクセスします
   const key = c.req.param('key')
   await c.env.siteData.put(key, c.req.body)
   return c.text(`Put ${key} successfully!`)

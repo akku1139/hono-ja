@@ -166,8 +166,8 @@ app.get(
 
 ## Deno Deploy
 
-Deno Deploy is a serverless platform for running JavaScript and TypeScript applications in the cloud.
-It provides a management plane for deploying and running applications through integrations like GitHub deployment.
+Deno Deploy は、クラウド上で JavaScript や TypeScript アプリケーションを実行するサーバレスプラットフォームです。
+GitHub のデプロイと同様に、連携機能を通してアプリケーションをデプロイしたり実行したりする管理機能を提供します。
 
 Hono は Deno Deploy もサポートしています。 [公式ドキュメント](https://docs.deno.com/deploy/manual/)を参照してください。
 
@@ -201,7 +201,7 @@ deno test hello.ts
 
 ## npm と JSR
 
-Hono is available on both [npm](https://www.npmjs.com/package/hono) and [JSR](https://jsr.io/@hono/hono) (the JavaScript Registry). You can use either `npm:hono` or `jsr:@hono/hono` in your `deno.json`:
+Hono は、(JavaScript レジストリである) [npm](https://www.npmjs.com/package/hono) と [JSR](https://jsr.io/@hono/hono) のどちらも使用可能です。 `deno.json` 内で `npm:hono` または `jsr:@hono/hono` のどちらかを使用することができます:
 
 ```json
 {
@@ -212,7 +212,7 @@ Hono is available on both [npm](https://www.npmjs.com/package/hono) and [JSR](ht
 }
 ```
 
-To use middleware you need to use the [Deno directory](https://docs.deno.com/runtime/fundamentals/configuration/#custom-path-mappings) syntax in the import.
+ミドルウェアを使用するために、 import で [Deno directory](https://docs.deno.com/runtime/fundamentals/configuration/#custom-path-mappings) 構文を使用する必要があります。
 
 ```json
 {
@@ -222,7 +222,7 @@ To use middleware you need to use the [Deno directory](https://docs.deno.com/run
 }
 ```
 
-When using third-party middleware, you may need to use Hono from the same registry as the middleware for proper TypeScript type inference. For example, if using the middleware from npm, you should also use Hono from npm:
+サードパーティ製のミドルウェアを使用する際に、適切な TypeScript の型インタフェースを使用するミドルウェアとして同じレジストリの Hono を使用する必要があるかもしれません。 たとえば、 npm からミドルウェアを使用している場合、 Hono も npm から使用スべきです:
 
 ```json
 {
@@ -234,7 +234,7 @@ When using third-party middleware, you may need to use Hono from the same regist
 }
 ```
 
-We also provide many third-party middleware packages on [JSR](https://jsr.io/@hono). When using the middleware on JSR, use Hono from JSR:
+[JSR](https://jsr.io/@hono) で多くのサードパーティ製ミドルウェアパッケージを提供しています。 JSR でミドルウェアを使用する際は、 Hono も JSR から使用してください:
 
 ```json
 {

@@ -33,7 +33,7 @@ bun install
 bun add hono
 ```
 
-Then add the `dev` command to your existing `package.json`.
+既存の `package.json` に `dev` コマンドを追加します。
 
 ```json
 {
@@ -43,7 +43,7 @@ Then add the `dev` command to your existing `package.json`.
 }
 ```
 
-See the [Bun starter template](https://github.com/honojs/starter/tree/main/templates/bun) for a minimal example setup. This is the output of running `bun create hono@latest`.
+最小限のセットアップ例については、 [Bun starter template](https://github.com/honojs/starter/tree/main/templates/bun) を参照してください。 これは `bun create hono@latest` を実行した出力になります。
 
 ## 3. Hello World
 
@@ -58,7 +58,7 @@ app.get('/', (c) => c.text('Hello Bun!'))
 export default app
 ```
 
-If you are setting up Hono on an existing project, the `bun run dev` command expects the "Hello World" script to be placed in `src/index.ts`
+既存のプロジェクトに Hono セットアップしている場合、 `bun run dev` コマンドは、 "Hello World" スクリプトが `src/index.ts` に置かれていると想定します。
 
 ## 4. Run
 
