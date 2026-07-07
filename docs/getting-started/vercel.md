@@ -60,7 +60,7 @@ bun i
 
 :::
 
-次のステップでは、ローカル環境のアプリケーション上で動作する Vercel CLI を使用します。まだインストールされていない場合は、 [Vercel CLI ドキュメント](https://vercel.com/docs/cli) に従ってグローバルにインストールしてください。
+次のステップでは、ローカル環境のアプリケーション上で動作する Vercel CLI を使用します。 まだインストールされていない場合は、 [Vercel CLI ドキュメント](https://vercel.com/docs/cli) に従ってグローバルにインストールしてください。
 
 ## 2. Hello World
 
@@ -103,6 +103,6 @@ vercel dev
 vercel deploy
 ```
 
-## 参考文献
+## 参考
 
 [Vercel ドキュメントで Hono について学ぶ](https://vercel.com/docs/frameworks/backend/hono).
