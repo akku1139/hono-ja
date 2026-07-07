@@ -1,9 +1,9 @@
 # Next.js
 
-Next.js は、フレキシブルな React フレームワークで、高速なWebアプリケーションを構築するための構成要素を提供します。
+Next.js は、フレキシブルな React フレームワークで、高速な Web アプリケーションを構築するための構成要素を提供します。
 
-Node.js ランタイムを使用している場合、 Next.js 上で Hono を実行することができます \
-Vercel 上では、 Vercel 関数を使用することで Next.js と一緒に Hono をデプロイすることが簡単にできます。
+Node.js ランタイムを使用している場合、 Next.js 上で Hono を実行することができます。 \
+Vercel 上では、 Vercel Functions を使用することで Next.js と一緒に Hono をデプロイすることが簡単にできます。
 
 ## 1. セットアップ
 
@@ -63,7 +63,7 @@ bun i
 
 ## 2. Hello World
 
-App ルータを使用している場合、 `app/api/[[...route]]/route.ts` を編集します。他のオプションについては、[Supported HTTP Methods](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#supported-http-methods) セクションを参照してください。
+App ルータを使用している場合、 `app/api/[[...route]]/route.ts` を編集します。 他のオプションについては、 [Supported HTTP Methods](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#supported-http-methods) セクションを参照してください。
 
 ```ts
 import { Hono } from 'hono'
@@ -105,7 +105,7 @@ bun run dev
 
 :::
 
-`/api/hello` にアクセスすると、 JSON を返します。しかし、 React UI を構築している場合、 Hono でフルスタックアプリケーションを作成することができます。
+`/api/hello` にアクセスすると、 JSON を返します。 しかし、 React UI を構築している場合、 Hono でフルスタックアプリケーションを作成することができます。
 
 ## 4. デプロイ
 
@@ -159,7 +159,7 @@ app.get('/hello', (c) => {
 export default getRequestListener(app.fetch)
 ```
 
-Pages ルータを動作させるには、 プロジェクトのダッシュボードの環境変数か `.env` ファイルで Vercel Node.js ヘルパーを無効に設定することが重要です。
+Pages ルータを動作させるには、プロジェクトのダッシュボードの環境変数か `.env` ファイルで Vercel Node.js ヘルパーを無効に設定することが重要です。
 
 ```text
 NODEJS_HELPERS=0
