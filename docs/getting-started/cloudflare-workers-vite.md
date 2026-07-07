@@ -1,7 +1,7 @@
 # Cloudflare Workers + Vite
 
 [`@cloudflare/vite-plugin`](https://developers.cloudflare.com/workers/vite-plugin/) を使用して、 [Vite](https://vite.dev) と共に [Cloudflare Workers](https://workers.cloudflare.com) 上にフルスタックアプリケーションを構築することができます。
-このセットアップは、高速な Vite 開発サーバ, Hono の JSX レンダラを使用したサーバサイドレンダリング, Vite にバンドルされたクライアントサイドスクリプトなどを提供します - すべて Cloudflare Workers 上で動作します。
+このセットアップは、高速な Vite 開発サーバ、 Hono の JSX レンダラを使用したサーバサイドレンダリング、 Vite にバンドルされたクライアントサイドスクリプトなどを提供します - すべて Cloudflare Workers 上で動作します。
 
 これは、 Cloudflare 上に新しいフルスタックプロジェクトを開始するために推奨されている方法です。
 
@@ -107,7 +107,7 @@ app.get('/', (c) => {
 export default app
 ```
 
-`renderer` は、  `vite-ssr-components` といっしょに Hono の [JSX renderer ミドルウェア](/docs/middleware/builtin/jsx-renderer) を使用して `src/renderer.tsx` で定義されます。
+`renderer` は、 `vite-ssr-components` といっしょに Hono の [JSX renderer ミドルウェア](/docs/middleware/builtin/jsx-renderer) を使用して `src/renderer.tsx` で定義されます。
 
 ```tsx
 import { jsxRenderer } from 'hono/jsx-renderer'
@@ -128,7 +128,7 @@ export const renderer = jsxRenderer(({ children }) => {
 
 ## 3. 実行
 
-開発サーバをローカルで実行します。ウェブブラウザで `http://localhost:5173` にアクセスします。
+開発サーバをローカルで実行します。 ウェブブラウザで `http://localhost:5173` にアクセスします。
 
 ::: code-group
 
@@ -176,8 +176,8 @@ bun run deploy
 
 ## バインディング
 
-変数, KV, D1 などのような Cloudflare バインディングを使用することができます。
-`wrangler.jsonc` で設定します。たとえば、 `MY_NAME` という名前の変数を追加するには以下のようにします:
+Variables, KV, D1 などのような Cloudflare バインディングを使用することができます。
+`wrangler.jsonc` で設定します。 たとえば、 `MY_NAME` という名前の変数を追加するには以下のようにします:
 
 ```jsonc
 {
@@ -229,7 +229,7 @@ app.get('/', (c) => {
 
 ## クライアントサイド
 
-`vite-ssr-components` は、Vite を通してクライアントサイドスクリプトをロードさせます。
+`vite-ssr-components` は、 Vite を通してクライアントサイドスクリプトをロードさせます。
 クライアントのエントリポイントを示す `Script` コンポーネントを追加してください。 Vite は、 dev と production のどちらでもバンドルを処理します:
 
 ```tsx
