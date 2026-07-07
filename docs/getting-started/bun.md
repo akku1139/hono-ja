@@ -43,7 +43,7 @@ bun add hono
 }
 ```
 
-最小限のセットアップ例については、 [Bun starter template](https://github.com/honojs/starter/tree/main/templates/bun) を参照してください。これは `bun create hono@latest` を実行した出力になります。
+最小限のセットアップ例については、 [Bun starter template](https://github.com/honojs/starter/tree/main/templates/bun) を参照してください。 これは `bun create hono@latest` を実行した出力になります。
 
 ## 3. Hello World
 
