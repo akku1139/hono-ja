@@ -77,7 +77,7 @@ fire(app)
 ```
 
 > [!NOTE]
-> アプリケーションのトップレベルで、 `@fastly/hono-fastly-compute'` から `fire` (または `buildFire()`) を使用する際に、 `'hono/quick'` よりはむしろ `'hono'` から `Hono` を使用する方が適切です。`fire` を使用すると、アプリケーションの初期化段階でルータが内部データを構築してしまうためです。
+> アプリケーションのトップレベルで、 `@fastly/hono-fastly-compute'` から `fire` (または `buildFire()`) を使用する際に、 `'hono/quick'` よりはむしろ `'hono'` から `Hono` を使用する方が適切です。 `fire` を使用すると、アプリケーションの初期化段階でルータが内部データを構築してしまうためです。
 
 ## 3. Run
 
@@ -131,7 +131,7 @@ bun run deploy
 
 ## バインディング
 
-Fastly Computeでは、高速なプラットフォームリソースをバインドすることができます。たとえば、KV ストア, Config ストア, Secret ストア, バックエンド, アクセス制御リスト, 名前付きログストリーム, 環境変数 などです。 `c.env` を通してアクセスすることができ、個々の SDK の型があります。
+Fastly Compute では、高速なプラットフォームリソースをバインドすることができます。 たとえば、KV ストア、 Config ストア、 Secret ストア、バックエンド、アクセス制御リスト、名前付きログストリーム、環境変数 などです。 `c.env` を通してアクセスすることができ、個々の SDK の型があります。
 
 これらのバインディングを使用するには、 `@fastly/hono-fastly-compute` から `fire` の代わりに `buildFire` を import します。[bindings](https://github.com/fastly/compute-js-context?tab=readme-ov-file#typed-bindings-with-buildcontextproxy) を定義して、 [`buildFire()`](https://github.com/fastly/hono-fastly-compute?tab=readme-ov-file#basic-example) に渡して `fire`を取得します。 `Hono` を構築する際に、 `Env` 型を定義するために `fire.Bindings` を使用してください。
 
