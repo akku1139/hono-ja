@@ -1,21 +1,23 @@
 # WebAssembly (w/ WASI)
 
-[WebAssembly][wasm-core] は、安全なサンドボックス化されたポータブルなランタイムです。ウェブブラウザの内部でも外部でも動作します。
+[WebAssembly][wasm-core] は、安全なサンドボックス化されたポータブルなランタイムです。 ウェブブラウザの内部でも外部でも動作します。
 
 実際に:
 
 - (JavaScript のような) 言語は、 WebAssembly (`.wasm` ファイル) に _コンパイルする_
 - ([`wasmtime`][wasmtime] や [`jco`][jco] のような) WebAssembly ランタイムは、 WebAssembly バイナリを _実行_ することができる
 
-WebAssembly のコアは、ローカルのファイルシステムやソケットなどにアクセス _しない_ ですが、 [WebAssembly System Interface][wasi] が、 WebAssembly のワークロード配下のプラットフォームを定義できる役割を担っています。
+WebAssembly のコアは、ローカルのファイルシステムやソケットなどにアクセス _しない_ ですが、 [WebAssembly System Interface][wasi] が、
+WebAssembly のワークロード配下のプラットフォームを定義できる役割を担っています。
 
 WASI _を持っている_ WebAssembly は、ファイルやソケットなどを操作することができるということです。
 
 ::: info
-WASI インタフェースをご自身で確認してみたいですか？ [`wasi:http`][wasi-http] をチェックしてみてください。
+WASI インタフェースをご自身で確認してみたいですか? [`wasi:http`][wasi-http] をチェックしてみてください。
 :::
 
-JavaScript における WebAssembly w/ WASI のサポートは、 [StarlingMonkey][sm] によって実現されています。 StarlingMonkey と Hono どちらもウェブ標準を重視しています。**Hono は、 WASI が有効な WebAssembly エコシステムにおいてすぐに動作します。**
+JavaScript における WebAssembly w/ WASI のサポートは、 [StarlingMonkey][sm] によって実現されています。
+StarlingMonkey と Hono はどちらもウェブ標準を重視しています。 **Hono は、 WASI が有効な WebAssembly エコシステムにおいてすぐに動作します。**
 
 [sm]: https://github.com/bytecodealliance/StarlingMonkey
 [wasm-core]: https://webassembly.org/
@@ -29,10 +31,10 @@ WebAssembly の JavaScript エコシステムは、簡単に WASI が有効な W
 
 - [StarlingMonkey][sm] は、 [SpiderMonkey][spidermonkey] のフォークです。 WebAssembly にコンパイルしコンポーネントを有効にします。
 - [`componentize-js`][componentize-js] は、 JavaScript ES modules を WebAssembly コンポーネントに変換します。
-- [`jco`][jco] はマルチツールで、コンポーネントをビルドし、型を生成し、Node.js やブラウザのような環境でコンポーネントを実行します。
+- [`jco`][jco] はマルチツールで、コンポーネントをビルドし、型を生成し、 Node.js やブラウザのような環境でコンポーネントを実行します。
 
 ::: info
-WebAssembly オープンなエコシステムがあり、オープンソースです。コアプロジェクトでは、 [Bytecode Alliance][bca] やそのメンバーによって管理されています。
+WebAssembly オープンなエコシステムがあり、オープンソースです。 コアプロジェクトでは、 [Bytecode Alliance][bca] やそのメンバーによって管理されています。
 
 新しい機能、イシュー、プルリクエストやその他の貢献などは、常に歓迎されます。
 :::
@@ -111,7 +113,8 @@ bun i
 
 - `compilerOptions.module` が `"nodenext"` にセットされている
 
-`componentize-js` (とそれを再利用する `jco`) は、単一の Javascript ファイルしかサポートしないため、バンドルすることが必須ですが、単一のバンドルファイルを生成するために、 [`rolldown`][rolldown] を使用することができます。
+`componentize-js` (とそれを再利用する `jco`) は、単一の JavaScript ファイルしかサポートしないため、
+バンドルすることが必須ですが、単一のバンドルファイルを生成するために、 [`rolldown`][rolldown] を使用することができます。
 
 次のような Rolldown (`rolldown.config.mjs`) 設定を使用することができます:
 
@@ -139,9 +142,9 @@ export default defineConfig({
 
 ## 2. WIT インタフェースや依存関係をセットアップする
 
-[WebAssembly Interface Types (WIT)][wit] は、インタフェース定義言語 ("IDL") です。WebAssembly コンポーネントが、どの機能を使用するか ("imports") や何を提供するか ("exports") を管理します。
+[WebAssembly Interface Types (WIT)][wit] は、インタフェース定義言語 ("IDL") です。 WebAssembly コンポーネントが、どの機能を使用するか ("imports") や何を提供するか ("exports") を管理します。
 
-標準化された WIT インタフェースのうち、 [`wasi:http`][wasi-http] は HTTP リクエスト (リクエストを受け取るかまたはリクエストを送るか) を扱うためのものです。ウェブサーバを作成するにあたり、コンポーネントは、 [WIT world][wit-world] において `wasi:http/incoming-handler` を使用することを宣言しなければなりません。
+標準化された WIT インタフェースのうち、 [`wasi:http`][wasi-http] は HTTP リクエスト (リクエストを受け取るかまたはリクエストを送るか) を扱うためのものです。 ウェブサーバを作成するにあたり、コンポーネントは、 [WIT world][wit-world] において `wasi:http/incoming-handler` を使用することを宣言しなければなりません。
 
 まず初めに、 `wit/component.wit` という名前のファイルで、コンポーネントの WIT world をセットアップします:
 
@@ -157,7 +160,7 @@ world component {
 
 `wasi:http/incoming-handler` インタフェースは、上流の標準化された WIT インタフェース (リクエストの構造についての仕様など) に依存しています。
 
-サードパーティ製 (Bytecode Alliance がメンテナンスしている) の WIT インタフェースを取得するために、利用できるツールの１つは [`wkg`][wkg] になります:
+サードパーティ製 (Bytecode Alliance がメンテナンスしている) の WIT インタフェースを取得するために、利用できるツールの1つは [`wkg`][wkg] になります:
 
 ```sh
 wkg wit fetch
@@ -187,7 +190,7 @@ wit
 
 ## 3. Hello Wasm
 
-WebAssembly で HTTP サーバをビルドするために、 [`jco-std`][jco-std] プロジェクトを使用することができます。ヘルパーが含まれていて、標準的な Hono の体験と似たような体験をすることができます。
+WebAssembly で HTTP サーバをビルドするために、 [`jco-std`][jco-std] プロジェクトを使用することができます。 ヘルパーが含まれていて、標準的な Hono の体験と似たような体験をすることができます。
 
 `src/component.ts` という名前のファイル内に WebAssembly コンポーネントとして基本的な Hono アプリケーションをもつ `component` world を構築してみましょう:
 
@@ -211,7 +214,7 @@ export { incomingHandler } from '@bytecodealliance/jco-std/wasi/0.2.6/http/adapt
 
 ## 4. ビルド
 
-Rolldownを使用している (また、TypeScript のコンパイルを処理するように設定されている) ので、ビルドやバンドルするのに使用することができます:
+Rolldownを使用している (また、 TypeScript のコンパイルを処理するように設定されている) ので、ビルドやバンドルするのに使用することができます:
 
 ::: code-group
 
@@ -234,7 +237,7 @@ bun build --target=bun --outfile=dist/component.js ./src/component.ts
 :::
 
 ::: info
-バンドルすることが必要です。WebAssembly JavaScript エコシステムツールは現在のところ単一の JavaScript ファイルしかサポートしておらず、関連したライブラリとともに Hono を含めたいためです。
+バンドルすることが必要です。 WebAssembly JavaScript エコシステムツールは現在のところ単一の JavaScript ファイルしかサポートしておらず、関連したライブラリとともに Hono を含めたいためです。
 
 よりシンプルな要件のコンポーネントの場合、バンドらは必要ありません。
 :::
@@ -312,11 +315,11 @@ Server listening @ localhost:8000...
 ```
 
 ::: info
-`jco serve` は、 WebAssembly コンポーネントを基本的な WebAssembly コアモジュールに変換することで動作します。このため、Node.js やブラウザのようなランタイム上で動作します。
+`jco serve` は、 WebAssembly コンポーネントを基本的な WebAssembly コアモジュールに変換することで動作します。 このため、 Node.js やブラウザのようなランタイム上で動作します。
 
-通常このプロセスは、`jco transpile` を通して実行され、WebAssembly コンポーネントのランタイムとして Node.js やブラウザのような Javascript エンジンを使用することができる方法です。
+通常このプロセスは、 `jco transpile` を通して実行され、 WebAssembly コンポーネントのランタイムとして Node.js やブラウザのような JavaScript エンジンを使用することができる方法です。
 
-`jco transpile` がどのように動作するかについては、このガイドの範囲外です。[the Jco book][jco-book] で詳細について読んでください。
+`jco transpile` がどのように動作するかについては、このガイドの範囲外です。 [The Jco book][jco-book] で詳細について読んでください。
 :::
 
 ## その他の情報
