@@ -429,7 +429,7 @@ export default defineConfig({
     },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/akku1139/hono-ja' },
-      { icon: 'discord', link: 'https://discord.gg/VARKtGvCZK' },
+      { icon: 'discord', link: 'https://discord.gg/KMh2eNSdxV' },
       { icon: 'x', link: 'https://x.com/honojs' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/hono.dev' },
     ],
