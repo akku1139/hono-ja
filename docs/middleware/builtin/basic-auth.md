@@ -76,7 +76,7 @@ app.use(
 
 ### <Badge type="info" text="optional" /> realm: `string`
 
-返される WWW-Authenticate チャレンジヘッダーの一部としてのレルムのドメイン名です。デフォルトは `"Secure Area"` です。
+返される WWW-Authenticate チャレンジヘッダーの一部としてのレルムのドメイン名です。 デフォルトは `"Secure Area"` です。
 詳しくは: https://developer.mozilla.org/ja/docs/Web/HTTP/Reference/Headers/WWW-Authenticate#digest
 
 ### <Badge type="info" text="optional" /> hashFunction: `Function`
@@ -93,7 +93,7 @@ app.use(
 
 ### <Badge type="info" text="optional" /> onAuthSuccess: `(c: Context, username: string) => void | Promise<void>`
 
-認証が成功した後に呼び出されるコールバック関数です。これにより、 Authorization ヘッダーを再パースすることなく、コンテキスト変数を設定したり副作用を実行したりできます。
+認証が成功した後に呼び出されるコールバック関数です。 これにより、 Authorization ヘッダーを再パースすることなく、コンテキスト変数を設定したり副作用を実行したりできます。
 
 ```ts
 app.use(

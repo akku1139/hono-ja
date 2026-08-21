@@ -110,7 +110,7 @@ app.use(
 
 ### <Badge type="info" text="optional" /> realm: `string`
 
-`401` レスポンスで返される `WWW-Authenticate` チャレンジヘッダーの `realm` パラメータによって記述される保護空間です。デフォルトはリクエスト URL です。
+`401` レスポンスで返される `WWW-Authenticate` チャレンジヘッダーの `realm` パラメータによって記述される保護空間です。 デフォルトはリクエスト URL です。
 
 ```ts
 app.use(
@@ -134,7 +134,7 @@ app.use(
 
 #### <Badge type="info" text="optional" /> VerifyOptions.aud: `string | string[] | RegExp`
 
-トークン検証に使用される期待されるオーディエンスです。これが設定されている場合、トークンは `aud` クレームを含んでいなければならず、少なくとも1つのオーディエンス値が一致する必要があります。
+トークン検証に使用される期待されるオーディエンスです。 これが設定されている場合、トークンは `aud` クレームを含んでいなければならず、少なくとも1つのオーディエンス値が一致する必要があります。
 
 #### <Badge type="info" text="optional" /> VerifyOptions.nbf: `boolean`
 

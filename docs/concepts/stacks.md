@@ -67,7 +67,7 @@ app.get(
 
 ::: warning
 
-RPC がルートを正しく推論するためには、含まれるすべてのメソッドがチェーンされている必要があり、エンドポイントやアプリの型は宣言された変数から推論される必要があります。詳しくは [RPC のベストプラクティス](https://hono.dev/docs/guides/best-practices#if-you-want-to-use-rpc-features) をご覧ください。
+RPC がルートを正しく推論するためには、含まれるすべてのメソッドがチェーンされている必要があり、エンドポイントやアプリの型は宣言された変数から推論される必要があります。 詳しくは [RPC のベストプラクティス](https://hono.dev/docs/guides/best-practices#if-you-want-to-use-rpc-features) をご覧ください。
 
 :::
 

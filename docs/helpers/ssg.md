@@ -246,11 +246,11 @@ app.get('/static-page', onlySSG(), (c) => c.html(<h1>Welcome to my site</h1>))
 
 ## プラグイン
 
-プラグインを使用すると、静的サイト生成プロセスの機能を拡張できます。プラグインはフックを使用して、異なる段階で生成プロセスをカスタマイズします。
+プラグインを使用すると、静的サイト生成プロセスの機能を拡張できます。 プラグインはフックを使用して、異なる段階で生成プロセスをカスタマイズします。
 
 ### デフォルトプラグイン
 
-デフォルトでは、 `toSSG` は 200 以外のステータスレスポンス (リダイレクト、エラー、404 など) をスキップする `defaultPlugin` を使用します。これにより、成功しなかったレスポンスのファイル生成が防止されます。
+デフォルトでは、 `toSSG` は 200 以外のステータスレスポンス (リダイレクト、エラー、404 など) をスキップする `defaultPlugin` を使用します。 これにより、成功しなかったレスポンスのファイル生成が防止されます。
 
 ```ts
 import { toSSG, defaultPlugin } from 'hono/ssg'
@@ -262,7 +262,7 @@ toSSG(app, fs)
 toSSG(app, fs, { plugins: [defaultPlugin] })
 ```
 
-カスタムプラグインを指定した場合、 `defaultPlugin` は自動的には含まれません。デフォルトの挙動を維持しながらカスタムプラグインを追加するには、明示的に含めてください:
+カスタムプラグインを指定した場合、 `defaultPlugin` は自動的には含まれません。 デフォルトの挙動を維持しながらカスタムプラグインを追加するには、明示的に含めてください:
 
 ```ts
 toSSG(app, fs, {
@@ -272,7 +272,7 @@ toSSG(app, fs, {
 
 ### リダイレクトプラグイン
 
-`redirectPlugin` は、 HTTP リダイレクトレスポンス (301 、 302 、 303 、 307 、 308) を返すルートに対して、 HTML リダイレクトページを生成します。生成される HTML には `<meta http-equiv="refresh">` タグと canonical リンクが含まれます。
+`redirectPlugin` は、 HTTP リダイレクトレスポンス (301 、 302 、 303 、 307 、 308) を返すルートに対して、 HTML リダイレクトページを生成します。 生成される HTML には `<meta http-equiv="refresh">` タグと canonical リンクが含まれます。
 
 ```ts
 import { toSSG, redirectPlugin, defaultPlugin } from 'hono/ssg'

@@ -17,7 +17,7 @@ WASI インタフェースをご自身で確認してみたいですか? [`wasi:
 :::
 
 JavaScript における WebAssembly w/ WASI のサポートは、 [StarlingMonkey][sm] によって実現されています。
-StarlingMonkey と Hono はどちらもウェブ標準を重視しています。 **Hono は、 WASI が有効な WebAssembly エコシステムにおいてすぐに動作します。**
+StarlingMonkey と Hono はどちらもウェブ標準を重視しています。 **Hono は、 WASI が有効な WebAssembly エコシステムにおいてすぐに動作します。 **
 
 [sm]: https://github.com/bytecodealliance/StarlingMonkey
 [wasm-core]: https://webassembly.org/
@@ -214,7 +214,7 @@ export { incomingHandler } from '@bytecodealliance/jco-std/wasi/0.2.6/http/adapt
 
 ## 4. ビルド
 
-Rolldownを使用している (また、 TypeScript のコンパイルを処理するように設定されている) ので、ビルドやバンドルするのに使用することができます:
+Rolldown を使用している (また、 TypeScript のコンパイルを処理するように設定されている) ので、ビルドやバンドルするのに使用することができます:
 
 ::: code-group
 
@@ -274,7 +274,7 @@ Hono WebAssembly HTTP サーバを実行するために、 WASI が使用可能�
 ここでは、すでにインストールされているので、 `jco serve` を使用します。
 
 ::: warning
-`jco serve` は開発用であることを示しています。本番用には推奨されません。
+`jco serve` は開発用であることを示しています。 本番用には推奨されません。
 :::
 
 [wasmtime]: https://wasmtime.dev
@@ -333,7 +333,7 @@ WASI や WebAssembly コンポーネントなどについて学ぶためには�
 - [`componentize-js` codebase][componentize-js]
 - [StarlingMonkey codebase][sm]
 
-WebAssemblyコミュニティに、質問やコメントや貢献、あるいは問題の報告などで連絡を取るには：
+WebAssembly コミュニティに、質問やコメントや貢献、あるいは問題の報告などで連絡を取るには:
 
 - [Bytecode Alliance Zulip](https://bytecodealliance.zulipchat.com) ([#jco チャンネル](https://bytecodealliance.zulipchat.com/#narrow/channel/409526-jco) への投稿がおすすめです)
 - [Jco repository](https://github.com/bytecodealliance/jco)

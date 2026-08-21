@@ -202,7 +202,17 @@ if (targets[0] === '--line-count') {
   lineCountRef = `${remote}/${branch}`
   targets = targets.slice(3)
 }
-for (const f of targets.length ? targets : walk('docs')) {
+// 引数がディレクトリなら再帰的に .md ファイルへ展開する
+function expandTargets(paths: string[]): string[] {
+  const out: string[] = []
+  for (const p of paths) {
+    if (statSync(p).isDirectory()) out.push(...walk(p))
+    else out.push(p)
+  }
+  return out
+}
+
+for (const f of expandTargets(targets.length ? targets : ['docs'])) {
   if (lineCountRef) checkLineCount(f, lineCountRef)
   check(f)
 }

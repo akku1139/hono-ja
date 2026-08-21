@@ -11,7 +11,8 @@ RPC 機能を使用すると、サーバとクライアント間で API の仕�
 
 ## サーバ
 
-サーバ側でしなければならないことはバリデータを記述することで、変数 `route` を生成します。次のサンプルでは [Zod Validator](https://github.com/honojs/middleware/tree/main/packages/zod-validator) を使用します。
+サーバ側でしなければならないことはバリデータを記述することで、変数 `route` を生成します。
+次のサンプルでは [Zod Validator](https://github.com/honojs/middleware/tree/main/packages/zod-validator) を使用します。
 
 ```ts{1}
 const route = app.post(
@@ -210,7 +211,7 @@ type AppWithErrors = ApplyGlobalResponse<
 
 ## Not Found
 
-クライアントを使用したい場合、 Not Found レスポンスを返すのに `c.notFound()` を使用すべきではありません。クライアントがサーバから取得するデータは、正しく推論することができません。
+クライアントを使用したい場合、 Not Found レスポンスを返すのに `c.notFound()` を使用すべきではありません。 クライアントがサーバから取得するデータは、正しく推論することができません。
 
 ```ts
 // server.ts
@@ -373,7 +374,7 @@ const res = await client.posts[':postId'][':authorId'].$get({
 
 ### スラッシュを含める
 
-`hc` 関数は `param` の値を URL エンコードしません。パラメータにスラッシュを含めるには、[正規表現](/docs/api/routing#regexp)を使用します。
+`hc` 関数は `param` の値を URL エンコードしません。 パラメータにスラッシュを含めるには、[正規表現](/docs/api/routing#regexp)を使用します。
 
 ```ts
 // client.ts
@@ -403,7 +404,7 @@ const route = app.get(
 ```
 
 > [!NOTE]
-> 正規表現を使用しない基本的なパスパラメータは、スラッシュにマッチしません。 hc 関数を使用してスラッシュを含む `param` を渡す場合、サーバは意図したようにはルート処理しないかもしれません。正確なルート処理を強制するためには、 `encodeURIComponent` を使用してパラメータをエンコードすることが推奨されます。
+> 正規表現を使用しない基本的なパスパラメータは、スラッシュにマッチしません。 hc 関数を使用してスラッシュを含む `param` を渡す場合、サーバは意図したようにはルート処理しないかもしれません。 正確なルート処理を強制するためには、 `encodeURIComponent` を使用してパラメータをエンコードすることが推奨されます。
 
 ## ヘッダ
 
@@ -471,7 +472,7 @@ abortController.abort()
 `$url()` を使用してエンドポイントにアクセスするための `URL` オブジェクトを取得できます。
 
 ::: warning
-動作させるためには、絶対 URL を渡さなければなりません。 相対 URLである `/` を渡すと、次のようなエラーになります。
+動作させるためには、絶対 URL を渡さなければなりません。 相対 URL である `/` を渡すと、次のようなエラーになります。
 
 `Uncaught TypeError: Failed to construct 'URL': Invalid URL`
 
@@ -515,7 +516,7 @@ const client = hc<typeof route, 'http://localhost:8787'>(
 )
 
 const url = client.api.posts.$url()
-// url は正確な型情報(プロトコル, ホスト, パスを含む)
+// url は正確な型情報 ( プロトコル, ホスト, パスを含む )
 // をもった型安全な URL です
 ```
 
@@ -770,7 +771,7 @@ export const app = Hono<BlankEnv, BlankSchema, '/'>().get<
 >('foo/:id', (c) => c.json({ ok: true }, 200))
 ```
 
-これはシングルルートの型インスタンスです。 ユーザは手動でこれらの型引数を記述する必要がない（これはよいことですが）、一方で型インスタンスは多くの時間を消費することが知られています。 IDE で使用されている `tsserver` は、アプリケーションを使用するたびに、時間のかかる処理をします。 多くのルートがある場合、 IDE は大幅に遅くなる可能性があります。
+これはシングルルートの型インスタンスです。 ユーザは手動でこれらの型引数を記述する必要がない (これはよいことですが) が、一方で型インスタンスは多くの時間を消費することが知られています。 IDE で使用されている `tsserver` は、アプリケーションを使用するたびに、時間のかかる処理をします。 多くのルートがある場合、 IDE は大幅に遅くなる可能性があります。
 
 しかし、この問題を軽減するためのいくつかのヒントがあります
 

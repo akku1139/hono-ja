@@ -11,7 +11,7 @@ import { testClient } from 'hono/testing'
 
 ## `testClient()`
 
-`testClient()` 関数は、 Hono のインスタンスを第1引数に取り、 [Hono Client](/docs/guides/rpc#client) と同様に、 Hono アプリケーションのルートに応じた型が付けられたオブジェクトを返します。これにより、テスト内でエディタの自動補完を使いながら、型安全に定義したルートを呼び出せます。
+`testClient()` 関数は、 Hono のインスタンスを第1引数に取り、 [Hono Client](/docs/guides/rpc#client) と同様に、 Hono アプリケーションのルートに応じた型が付けられたオブジェクトを返します。 これにより、テスト内でエディタの自動補完を使いながら、型安全に定義したルートを呼び出せます。
 
 **型推論に関する重要な注意:**
 
@@ -62,7 +62,7 @@ describe('Search Endpoint', () => {
 })
 ```
 
-テストにヘッダーを含めたい場合は、呼び出しの第2パラメータとして渡します。第2パラメータは `RequestInit` オブジェクトとして `init` プロパティも受け取ることができ、ヘッダー、メソッド、ボディなどを設定できます。 `init` プロパティの詳細は [こちら](/docs/guides/rpc#init-option) をご覧ください。
+テストにヘッダーを含めたい場合は、呼び出しの第2パラメータとして渡します。 第2パラメータは `RequestInit` オブジェクトとして `init` プロパティも受け取ることができ、ヘッダー、メソッド、ボディなどを設定できます。 `init` プロパティの詳細は [こちら](/docs/guides/rpc#init-option) をご覧ください。
 
 ```ts
 // index.test.ts

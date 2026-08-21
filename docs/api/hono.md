@@ -69,7 +69,7 @@ app.onError((err, c) => {
 ## fire()
 
 ::: warning
-**`app.fire()` は非推奨です**。代わりに `hono/service-worker` から `fire()` を使ってください。 詳しくは[サービスワーカーのドキュメント](/docs/getting-started/service-worker) を読んでください。
+**`app.fire()` は非推奨です**。 代わりに `hono/service-worker` から `fire()` を使ってください。 詳しくは[サービスワーカーのドキュメント](/docs/getting-started/service-worker) を読んでください。
 :::
 
 `app.fire()` は自動で `fetch` イベントリスナーを追加します。
@@ -180,7 +180,7 @@ const app = new Hono()
 app.mount('/itty-router', ittyRouter.handle)
 ```
 
-デフォルトでは、 `mount()` はマウントパスを URL から取り除いた新しい `Request` を渡します。マウントされたアプリケーションにどの `Request` を渡すかを制御するには、 `replaceRequest` 関数を指定してください:
+デフォルトでは、 `mount()` はマウントパスを URL から取り除いた新しい `Request` を渡します。 マウントされたアプリケーションにどの `Request` を渡すかを制御するには、 `replaceRequest` 関数を指定してください:
 
 ```ts twoslash
 import { Hono } from 'hono'

@@ -1,7 +1,7 @@
 # Cloudflare Pages
 
 ::: warning
-新しいプロジェクトでは、 Cloudflare Pages の代わりに [Cloudflare Workers](/docs/getting-started/cloudflare-workers) の使用が推奨されています。 Workers は静的アセットをサポートし、より幅広い機能を提供します。新しいフルスタックアプリケーションを始める場合は、この Pages セットアップの後継である [Cloudflare Workers + Vite](/docs/getting-started/cloudflare-workers-vite) を参照してください。
+新しいプロジェクトでは、 Cloudflare Pages の代わりに [Cloudflare Workers](/docs/getting-started/cloudflare-workers) の使用が推奨されています。 Workers は静的アセットをサポートし、より幅広い機能を提供します。 新しいフルスタックアプリケーションを始める場合は、この Pages セットアップの後継である [Cloudflare Workers + Vite](/docs/getting-started/cloudflare-workers-vite) を参照してください。
 :::
 
 [Cloudflare Pages](https://pages.cloudflare.com) はフルスタックアプリケーションのためのエッジプラットフォームです。

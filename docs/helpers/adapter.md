@@ -76,7 +76,7 @@ app.get('/', (c) => {
 
 ### 利用可能なランタイムキー
 
-以下は利用可能なランタイムキーの一覧です。利用できないランタイムキーは、サポートされる可能性があり、 `other` というラベルが付けられます。 一部のキーは [WinterCG's Runtime Keys](https://runtime-keys.proposal.wintercg.org/) に着想を得ています:
+以下は利用可能なランタイムキーの一覧です。 利用できないランタイムキーは、サポートされる可能性があり、 `other` というラベルが付けられます。 一部のキーは [WinterCG's Runtime Keys](https://runtime-keys.proposal.wintercg.org/) に着想を得ています:
 
 - `workerd` - Cloudflare Workers
 - `deno`

@@ -1,10 +1,8 @@
 # Client Components
 
-`hono/jsx` はサーバサイドだけでなくクライアントサイドもサポートします。 このため、ブラウザで実行するインタラクティブな UI を生成することができます。 クライアントコンポーネントまたは `hono/jsx/dom` と呼んでいます。
+`hono/jsx` はサーバサイドだけでなくクライアントサイドもサポートします。 このため、ブラウザで実行するインタラクティブな UI を生成することができます。 クライアントコンポーネントまたは `hono/jsx/dom` と呼んでいます。 このセクションではクライアントコンポーネント特有の機能を紹介します。
 
 とても高速で、サイズが小さいです。 `hono/jsx/dom` で作ったカウンタープログラムは、 Brotli 圧縮でわずか 2.8KB です。 React 用は 47.8KB になります。
-
-このセクションではクライアントコンポーネント特有の機能を紹介します。
 
 ## カウンターサンプル
 
@@ -194,7 +192,7 @@ export default function App() {
 
 アニメーション中だけスタイルを変更したい場合、 `useViewTransition()` を使用することができます。 このフックは `[boolean, (callback: () => void) => void]` を返します。 これは `isUpdating` フラグや `startViewTransition()` 関数です。
 
-このフックを使用する際、コンポーネントは次のような２個所のタイミングで評価されます。
+このフックを使用する際、コンポーネントは次のような2箇所のタイミングで評価されます。
 
 - `startViewTransition()` を呼び出すコールバックの内部
 - [`finish` promise が fulfilled になるとき](https://developer.mozilla.org/en-US/docs/Web/API/ViewTransition/finished)
