@@ -8,6 +8,7 @@
     "build": "vitepress build",
     "prepreview": "vitepress build",
     "preview": "wrangler dev",
+    "lint:translation": "node ./scripts/translation-lint.ts",
     "format": "prettier --check ./docs ./examples ./scripts index.md",
     "format:fix": "prettier --check --write ./docs ./examples ./scripts index.md"
   },
