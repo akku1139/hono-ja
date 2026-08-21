@@ -1,9 +1,9 @@
-# Compress Middleware
+# Compress ミドルウェア
 
-This middleware compresses the response body, according to `Accept-Encoding` request header.
+このミドルウェアは、 `Accept-Encoding` リクエストヘッダーに応じてレスポンスボディを圧縮します。
 
 ::: info
-**Note**: On Cloudflare Workers and Deno Deploy, the response body will be compressed automatically, so there is no need to use this middleware.
+**Note**: Cloudflare Workers と Deno Deploy では、レスポンスボディは自動的に圧縮されるため、このミドルウェアを使用する必要はありません。
 :::
 
 ## Import
@@ -13,7 +13,7 @@ import { Hono } from 'hono'
 import { compress } from 'hono/compress'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -21,28 +21,28 @@ const app = new Hono()
 app.use(compress())
 ```
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> encoding: `'gzip'` | `'deflate'`
 
-The compression scheme to allow for response compression. Either `gzip` or `deflate`. If not defined, both are allowed and will be used based on the `Accept-Encoding` header. `gzip` is prioritized if this option is not provided and the client provides both in the `Accept-Encoding` header.
+レスポンスの圧縮に許可する圧縮方式です。 `gzip` または `deflate` のいずれかです。 定義しない場合は両方が許可され、 `Accept-Encoding` ヘッダーに基づいて使用されます。 このオプションが指定されておらず、クライアントが `Accept-Encoding` ヘッダーで両方を指定している場合は、 `gzip` が優先されます。
 
 ### <Badge type="info" text="optional" /> threshold: `number`
 
-The minimum size in bytes to compress. Defaults to 1024 bytes.
+圧縮する最小サイズ (バイト) です。 デフォルトは 1024 バイトです。
 
 ### <Badge type="info" text="optional" /> contentTypeFilter: `RegExp` | `(contentType: string) => boolean`
 
-A `RegExp` or function to determine whether the response should be compressed based on its `Content-Type`. By default, a built-in list of compressible Content-Types is used.
+`Content-Type` に基づいてレスポンスを圧縮するかどうかを判定するための `RegExp` または関数です。 デフォルトでは、組み込みの圧縮可能な Content-Type のリストが使用されます。
 
-You can pass a `RegExp` to compress only matching Content-Types:
+マッチする Content-Types のみを圧縮したい場合は、 `RegExp` を渡せます:
 
 ```ts
 // Compress only JSON responses
 app.use(compress({ contentTypeFilter: /^application\/json/ }))
 ```
 
-Or pass a function for custom logic. The built-in `COMPRESSIBLE_CONTENT_TYPE_REGEX` is also exported so you can extend the default behavior:
+または、カスタムロジックのために関数を渡せます。 組み込みの `COMPRESSIBLE_CONTENT_TYPE_REGEX` もエクスポートされているので、デフォルトの挙動を拡張できます:
 
 ```ts
 import {
