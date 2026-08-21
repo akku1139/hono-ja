@@ -38,7 +38,7 @@ app.post(
 ```ts
 , (c) => {
   const { body } = c.req.valid('form')
-  // ... do something
+  // 何か処理をする...
   return c.json(
     {
       message: 'Created!',
@@ -63,7 +63,7 @@ const app = new Hono()
 app.post(
   '/testing',
   validator('json', (value, c) => {
-    // pass-through validator
+    // 何もせずそのまま受け渡すバリデータ
     return value
   }),
   (c) => {
@@ -76,7 +76,7 @@ app.post(
 テストは以下のように記述できます。
 
 ```ts
-// ❌ this will not work
+// ❌ これは動作しません
 const res = await app.request('/testing', {
   method: 'POST',
   body: JSON.stringify({ key: 'value' }),
@@ -84,7 +84,7 @@ const res = await app.request('/testing', {
 const data = await res.json()
 console.log(data) // {}
 
-// ✅ this will work
+// ✅ これは動作します
 const res = await app.request('/testing', {
   method: 'POST',
   body: JSON.stringify({ key: 'value' }),
@@ -102,12 +102,12 @@ console.log(data) // { key: 'value' }
 `Idempotency-Key` ヘッダをバリデートしたい場合、キーは `idempotency-key` のように指定する必要があります。
 
 ```ts
-// ❌ this will not work
+// ❌ これは動作しません
 app.post(
   '/api',
   validator('header', (value, c) => {
-    // idempotencyKey is always undefined
-    // so this middleware always return 400 as not expected
+    // idempotencyKey は常に undefined
+    // そのためこのミドルウェアは常に not expected として 400 を返す
     const idempotencyKey = value['Idempotency-Key']
 
     if (idempotencyKey == undefined || idempotencyKey === '') {
@@ -123,11 +123,11 @@ app.post(
   }
 )
 
-// ✅ this will work
+// ✅ これは動作します
 app.post(
   '/api',
   validator('header', (value, c) => {
-    // can retrieve the value of the header as expected
+    // 期待通りにヘッダの値を取得できる
     const idempotencyKey = value['idempotency-key']
 
     if (idempotencyKey == undefined || idempotencyKey === '') {
@@ -217,7 +217,7 @@ const route = app.post(
   }),
   (c) => {
     const { body } = c.req.valid('form')
-    // ... do something
+    // なにか処理をする...
     return c.json(
       {
         message: 'Created!',

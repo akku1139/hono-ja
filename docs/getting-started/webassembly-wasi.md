@@ -206,9 +206,9 @@ app.get('/hello', (c) => {
 
 fire(app)
 
-// Although we've called `fire()` with wasi HTTP configured for use above,
-// we still need to actually export the `wasi:http/incoming-handler` interface object,
-// as jco and componentize-js will be looking for the ES module export that matches the WASI interface.
+// 上記で wasi HTTP が設定されている `fire()` をコールしていますが、
+// 実際には `wasi:http/incoming-handler` インタフェースオブジェクトをエクスポートする必要があります
+// それは jco や componentize-js が WASI インタフェースにマッチしている ES module のエクスポートを検索しているからです。
 export { incomingHandler } from '@bytecodealliance/jco-std/wasi/0.2.6/http/adapters/hono/server'
 ```
 

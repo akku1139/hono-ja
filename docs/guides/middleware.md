@@ -10,13 +10,13 @@
 ミドルウェアの登録には `app.use` か `app.HTTP_METHOD` をハンドラと同じように登録できます。 この方法ではパスや HTTP メソッドを簡単に指定できます。
 
 ```ts
-// match any method, all routes
+// あらゆるメソッドと全てのルートにマッチする
 app.use(logger())
 
-// specify path
+// パスを指定する
 app.use('/posts/*', cors())
 
-// specify method and path
+// メソッドトパスを指定する
 app.post('/posts/*', basicAuth())
 ```
 
@@ -125,13 +125,13 @@ app.get(
 独自のミドルウェアを作成できます。
 
 ```ts
-// Custom logger
+// カスタムロガー
 app.use(async (c, next) => {
   console.log(`[${c.req.method}] ${c.req.url}`)
   await next()
 })
 
-// Add a custom header
+// カスタムヘッダを追加
 app.use('/message/*', async (c, next) => {
   await next()
   c.header('x-message', 'This is middleware!')
@@ -239,7 +239,7 @@ const app = new Hono()
   .use(authMiddleware)
   .use(dbMiddleware)
   .get('/', (c) => {
-    // Both `user` and `db` are available and type-safe
+    // `user` と `db` 両方が有効で型安全
     const user = c.var.user // { id: string; name: string }
     const db = c.var.db // { query: (sql: string) => Promise<unknown> }
     return c.json({ user })

@@ -480,14 +480,14 @@ const mw = createMiddleware(async (c, next) => {
 
 const app = new Hono()
 
-// handler uses the middleware
+// ハンドラはミドルウェアを使用します
 app.get('/foo', mw, (c) => {
-  const val = c.get('result') // ✅ val is a string and typed as such, as expected
+  const val = c.get('result') // ✅ val は文字列で、文字列に型づけされる。 期待どおり。
 })
 
-// handler doesn't use the middleware
+// ハンドラはミドルウェアを使用しない
 app.get('/bar', (c) => {
-  const val = c.get('result') // ❌ val is undefined but typed as a string, which can lead to runtime errors
+  const val = c.get('result') // ❌ val は undefined だが、文字列に型づけされる。 ランタイムエラーになる可能性がある。
 })
 ```
 

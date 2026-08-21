@@ -47,20 +47,7 @@ function check(file: string) {
       inCode = !inCode
       continue
     }
-    if (inCode) {
-      // コードブロック内は翻訳しない (コメントも原文のまま)
-      if (hasJapanese(raw)) {
-        issues.push({
-          file,
-          line: lineNo,
-          rule: 'japanese-in-code',
-          message:
-            'コードブロック内は翻訳しません。原文のコードのままにしてください (--fix でアップストリームから復元できます)',
-          text: raw.trim().slice(0, 80),
-        })
-      }
-      continue
-    }
+    // コードブロック内も翻訳されている場合は同じ翻訳ルールで検査する
     let line = raw
     if (!hasJapanese(line)) continue
 
@@ -191,32 +178,8 @@ function walk(dir: string): string[] {
 }
 
 // 軽微なフォーマット問題を自動修正する (--fix)
-// コードブロック内の日本語は、アップストリームとの行数が一致する場合に原文へ復元する
-function applyFixes(
-  file: string,
-  content: string,
-  ref: string | null
-): string | null {
-  let upstreamLines: string[] | null = null
-  if (ref) {
-    try {
-      const upstream = execFileSync(
-        'git',
-        ['show', `${ref}:${file}`],
-        {
-          encoding: 'utf8',
-          maxBuffer: 16 * 1024 * 1024,
-        }
-      )
-      const u = upstream.split('\n')
-      const l = content.split('\n')
-      // 行数が一致するときのみコードブロック復元に使用できる
-      if (u.length === l.length) upstreamLines = u
-    } catch {
-      // アップストリームに存在しない場合はスキップ
-    }
-  }
-
+// 本文・コードブロック内ともに同じルールで修正する (コードブロック内の翻訳も対象)
+function applyFixes(content: string): string | null {
   const KANA_RE = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]/
   const FULLWIDTH_MAP: Record<string, string> = {
     '！': '! ',
@@ -228,25 +191,8 @@ function applyFixes(
     '，': ', ',
     '．': '. ',
   }
-  let inCode = false
   let changed = false
-  const out = content.split('\n').map((raw, idx) => {
-    if (/^\s*```/.test(raw)) {
-      inCode = !inCode
-      return raw
-    }
-    if (inCode) {
-      // コードブロック内の日本語はアップストリームの行で復元
-      if (
-        upstreamLines &&
-        KANA_RE.test(raw) &&
-        !KANA_RE.test(upstreamLines[idx])
-      ) {
-        changed = true
-        return upstreamLines[idx]
-      }
-      return raw
-    }
+  const out = content.split('\n').map((raw) => {
     if (!KANA_RE.test(raw)) return raw
     let line = raw
     // 全角記号・全角数字を半角へ (〜 は保持)
@@ -271,8 +217,6 @@ function applyFixes(
           a !== undefined ? `${a} ${b}` : `${c} ${d}`
       )
     }
-    // 連続スペースを1つに
-    line = line.replace(/([^ \t]) {2,}/g, '$1 ')
     if (line !== raw) changed = true
     return line
   })
@@ -332,7 +276,7 @@ const files = expandTargets(targets.length ? targets : ['docs'])
 for (const f of files) {
   if (fixMode && !f.endsWith('.md')) continue
   if (fixMode) {
-    const fixed = applyFixes(f, readFileSync(f, 'utf8'), lineCountRef)
+    const fixed = applyFixes(readFileSync(f, 'utf8'))
     if (fixed !== null) {
       writeFileSync(f, fixed)
       console.log(`fixed: ${f}`)

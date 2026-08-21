@@ -140,13 +140,13 @@ Fastly Compute では、高速なプラットフォームリソースをバイ�
 import { buildFire } from '@fastly/hono-fastly-compute'
 
 const fire = buildFire({
-  siteData: 'KVStore:site-data', // I have a KV Store named "site-data"
+  siteData: 'KVStore:site-data', // "site-data" という名前の KV ストアがあります
 })
 
 const app = new Hono<{ Bindings: typeof fire.Bindings }>()
 
 app.put('/upload/:key', async (c, next) => {
-  // e.g., Access the KV Store
+  // 例. KV ストア にアクセスします
   const key = c.req.param('key')
   await c.env.siteData.put(key, c.req.body)
   return c.text(`Put ${key} successfully!`)
