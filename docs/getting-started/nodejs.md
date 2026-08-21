@@ -174,9 +174,7 @@ import { Hono } from 'hono'
 import { serve, type HttpBindings } from '@hono/node-server'
 // or `Http2Bindings` if you use HTTP2
 
-type Bindings = HttpBindings & {
-  /* ... */
-}
+type Bindings = HttpBindings & {/* ... */}
 
 const app = new Hono<{ Bindings: Bindings }>()
 

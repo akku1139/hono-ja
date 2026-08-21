@@ -252,15 +252,17 @@ export default function App() {
               width: 600px;
               height: 600px;
               position: relative;
-              ${isUpdating &&
-              css`
-                &:before {
-                  content: 'Loading...';
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                }
-              `}
+              ${
+                isUpdating &&
+                css`
+                  &:before {
+                    content: 'Loading...';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                  }
+                `
+              }
             `}
           ></div>
         )}

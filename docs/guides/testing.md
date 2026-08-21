@@ -66,7 +66,7 @@ test('POST /posts', async () => {
 })
 ```
 
- `POST /posts` に `JSON` データのリクエストを送り、次のようにします。
+`POST /posts` に `JSON` データのリクエストを送り、次のようにします。
 
 ```ts
 test('POST /posts', async () => {
@@ -83,7 +83,7 @@ test('POST /posts', async () => {
 })
 ```
 
- `POST /posts` に `multipart/form-data` データのリクエストを送り、次のようにします。
+`POST /posts` に `multipart/form-data` データのリクエストを送り、次のようにします。
 
 ```ts
 test('POST /posts', async () => {
