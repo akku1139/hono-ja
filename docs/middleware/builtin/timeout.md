@@ -1,6 +1,6 @@
-# Timeout Middleware
+# Timeout ミドルウェア
 
-The Timeout Middleware enables you to easily manage request timeouts in your application. It allows you to set a maximum duration for requests and optionally define custom error responses if the specified timeout is exceeded.
+Timeout Middleware を使うと、アプリケーション内のリクエストタイムアウトを簡単に管理できます。 リクエストの最大継続時間を設定し、指定されたタイムアウトを超えた場合にカスタムエラーレスポンスを定義することもできます。
 
 ## Import
 
@@ -9,11 +9,11 @@ import { Hono } from 'hono'
 import { timeout } from 'hono/timeout'
 ```
 
-## Usage
+## 使い方
 
-Here's how to use the Timeout Middleware with both default and custom settings:
+デフォルト設定とカスタム設定の両方を使った Timeout Middleware の使用方法は次の通りです:
 
-Default Settings:
+デフォルト設定:
 
 ```ts
 const app = new Hono()
@@ -28,7 +28,7 @@ app.get('/api/data', async (c) => {
 })
 ```
 
-Custom settings:
+カスタム設定:
 
 ```ts
 import { HTTPException } from 'hono/http-exception'
@@ -58,9 +58,9 @@ app.get('/api/long-process', async (c) => {
 
 ## Notes
 
-- The duration for the timeout can be specified in milliseconds. The middleware will automatically reject the promise and potentially throw an error if the specified duration is exceeded.
+- タイムアウトの時間はミリ秒で指定できます。 指定された時間を超えると、ミドルウェアは自動的に promise を reject し、場合によってはエラーをスローします。
 
-- The timeout middleware cannot be used with stream Thus, use `stream.close` and `setTimeout` together.
+- Timeout Middleware はストリームと併用できません。 そのため、 `stream.close` と `setTimeout` を組み合わせて使用してください。
 
 ```ts
 app.get('/sse', async (c) => {
@@ -95,4 +95,4 @@ app.get('/sse', async (c) => {
 
 ## Middleware Conflicts
 
-Be cautious about the order of middleware, especially when using error-handling or other timing-related middleware, as it might affect the behavior of this timeout middleware.
+エラー処理やその他のタイミング関連のミドルウェアを使用する場合は、この Timeout Middleware の挙動に影響を与える可能性があるため、ミドルウェアの順序に注意してください。

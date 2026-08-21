@@ -1,13 +1,13 @@
-# CSRF Protection
+# CSRF 保護
 
-This middleware protects against CSRF attacks by checking both the `Origin` header and the `Sec-Fetch-Site` header. The request is allowed if either validation passes.
+このミドルウェアは、 `Origin` ヘッダーと `Sec-Fetch-Site` ヘッダーの両方をチェックすることで、 CSRF 攻撃から保護します。 いずれかの検証に合格すれば、リクエストは許可されます。
 
-The middleware only validates requests that:
+ミドルウェアが検証するのは、次のようなリクエストのみです:
 
-- Use unsafe HTTP methods (not GET, HEAD, or OPTIONS)
-- Have content types that can be sent by HTML forms (`application/x-www-form-urlencoded`, `multipart/form-data`, or `text/plain`)
+- 安全でない HTTP メソッドを使用している (GET 、 HEAD 、 OPTIONS 以外)
+- HTML フォームで送信可能なコンテンツタイプを持っている (`application/x-www-form-urlencoded` 、 `multipart/form-data` 、 `text/plain`)
 
-Old browsers that do not send `Origin` headers, or environments that use reverse proxies to remove these headers, may not work well. In such environments, use other CSRF token methods.
+`Origin` ヘッダーを送信しない古いブラウザや、リバースプロキシでこれらのヘッダーを削除する環境では、うまく動作しない場合があります。 そのような環境では、他の CSRF トークン方式を使用してください。
 
 ## Import
 
@@ -16,7 +16,7 @@ import { Hono } from 'hono'
 import { csrf } from 'hono/csrf'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -71,35 +71,35 @@ app.use(
 )
 ```
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> origin: `string` | `string[]` | `Function`
 
-Specify allowed origins for CSRF protection.
+CSRF 保護で許可するオリジンを指定します。
 
-- **`string`**: Single allowed origin (e.g., `'https://example.com'`)
-- **`string[]`**: Array of allowed origins
-- **`Function`**: Custom handler `(origin: string, context: Context) => boolean` for flexible origin validation and bypass logic
+- **`string`**: 単一の許可オリジン (例: `'https://example.com'`)
+- **`string[]`**: 許可オリジンの配列
+- **`Function`**: 柔軟なオリジン検証とバイパスロジックのためのカスタムハンドラ `(origin: string, context: Context) => boolean`
 
-**Default**: Only same origin as the request URL
+**Default**: リクエスト URL と同じオリジンのみ
 
-The function handler receives the request's `Origin` header value and the request context, allowing for dynamic validation based on request properties like path, headers, or other context data.
+関数ハンドラは、リクエストの `Origin` ヘッダーの値とリクエストコンテキストを受け取ります。 これにより、パス、ヘッダー、その他のコンテキストデータなどのリクエストプロパティに基づいた動的な検証が可能になります。
 
 ### <Badge type="info" text="optional" /> secFetchSite: `string` | `string[]` | `Function`
 
-Specify allowed Sec-Fetch-Site header values for CSRF protection using [Fetch Metadata](https://web.dev/articles/fetch-metadata).
+[Fetch Metadata](https://web.dev/articles/fetch-metadata) を使用した CSRF 保護で許可する Sec-Fetch-Site ヘッダーの値を指定します。
 
-- **`string`**: Single allowed value (e.g., `'same-origin'`)
-- **`string[]`**: Array of allowed values (e.g., `['same-origin', 'none']`)
-- **`Function`**: Custom handler `(secFetchSite: string, context: Context) => boolean` for flexible validation
+- **`string`**: 単一の許可値 (例: `'same-origin'`)
+- **`string[]`**: 許可値の配列 (例: `['same-origin', 'none']`)
+- **`Function`**: 柔軟な検証のためのカスタムハンドラ `(secFetchSite: string, context: Context) => boolean`
 
-**Default**: Only allows `'same-origin'`
+**Default**: `'same-origin'` のみ許可
 
-Standard Sec-Fetch-Site values:
+標準の Sec-Fetch-Site の値:
 
-- `same-origin`: Request from same origin
-- `same-site`: Request from same site (different subdomain)
-- `cross-site`: Request from different site
-- `none`: Request not from a web page (e.g., browser address bar, bookmark)
+- `same-origin`: 同一オリジンからのリクエスト
+- `same-site`: 同一サイト (異なるサブドメイン) からのリクエスト
+- `cross-site`: 異なるサイトからのリクエスト
+- `none`: Web ページ以外からのリクエスト (例: ブラウザのアドレスバー、ブックマーク)
 
-The function handler receives the request's `Sec-Fetch-Site` header value and the request context, enabling dynamic validation based on request properties.
+関数ハンドラは、リクエストの `Sec-Fetch-Site` ヘッダーの値とリクエストコンテキストを受け取り、リクエストのプロパティに基づいた動的な検証を可能にします。

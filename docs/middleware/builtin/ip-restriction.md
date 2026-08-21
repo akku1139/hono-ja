@@ -1,6 +1,6 @@
-# IP Restriction Middleware
+# IP Restriction ミドルウェア
 
-IP Restriction Middleware is middleware that limits access to resources based on the IP address of the user.
+IP Restriction Middleware は、ユーザーの IP アドレスに基づいてリソースへのアクセスを制限するミドルウェアです。
 
 ## Import
 
@@ -9,9 +9,9 @@ import { Hono } from 'hono'
 import { ipRestriction } from 'hono/ip-restriction'
 ```
 
-## Usage
+## 使い方
 
-For your application running on Bun, if you want to allow access only from local, you can write it as follows. Specify the rules you want to deny in the `denyList` and the rules you want to allow in the `allowList`.
+Bun 上で動作するアプリケーションで、ローカルからのアクセスのみを許可したい場合は、次のように書けます。 拒否したいルールを `denyList` に、許可したいルールを `allowList` に指定します。
 
 ```ts
 import { Hono } from 'hono'
@@ -31,7 +31,7 @@ app.use(
 app.get('/', (c) => c.text('Hello Hono!'))
 ```
 
-Pass the `getConninfo` from the [ConnInfo helper](/docs/helpers/conninfo) appropriate for your environment as the first argument of `ipRestriction`. For example, for Deno, it would look like this:
+環境に適した [ConnInfo Helper](/docs/helpers/conninfo) の `getConninfo` を `ipRestriction` の第1引数として渡します。 例えば、 Deno の場合は次のようになります:
 
 ```ts
 import { getConnInfo } from 'hono/deno'
@@ -47,9 +47,9 @@ app.use(
 )
 ```
 
-## Rules
+## ルール
 
-Follow the instructions below for writing rules.
+ルールの書き方は以下の手順に従ってください。
 
 ### IPv4
 
@@ -63,9 +63,9 @@ Follow the instructions below for writing rules.
 - `::1/10` - CIDR Notation
 - `*` - ALL Addresses
 
-## Error handling
+## エラー処理
 
-To customize the error, return a `Response` in the third argument.
+エラーをカスタマイズするには、第3引数で `Response` を返します。
 
 ```ts
 app.use(
