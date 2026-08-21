@@ -1,7 +1,12 @@
 // CONTRIBUTING.md の翻訳ルールを検証する lint スクリプト
 //
-// 使い方: node ./scripts/translation-lint.ts [file ...]
-// ファイルが指定されない場合は docs/ 以下の .md をすべて検査します。
+// 使い方:
+//   node ./scripts/translation-lint.ts [file ...]
+//     ファイルが指定されない場合は docs/ 以下の .md をすべて検査します。
+//   node ./scripts/translation-lint.ts --line-count <remote> <branch> [file ...]
+//     アップストリーム (指定したリモートのブランチ) と行数が一致しないファイルを検出します。
+//     例: node ./scripts/translation-lint.ts --line-count upstream main
+import { execFileSync } from 'node:child_process'
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -73,8 +78,9 @@ function check(file: string) {
     }
 
     // 文章中の英単語の前後にはスペースを追加 (かな/漢字と英字が直接隣接してはならない)
+    // 数字は日本語文中でそのまま使うことが多いため対象外
     const m1 = line.match(
-      new RegExp(`${KANA}[A-Za-z0-9]|[A-Za-z0-9]${KANA}`)
+      new RegExp(`${KANA}[A-Za-z]|[A-Za-z]${KANA}`)
     )
     if (m1) {
       push(
@@ -99,18 +105,15 @@ function check(file: string) {
       }
     }
 
-    // 句点の後にはスペース (行末・コードプレースホルダ直前は不要)
+    // 句点の後にはスペース (行末・閉じ括弧類・プレースホルダ直前は不要)
     const noSpaceAfterPeriod = line.match(
-      new RegExp(`。(?=[^ \\t\\u0000\\u0001」）)\\]])`)
+      /。[^ \t\u0000\u0001」）)】\]]/
     )
     if (noSpaceAfterPeriod) {
-      const after = line.match(new RegExp(`。.`))
-      if (after && !/^。[ \t]/.test(after[0])) {
-        push(
-          'space-after-period',
-          '句点の後にはスペースを追加してください'
-        )
-      }
+      push(
+        'space-after-period',
+        '句点の後にはスペースを追加してください'
+      )
     }
 
     // インラインコードブロックの前後には半角スペース
@@ -158,8 +161,51 @@ function walk(dir: string): string[] {
   return out
 }
 
-const targets = process.argv.slice(2)
-for (const f of targets.length ? targets : walk('docs')) check(f)
+// アップストリームと行数を比較する (--line-count <remote> <branch>)
+function checkLineCount(file: string, ref: string) {
+  if (!file.endsWith('.md')) return
+  let upstream: string
+  try {
+    upstream = execFileSync('git', ['show', `${ref}:${file}`], {
+      encoding: 'utf8',
+      maxBuffer: 16 * 1024 * 1024,
+    })
+  } catch {
+    // アップストリームに存在しないファイルは比較対象外
+    return
+  }
+  const localLines = readFileSync(file, 'utf8').split('\n').length
+  const upstreamLines = upstream.split('\n').length
+  if (localLines !== upstreamLines) {
+    issues.push({
+      file,
+      line: 0,
+      rule: 'line-count',
+      message: `翻訳元と行数が一致しません (ローカル: ${localLines} 行 / 翻訳元: ${upstreamLines} 行)。翻訳は翻訳元と同じ行に収めてください`,
+      text: '',
+    })
+  }
+}
+
+const argv = process.argv.slice(2)
+let lineCountRef: string | null = null
+let targets = argv.slice()
+if (targets[0] === '--line-count') {
+  const remote = targets[1]
+  const branch = targets[2]
+  if (!remote || !branch) {
+    console.error(
+      '--line-count には <remote> と <branch> を指定してください'
+    )
+    process.exit(2)
+  }
+  lineCountRef = `${remote}/${branch}`
+  targets = targets.slice(3)
+}
+for (const f of targets.length ? targets : walk('docs')) {
+  if (lineCountRef) checkLineCount(f, lineCountRef)
+  check(f)
+}
 
 if (issues.length > 0) {
   for (const it of issues) {
