@@ -120,7 +120,7 @@ const data = body['foo']
 //    ^?
 ```
 
-`body['foo']` is `(string | File)`.
+`body['foo']` は `(string | File)` です。
 
 複数のファイルがアップロードされた場合、最後のファイルが取得されます。
 

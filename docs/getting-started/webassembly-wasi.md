@@ -328,14 +328,14 @@ WASI や WebAssembly コンポーネントなどについて学ぶためには�
 
 - [BytecodeAlliance Component Model book][cm-book]
 - [`jco` codebase][jco]
-  - [`jco` example components][jco-example-components] (in particular the [Hono example][jco-example-component-hono])
+  - [`jco` example components][jco-example-components] (特に [Hono の例][jco-example-component-hono])
 - [Jco book][jco-book]
 - [`componentize-js` codebase][componentize-js]
 - [StarlingMonkey codebase][sm]
 
 WebAssemblyコミュニティに、質問やコメントや貢献、あるいは問題の報告などで連絡を取るには：
 
-- [Bytecode Alliance Zulip](https://bytecodealliance.zulipchat.com) (consider posting in the [#jco channel](https://bytecodealliance.zulipchat.com/#narrow/channel/409526-jco))
+- [Bytecode Alliance Zulip](https://bytecodealliance.zulipchat.com) ([#jco チャンネル](https://bytecodealliance.zulipchat.com/#narrow/channel/409526-jco) への投稿がおすすめです)
 - [Jco repository](https://github.com/bytecodealliance/jco)
 - [componentize-js repository](https://github.com/bytecodealliance/componentize-js)
 

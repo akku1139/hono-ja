@@ -7,7 +7,7 @@ RPC 機能を使用すると、サーバとクライアント間で API の仕�
 ジェネリック引数として `AppType` を受け取ることで、 Hono クライアントは、バリデータで指定された入力の型と `c.json()` を使ってハンドラが返した出力の型の両方を推論することができます。
 
 > [!NOTE]
-RPC の型が monorepo で適切に動作するには、クライアントとサーバ両方の tsconfig.json ファイル内で、 `compilerOptions` に `"strict": true` を設定します。 [詳細はこちら](https://github.com/honojs/hono/issues/2270#issuecomment-2143745118)
+> RPC の型が monorepo で適切に動作するには、クライアントとサーバ両方の tsconfig.json ファイル内で、 `compilerOptions` に `"strict": true` を設定します。 [詳細はこちら](https://github.com/honojs/hono/issues/2270#issuecomment-2143745118)
 
 ## サーバ
 
@@ -37,7 +37,7 @@ const route = app.post(
 ```
 
 > [!TIP]
-> The [Standard Schema Validator](https://github.com/honojs/middleware/tree/main/packages/standard-validator) works as well, so you can use any Standard Schema library such as Valibot.
+> [Standard Schema Validator](https://github.com/honojs/middleware/tree/main/packages/standard-validator) も動作するので、 Valibot などの Standard Schema 互換のライブラリを使用できます。
 
 次に、クライアントに API を共有するために型をエクスポートします。
 
@@ -280,8 +280,7 @@ import { Hono, TypedResponse } from 'hono'
 
 declare module 'hono' {
   interface NotFoundResponse
-    extends Response,
-      TypedResponse<{ error: string }, 404, 'json'> {}
+    extends Response, TypedResponse<{ error: string }, 404, 'json'> {}
 }
 
 const app = new Hono()
@@ -404,7 +403,7 @@ const route = app.get(
 ```
 
 > [!NOTE]
-正規表現を使用しない基本的なパスパラメータは、スラッシュにマッチしません。 hc 関数を使用してスラッシュを含む `param` を渡す場合、サーバは意図したようにはルート処理しないかもしれません。正確なルート処理を強制するためには、 `encodeURIComponent` を使用してパラメータをエンコードすることが推奨されます。
+> 正規表現を使用しない基本的なパスパラメータは、スラッシュにマッチしません。 hc 関数を使用してスラッシュを含む `param` を渡す場合、サーバは意図したようにはルート処理しないかもしれません。正確なルート処理を強制するためには、 `encodeURIComponent` を使用してパラメータをエンコードすることが推奨されます。
 
 ## ヘッダ
 
@@ -472,7 +471,7 @@ abortController.abort()
 `$url()` を使用してエンドポイントにアクセスするための `URL` オブジェクトを取得できます。
 
 ::: warning
-動作させるためには、絶対 URL を渡さなければなりません。 相対 URLである  `/` を渡すと、次のようなエラーになります。
+動作させるためには、絶対 URL を渡さなければなりません。 相対 URLである `/` を渡すと、次のようなエラーになります。
 
 `Uncaught TypeError: Failed to construct 'URL': Invalid URL`
 
