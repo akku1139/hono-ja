@@ -1,22 +1,22 @@
-# JWT Authentication Helper
+# JWT 認証ヘルパー
 
-This helper provides functions for encoding, decoding, signing, and verifying JSON Web Tokens (JWTs). JWTs are commonly used for authentication and authorization purposes in web applications. This helper offers robust JWT functionality with support for various cryptographic algorithms.
+このヘルパーは、 JSON Web Token (JWT) のエンコード、デコード、署名、検証のための関数を提供します。 JWT は、 Web アプリケーションで認証や認可の目的で広く使われています。 このヘルパーは、様々な暗号化アルゴリズムをサポートする堅牢な JWT 機能を提供します。
 
 ## Import
 
-To use this helper, you can import it as follows:
+このヘルパーを使用するには、次のようにインポートします:
 
 ```ts
 import { decode, sign, verify } from 'hono/jwt'
 ```
 
 ::: info
-[JWT Middleware](/docs/middleware/builtin/jwt) also import the `jwt` function from the `hono/jwt`.
+[JWT ミドルウェア](/docs/middleware/builtin/jwt) も `hono/jwt` から `jwt` 関数をインポートします。
 :::
 
 ## `sign()`
 
-This function generates a JWT token by encoding a payload and signing it using the specified algorithm and secret.
+この関数は、ペイロードをエンコードし、指定されたアルゴリズムとシークレットで署名することで、 JWT トークンを生成します。
 
 ```ts
 sign(
@@ -27,7 +27,7 @@ sign(
 ): Promise<string>;
 ```
 
-### Example
+### 例
 
 ```ts
 import { sign } from 'hono/jwt'
@@ -41,25 +41,25 @@ const secret = 'mySecretKey'
 const token = await sign(payload, secret)
 ```
 
-### Options
+### オプション
 
 <br/>
 
 #### <Badge type="danger" text="required" /> payload: `unknown`
 
-The JWT payload to be signed. You can include other claims like in [Payload Validation](#payload-validation).
+署名される JWT のペイロードです。 [ペイロードの検証](#payload-validation) にあるような他のクレームを含めることができます。
 
 #### <Badge type="danger" text="required" /> secret: `string`
 
-The secret key used for JWT verification or signing.
+JWT の検証や署名に使用されるシークレットキーです。
 
 #### <Badge type="info" text="optional" /> alg: [AlgorithmTypes](#supported-algorithmtypes)
 
-The algorithm used for JWT signing or verification. The default is HS256.
+JWT の署名や検証に使用されるアルゴリズムです。 デフォルトは HS256 です。
 
 ## `verify()`
 
-This function checks if a JWT token is genuine and still valid. It ensures the token hasn't been altered and checks validity only if you added [Payload Validation](#payload-validation).
+この関数は、 JWT トークンが本物でまだ有効であるかを確認します。 トークンが改ざんされていないことを保証し、 [ペイロードの検証](#payload-validation) を追加した場合にのみ有効性をチェックします。
 
 ```ts
 verify(
@@ -72,7 +72,7 @@ verify(
 
 ```
 
-### Example
+### 例
 
 ```ts
 import { verify } from 'hono/jwt'
@@ -84,39 +84,39 @@ const decodedPayload = await verify(tokenToVerify, secretKey, 'HS256')
 console.log(decodedPayload)
 ```
 
-### Options
+### オプション
 
 <br/>
 
 #### <Badge type="danger" text="required" /> token: `string`
 
-The JWT token to be verified.
+検証対象の JWT トークンです。
 
 #### <Badge type="danger" text="required" /> secret: `string`
 
-The secret key used for JWT verification or signing.
+JWT の検証や署名に使用されるシークレットキーです。
 
 #### <Badge type="danger" text="required" /> alg: [AlgorithmTypes](#supported-algorithmtypes)
 
-The algorithm used for JWT signing or verification.
+JWT の署名や検証に使用されるアルゴリズムです。
 
 #### <Badge type="info" text="optional" /> issuer: `string | RegExp`
 
-The expected issuer used for JWT verification.
+JWT の検証に使用される期待される issuer です。
 
 #### <Badge type="info" text="optional" /> aud: `string | string[] | RegExp`
 
-The expected audience used for JWT verification. If this is set, the token must include an `aud` claim and at least one audience value must match.
+JWT の検証に使用される期待されるオーディエンスです。 これが設定されている場合、トークンは `aud` クレームを含んでいなければならず、少なくとも1つのオーディエンス値が一致する必要があります。
 
 ## `decode()`
 
-This function decodes a JWT token without performing signature verification. It extracts and returns the header and payload from the token.
+この関数は、署名の検証を行わずに JWT トークンをデコードします。 トークンからヘッダーとペイロードを抽出して返します。
 
 ```ts
 decode(token: string): { header: any; payload: any };
 ```
 
-### Example
+### 例
 
 ```ts
 import { decode } from 'hono/jwt'
@@ -131,45 +131,45 @@ console.log('Decoded Header:', header)
 console.log('Decoded Payload:', payload)
 ```
 
-### Options
+### オプション
 
 <br/>
 
 #### <Badge type="danger" text="required" /> token: `string`
 
-The JWT token to be decoded.
+デコード対象の JWT トークンです。
 
-> The `decode` function allows you to inspect the header and payload of a JWT token _**without**_ performing verification. This can be useful for debugging or extracting information from JWT tokens.
+> `decode` 関数を使うと、検証を行わ _**ずに**_ JWT トークンのヘッダーとペイロードを調査できます。 これは、デバッグや JWT トークンからの情報抽出に役立ちます。
 
-## Payload Validation
+## ペイロードの検証
 
-When verifying a JWT token, the following payload validations are performed:
+JWT トークンの検証時には、以下のペイロード検証が行われます:
 
-- `exp`: The token is checked to ensure it has not expired.
-- `nbf`: The token is checked to ensure it is not being used before a specified time.
-- `iat`: The token is checked to ensure it is not issued in the future.
-- `iss`: The token is checked to ensure it has been issued by a trusted issuer.
-- `aud`: The token is checked to ensure it is intended for an accepted audience when the `aud` verification parameter is set.
+- `exp`: トークンの有効期限が切れていないかチェックされます。
+- `nbf`: トークンが指定された時刻より前に使用されていないかチェックされます。
+- `iat`: トークンが未来に発行されていないかチェックされます。
+- `iss`: トークンが信頼できる issuer によって発行されたものかチェックされます。
+- `aud`: `aud` 検証パラメータが設定されている場合、トークンが許可されたオーディエンス向けのものであるかチェックされます。
 
-Please ensure that your JWT payload includes these fields, as an object, if you intend to perform these checks during verification.
+検証時にこれらのチェックを行いたい場合は、 JWT ペイロードにこれらのフィールドをオブジェクトとして含めてください。
 
-## Custom Error Types
+## カスタムエラー型
 
-The module also defines custom error types to handle JWT-related errors.
+このモジュールは、 JWT 関連のエラーを処理するためのカスタムエラー型も定義しています。
 
-- `JwtAlgorithmNotImplemented`: Indicates that the requested JWT algorithm is not implemented.
-- `JwtTokenInvalid`: Indicates that the JWT token is invalid.
-- `JwtTokenNotBefore`: Indicates that the token is being used before its valid date.
-- `JwtTokenExpired`: Indicates that the token has expired.
-- `JwtTokenIssuedAt`: Indicates that the "iat" claim in the token is incorrect.
-- `JwtTokenIssuer`: Indicates that the "iss" claim in the token is incorrect.
-- `JwtPayloadRequiresAud`: Indicates that an `aud` claim is required when `aud` verification is configured.
-- `JwtTokenAudience`: Indicates that the token's `aud` claim does not match the expected audience.
-- `JwtTokenSignatureMismatched`: Indicates a signature mismatch in the token.
+- `JwtAlgorithmNotImplemented`: リクエストされた JWT アルゴリズムが実装されていないことを示します。
+- `JwtTokenInvalid`: JWT トークンが無効であることを示します。
+- `JwtTokenNotBefore`: トークンが有効日より前に使用されていることを示します。
+- `JwtTokenExpired`: トークンの有効期限が切れていることを示します。
+- `JwtTokenIssuedAt`: トークン内の "iat" クレームが正しくないことを示します。
+- `JwtTokenIssuer`: トークン内の "iss" クレームが正しくないことを示します。
+- `JwtPayloadRequiresAud`: `aud` 検証が設定されている場合に `aud` クレームが必要であることを示します。
+- `JwtTokenAudience`: トークンの `aud` クレームが期待されるオーディエンスと一致しないことを示します。
+- `JwtTokenSignatureMismatched`: トークン内の署名の不一致を示します。
 
-## Supported AlgorithmTypes
+## サポートされている AlgorithmTypes
 
-The module supports the following JWT cryptographic algorithms:
+このモジュールは、以下の JWT 暗号化アルゴリズムをサポートしています:
 
 - `HS256`: HMAC using SHA-256
 - `HS384`: HMAC using SHA-384

@@ -35,7 +35,7 @@ const factory = createFactory<Env>()
 
 ### <Badge type="info" text="optional" /> defaultAppOptions: `HonoOptions`
 
-The default options to pass to the Hono application created by `createApp()`.
+`createApp()` で作成される Hono アプリケーションに渡されるデフォルトのオプションです。
 
 ```ts
 const factory = createFactory({

@@ -1,6 +1,6 @@
-# Method Not Allowed Middleware
+# Method Not Allowed ミドルウェア
 
-The Method Not Allowed middleware returns a `405 Method Not Allowed` response with an `Allow` header when the request path matches a registered route but the request method is not supported. Without this middleware, Hono returns a `404 Not Found` in that case.
+Method Not Allowed ミドルウェアは、リクエストパスが登録済みのルートにマッチするが、リクエストメソッドがサポートされていない場合に、 `Allow` ヘッダー付きの `405 Method Not Allowed` レスポンスを返します。 このミドルウェアがない場合、 Hono はそのケースで `404 Not Found` を返します。
 
 ## Import
 
@@ -9,7 +9,7 @@ import { Hono } from 'hono'
 import { methodNotAllowed } from 'hono/method-not-allowed'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -23,7 +23,7 @@ app.post('/hello', (c) => c.text('Posted!'))
 // Allow: GET, HEAD, POST
 ```
 
-You can customize the response with the `onMethodNotAllowed` option:
+`onMethodNotAllowed` オプションでレスポンスをカスタマイズできます:
 
 ```ts
 app.use(
@@ -37,12 +37,12 @@ app.use(
 )
 ```
 
-## Options
+## オプション
 
 ### <Badge type="danger" text="required" /> app: `Hono`
 
-The Hono instance used by the application. The middleware collects the allowed methods for each path from its registered routes.
+アプリケーションで使用される Hono のインスタンスです。 ミドルウェアは、登録されたルートから各パスに対して許可されたメソッドを収集します。
 
 ### <Badge type="info" text="optional" /> onMethodNotAllowed: `(c: Context, allowedMethods: string[]) => Response | Promise<Response>`
 
-Generates the response, including its `Allow` header. By default, the middleware returns a `405 Method Not Allowed` response with the `Allow` header set to the allowed methods.
+`Allow` ヘッダーを含むレスポンスを生成します。 デフォルトでは、ミドルウェアは許可されたメソッドが設定された `Allow` ヘッダー付きの `405 Method Not Allowed` レスポンスを返します。

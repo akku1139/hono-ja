@@ -8,7 +8,7 @@
 このセクションでは、 Cloudflare Workers と [Vitest] を使ってテストしましょう。
 
 ::: tip
-Cloudflare は、 [@cloudflare/vitest-pool-workers](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers) で [Vitest] を使用することを推奨しています。詳細については、Cloudflare Workers のドキュメント内の [Vitest integration](https://developers.cloudflare.com/workers/testing/vitest-integration/) を参照してください。
+Cloudflare は、 [@cloudflare/vitest-pool-workers](https://www.npmjs.com/package/@cloudflare/vitest-pool-workers) で [Vitest] を使用することを推奨しています。 詳細については、Cloudflare Workers のドキュメント内の [Vitest integration](https://developers.cloudflare.com/workers/testing/vitest-integration/) を参照してください。
 :::
 
 ## Request と Response
@@ -66,7 +66,7 @@ test('POST /posts', async () => {
 })
 ```
 
- `POST /posts` に `JSON` データのリクエストを送り、次のようにします。
+`POST /posts` に `JSON` データのリクエストを送り、次のようにします。
 
 ```ts
 test('POST /posts', async () => {
@@ -83,7 +83,7 @@ test('POST /posts', async () => {
 })
 ```
 
- `POST /posts` に `multipart/form-data` データのリクエストを送り、次のようにします。
+`POST /posts` に `multipart/form-data` データのリクエストを送り、次のようにします。
 
 ```ts
 test('POST /posts', async () => {
@@ -121,7 +121,7 @@ test('POST /posts', async () => {
 
 ## Env
 
-テスト用に `c.env` をセットするために、 `app.request` の第 3 パラメータとしてその値を渡すことができます。これは [Cloudflare Workers Bindings](https://hono.dev/getting-started/cloudflare-workers#bindings) のような値のモックを使用する際に有用です:
+テスト用に `c.env` をセットするために、 `app.request` の第 3 パラメータとしてその値を渡すことができます。 これは [Cloudflare Workers Bindings](https://hono.dev/getting-started/cloudflare-workers#bindings) のような値のモックを使用する際に有用です:
 
 ```ts
 const MOCK_ENV = {

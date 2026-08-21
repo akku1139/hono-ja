@@ -1,11 +1,11 @@
-# Context Storage Middleware
+# Context Storage ミドルウェア
 
-The Context Storage Middleware stores the Hono `Context` in the `AsyncLocalStorage`, to make it globally accessible.
+Context Storage Middleware は、 Hono の `Context` を `AsyncLocalStorage` に保存し、グローバルにアクセスできるようにします。
 
 ::: info
-**Note** This middleware uses `AsyncLocalStorage`. The runtime should support it.
+**Note** このミドルウェアは `AsyncLocalStorage` を使用します。 ランタイムがこれをサポートしている必要があります。
 
-**Cloudflare Workers**: To enable `AsyncLocalStorage`, add the [`nodejs_compat` or `nodejs_als` flag](https://developers.cloudflare.com/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml` file.
+**Cloudflare Workers**: `AsyncLocalStorage` を有効にするには、 `wrangler.toml` ファイルに [`nodejs_compat` または `nodejs_als` フラグ](https://developers.cloudflare.com/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) を追加してください。
 :::
 
 ## Import
@@ -19,9 +19,9 @@ import {
 } from 'hono/context-storage'
 ```
 
-## Usage
+## 使い方
 
-The `getContext()` will return the current Context object if the `contextStorage()` is applied as a middleware.
+`contextStorage()` がミドルウェアとして適用されている場合、 `getContext()` は現在の Context オブジェクトを返します。
 
 ```ts
 type Env = {
@@ -49,7 +49,7 @@ app.get('/', (c) => {
 })
 ```
 
-On Cloudflare Workers, you can access the bindings outside the handler.
+Cloudflare Workers では、ハンドラーの外部から Bindings にアクセスできます。
 
 ```ts
 type Env = {
@@ -69,7 +69,7 @@ const setKV = (value: string) => {
 
 ## tryGetContext
 
-`tryGetContext()` works like `getContext()`, but returns `undefined` instead of throwing an error when the context is not available:
+`tryGetContext()` は `getContext()` と同様に動作しますが、コンテキストが利用できない場合にエラーをスローする代わりに `undefined` を返します:
 
 ```ts
 const context = tryGetContext<Env>()

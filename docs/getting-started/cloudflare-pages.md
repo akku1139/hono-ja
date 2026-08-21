@@ -1,7 +1,7 @@
 # Cloudflare Pages
 
 ::: warning
-For new projects, Cloudflare now recommends using [Cloudflare Workers](/docs/getting-started/cloudflare-workers) instead of Cloudflare Pages. Workers supports static assets and offers a broader set of features. If you are starting a new full-stack application, see [Cloudflare Workers + Vite](/docs/getting-started/cloudflare-workers-vite), which is the successor to this Pages setup.
+新しいプロジェクトでは、 Cloudflare Pages の代わりに [Cloudflare Workers](/docs/getting-started/cloudflare-workers) の使用が推奨されています。 Workers は静的アセットをサポートし、より幅広い機能を提供します。 新しいフルスタックアプリケーションを始める場合は、この Pages セットアップの後継である [Cloudflare Workers + Vite](/docs/getting-started/cloudflare-workers-vite) を参照してください。
 :::
 
 [Cloudflare Pages](https://pages.cloudflare.com) はフルスタックアプリケーションのためのエッジプラットフォームです。

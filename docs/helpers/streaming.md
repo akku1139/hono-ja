@@ -47,7 +47,7 @@ app.get('/streamText', (c) => {
 
 ::: warning
 
-If you are developing an application for Cloudflare Workers, streaming may not work well on Wrangler. If so, add `Identity` for `Content-Encoding` header.
+Cloudflare Workers 向けのアプリケーションを開発している場合、ストリーミングは Wrangler 上ではうまく動作しないことがあります。 その場合は、 `Content-Encoding` ヘッダーに `Identity` を追加してください。
 
 ```ts
 app.get('/streamText', (c) => {

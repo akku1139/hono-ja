@@ -1,9 +1,9 @@
-# Body Limit Middleware
+# Body Limit ミドルウェア
 
-The Body Limit Middleware can limit the file size of the request body.
+Body Limit ミドルウェアは、リクエストボディのファイルサイズを制限できます。
 
-This middleware first uses the value of the `Content-Length` header in the request, if present.
-If it is not set, it reads the body in the stream and executes an error handler if it is larger than the specified file size.
+このミドルウェアは、まずリクエスト内の `Content-Length` ヘッダーの値を使用します (存在する場合)。
+設定されていない場合は、ボディをストリームとして読み込み、指定されたファイルサイズより大きい場合にエラーハンドラーを実行します。
 
 ## Import
 
@@ -12,7 +12,7 @@ import { Hono } from 'hono'
 import { bodyLimit } from 'hono/body-limit'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -35,21 +35,21 @@ app.post(
 )
 ```
 
-## Options
+## オプション
 
 ### <Badge type="danger" text="required" /> maxSize: `number`
 
-The maximum file size of the file you want to limit. The default is `100 * 1024` - `100kb`.
+制限したいファイルの最大ファイルサイズです。 デフォルトは `100 * 1024` - `100kb` です。
 
 ### <Badge type="info" text="optional" /> onError: `OnError`
 
-The error handler to be invoked if the specified file size is exceeded.
+指定されたファイルサイズを超えた場合に呼び出されるエラーハンドラーです。
 
-## Usage with Bun for large requests
+## Bun での大きなリクエストの扱い
 
-If the Body Limit Middleware is used explicitly to allow a request body larger than the default, it might be necessary to make changes to your `Bun.serve` configuration accordingly. [At the time of writing](https://github.com/oven-sh/bun/blob/f2cfa15e4ef9d730fc6842ad8b79fb7ab4c71cb9/packages/bun-types/bun.d.ts#L2191), `Bun.serve`'s default request body limit is 128MiB. If you set Hono's Body Limit Middleware to a value bigger than that, your requests will still fail and, additionally, the `onError` handler specified in the middleware will not be called. This is because `Bun.serve()` will set the status code to `413` and terminate the connection before passing the request to Hono.
+Body Limit ミドルウェアを、デフォルトよりも大きいリクエストボディを許可するために明示的に使用する場合、それに応じて `Bun.serve` の設定を変更する必要があるかもしれません。 [執筆時点](https://github.com/oven-sh/bun/blob/f2cfa15e4ef9d730fc6842ad8b79fb7ab4c71cb9/packages/bun-types/bun.d.ts#L2191) では、 `Bun.serve` のデフォルトのリクエストボディ上限は 128MiB です。 Hono の Body Limit ミドルウェアにそれより大きい値を設定しても、リクエストは失敗し続け、さらにミドルウェアで指定された `onError` ハンドラーも呼び出されません。 これは、 `Bun.serve()` がステータスコードを `413` に設定し、リクエストを Hono に渡す前に接続を切断するためです。
 
-If you want to accept requests larger than 128MiB with Hono and Bun, you need to set the limit for Bun as well:
+Hono と Bun で 128MiB より大きいリクエストを受け付けたい場合は、 Bun 側にも上限を設定する必要があります:
 
 ```ts
 export default {
@@ -59,7 +59,7 @@ export default {
 }
 ```
 
-or, depending on your setup:
+または、セットアップによっては次のようになります:
 
 ```ts
 Bun.serve({

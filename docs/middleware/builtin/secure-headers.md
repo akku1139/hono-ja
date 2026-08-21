@@ -1,6 +1,6 @@
-# Secure Headers Middleware
+# Secure Headers ミドルウェア
 
-Secure Headers Middleware simplifies the setup of security headers. Inspired in part by the capabilities of Helmet, it allows you to control the activation and deactivation of specific security headers.
+Secure Headers Middleware は、セキュリティヘッダーの設定を簡単にします。 Helmet の機能に一部インスピレーションを受けており、特定のセキュリティヘッダーの有効化と無効化を制御できます。
 
 ## Import
 
@@ -9,16 +9,16 @@ import { Hono } from 'hono'
 import { secureHeaders } from 'hono/secure-headers'
 ```
 
-## Usage
+## 使い方
 
-You can use the optimal settings by default.
+デフォルトで、最適な設定を使用できます。
 
 ```ts
 const app = new Hono()
 app.use(secureHeaders())
 ```
 
-You can suppress unnecessary headers by setting them to false.
+不要なヘッダーは、 `false` を設定することで抑制できます。
 
 ```ts
 const app = new Hono()
@@ -31,7 +31,7 @@ app.use(
 )
 ```
 
-You can override default header values using a string.
+デフォルトのヘッダー値は、文字列で上書きできます。
 
 ```ts
 const app = new Hono()
@@ -46,14 +46,14 @@ app.use(
 )
 ```
 
-## Supported Options
+## サポートされているオプション
 
-Each option corresponds to the following Header Key-Value pairs.
+各オプションは、次のヘッダーのキーと値のペアに対応しています。
 
 | Option                          | Header                                                                                                                                         | Value                                                                      | Default    |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------- |
 | -                               | X-Powered-By                                                                                                                                   | (Delete Header)                                                            | True       |
-| contentSecurityPolicy           | [Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)                                                               | Usage: [Setting Content-Security-Policy](#setting-content-security-policy) | No Setting |
+| contentSecurityPolicy           | [Content-Security-Policy](https://developer.mozilla.org/ja/docs/Web/HTTP/CSP)                                                                  | Usage: [Setting Content-Security-Policy](#setting-content-security-policy) | No Setting |
 | contentSecurityPolicyReportOnly | [Content-Security-Policy-Report-Only](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only)           | Usage: [Setting Content-Security-Policy](#setting-content-security-policy) | No Setting |
 | trustedTypes                    | [Trusted Types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/trusted-types)                               | Usage: [Setting Content-Security-Policy](#setting-content-security-policy) | No Setting |
 | requireTrustedTypesFor          | [Require Trusted Types For](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/require-trusted-types-for)       | Usage: [Setting Content-Security-Policy](#setting-content-security-policy) | No Setting |
@@ -61,23 +61,23 @@ Each option corresponds to the following Header Key-Value pairs.
 | crossOriginResourcePolicy       | [Cross-Origin-Resource-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy)                         | same-origin                                                                | True       |
 | crossOriginOpenerPolicy         | [Cross-Origin-Opener-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy)                             | same-origin                                                                | True       |
 | originAgentCluster              | [Origin-Agent-Cluster](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster)                                         | ?1                                                                         | True       |
-| referrerPolicy                  | [Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy)                                                   | no-referrer                                                                | True       |
+| referrerPolicy                  | [Referrer-Policy](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Referrer-Policy)                                                      | no-referrer                                                                | True       |
 | reportingEndpoints              | [Reporting-Endpoints](https://www.w3.org/TR/reporting-1/#header)                                                                               | Usage: [Setting Content-Security-Policy](#setting-content-security-policy) | No Setting |
 | reportTo                        | [Report-To](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)                                       | Usage: [Setting Content-Security-Policy](#setting-content-security-policy) | No Setting |
-| strictTransportSecurity         | [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)                               | max-age=15552000; includeSubDomains                                        | True       |
-| xContentTypeOptions             | [X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options)                                     | nosniff                                                                    | True       |
+| strictTransportSecurity         | [Strict-Transport-Security](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Strict-Transport-Security)                                  | max-age=15552000; includeSubDomains                                        | True       |
+| xContentTypeOptions             | [X-Content-Type-Options](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/X-Content-Type-Options)                                        | nosniff                                                                    | True       |
 | xDnsPrefetchControl             | [X-DNS-Prefetch-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control)                                     | off                                                                        | True       |
 | xDownloadOptions                | [X-Download-Options](https://learn.microsoft.com/en-us/archive/blogs/ie/ie8-security-part-v-comprehensive-protection#mime-handling-force-save) | noopen                                                                     | True       |
-| xFrameOptions                   | [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)                                                   | SAMEORIGIN                                                                 | True       |
+| xFrameOptions                   | [X-Frame-Options](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/X-Frame-Options)                                                      | SAMEORIGIN                                                                 | True       |
 | xPermittedCrossDomainPolicies   | [X-Permitted-Cross-Domain-Policies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Permitted-Cross-Domain-Policies)               | none                                                                       | True       |
-| xXssProtection                  | [X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection)                                                 | 0                                                                          | True       |
-| permissionPolicy                | [Permissions-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy)                                             | Usage: [Setting Permission-Policy](#setting-permission-policy)             | No Setting |
+| xXssProtection                  | [X-XSS-Protection](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/X-XSS-Protection)                                                    | 0                                                                          | True       |
+| permissionPolicy                | [Permissions-Policy](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Permissions-Policy)                                                | Usage: [Setting Permission-Policy](#setting-permission-policy)             | No Setting |
 
 ## Middleware Conflict
 
-Please be cautious about the order of specification when dealing with middleware that manipulates the same header.
+同じヘッダーを操作するミドルウェアを扱う場合は、指定の順序に注意してください。
 
-In this case, Secure-headers operates and the `x-powered-by` is removed:
+この場合、 Secure-headers が動作し、 `x-powered-by` は削除されます:
 
 ```ts
 const app = new Hono()
@@ -85,7 +85,7 @@ app.use(secureHeaders())
 app.use(poweredBy())
 ```
 
-In this case, Powered-By operates and the `x-powered-by` is added:
+この場合、 Powered-By が動作し、 `x-powered-by` は追加されます:
 
 ```ts
 const app = new Hono()
@@ -93,7 +93,7 @@ app.use(poweredBy())
 app.use(secureHeaders())
 ```
 
-## Setting Content-Security-Policy
+## Content-Security-Policy の設定
 
 ```ts
 const app = new Hono()
@@ -143,9 +143,9 @@ app.use(
 )
 ```
 
-### `nonce` attribute
+### `nonce` 属性
 
-You can add a [`nonce` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) to a `script` or `style` element by adding the `NONCE` imported from `hono/secure-headers` to a `scriptSrc` or `styleSrc`:
+`hono/secure-headers` からインポートした `NONCE` を `scriptSrc` または `styleSrc` に追加することで、 `script` または `style` 要素に [`nonce` 属性](https://developer.mozilla.org/ja/docs/Web/HTML/Global_attributes/nonce) を追加できます:
 
 ```tsx
 import { secureHeaders, NONCE } from 'hono/secure-headers'
@@ -182,7 +182,7 @@ app.get('/', (c) => {
 })
 ```
 
-If you want to generate the nonce value yourself, you can also specify a function as the following:
+nonce 値を自分で生成したい場合は、次のように関数を指定することもできます:
 
 ```tsx
 const app = new Hono<{
@@ -217,9 +217,9 @@ app.get('/', (c) => {
 })
 ```
 
-## Setting Permission-Policy
+## Permission-Policy の設定
 
-The Permission-Policy header allows you to control which features and APIs can be used in the browser. Here's an example of how to set it:
+Permission-Policy ヘッダーにより、ブラウザでどの機能や API が使用できるかを制御できます。 設定方法の例は次の通りです:
 
 ```ts
 const app = new Hono()

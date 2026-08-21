@@ -1,4 +1,4 @@
-# Client Components
+# クライアントコンポーネント
 
 `hono/jsx` はサーバサイドだけでなくクライアントサイドもサポートします。 このため、ブラウザで実行するインタラクティブな UI を生成することができます。 クライアントコンポーネントまたは `hono/jsx/dom` と呼んでいます。
 
@@ -79,7 +79,7 @@ hono/jsx/dom にはフックがあります。 これらは、 React と完全�
 
 ## `startViewTransition()` ファミリー
 
-`startViewTransition()` ファミリーは、 [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API) を簡単に扱うためのオリジナルのフックや関数があります。 以下の例では、どのように使用するかを示しています。
+`startViewTransition()` ファミリーは、 [View Transitions API](https://developer.mozilla.org/ja/docs/Web/API/View_Transitions_API) を簡単に扱うためのオリジナルのフックや関数があります。 以下の例では、どのように使用するかを示しています。
 
 ### 1. とてもシンプルな例
 
@@ -194,10 +194,10 @@ export default function App() {
 
 アニメーション中だけスタイルを変更したい場合、 `useViewTransition()` を使用することができます。 このフックは `[boolean, (callback: () => void) => void]` を返します。 これは `isUpdating` フラグや `startViewTransition()` 関数です。
 
-このフックを使用する際、コンポーネントは次のような２個所のタイミングで評価されます。
+このフックを使用する際、コンポーネントは次の2箇所のタイミングで評価されます。
 
-- `startViewTransition()` を呼び出すコールバックの内部
-- [`finish` promise が fulfilled になるとき](https://developer.mozilla.org/en-US/docs/Web/API/ViewTransition/finished)
+- `startViewTransition()` の呼び出しのコールバック内。
+- [the `finish` promise becomes fulfilled](https://developer.mozilla.org/ja/docs/Web/API/ViewTransition/finished)
 
 ```tsx
 import { useState, useViewTransition } from 'hono/jsx'
@@ -272,7 +272,7 @@ export default function App() {
 
 ## `hono/jsx/dom` ランタイム
 
-クライアントコンポーネント用の小さな JSX ランタイムがあります。 これを使用すると、 `hono/jsx` を使用するよりも小さくバンドルされた結果が返ります。 `tsconfig.json` で `hono/jsx/dom` を指定します。 Deno では、 deno.json を変更します。
+クライアントコンポーネント向けの小さな JSX ランタイムがあります。 これを使用すると、 `hono/jsx` を使用する場合よりも小さなバンドル結果になります。 `tsconfig.json` で `hono/jsx/dom` を指定してください。 Deno の場合は deno.json を修正してください。
 
 ```json
 {
@@ -283,7 +283,7 @@ export default function App() {
 }
 ```
 
-あるいは、 `vite.config.ts` の esbuild 変換オプション内で `hono/jsx/dom` を指定することができます。
+または、 `vite.config.ts` の esbuild transform オプションで `hono/jsx/dom` を指定することもできます。
 
 ```ts
 import { defineConfig } from 'vite'

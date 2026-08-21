@@ -1,6 +1,6 @@
-# Method Override Middleware
+# Method Override ミドルウェア
 
-This middleware executes the handler of the specified method, which is different from the actual method of the request, depending on the value of the form, header, or query, and returns its response.
+このミドルウェアは、フォーム、ヘッダー、クエリの値に応じて、リクエストの実際のメソッドとは異なる指定されたメソッドのハンドラーを実行し、そのレスポンスを返します。
 
 ## Import
 
@@ -9,7 +9,7 @@ import { Hono } from 'hono'
 import { methodOverride } from 'hono/method-override'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -23,11 +23,11 @@ app.delete('/posts', (c) => {
 })
 ```
 
-## For example
+## 例
 
-Since HTML forms cannot send a DELETE method, you can put the value `DELETE` in the property named `_method` and send it. And the handler for `app.delete()` will be executed.
+HTML フォームは DELETE メソッドを送信できないため、 `_method` という名前のプロパティに `DELETE` の値を入れて送信できます。 すると、 `app.delete()` のハンドラーが実行されます。
 
-The HTML form:
+HTML フォーム:
 
 ```html
 <form action="/posts" method="POST">
@@ -36,7 +36,7 @@ The HTML form:
 </form>
 ```
 
-The application:
+アプリケーション:
 
 ```ts
 import { methodOverride } from 'hono/method-override'
@@ -49,7 +49,7 @@ app.delete('/posts', () => {
 })
 ```
 
-You can change the default values or use the header value and query value:
+デフォルト値を変更したり、ヘッダー値やクエリ値を使用できます:
 
 ```ts
 app.use('/posts', methodOverride({ app, form: '_custom_name' }))
@@ -60,21 +60,21 @@ app.use(
 app.use('/posts', methodOverride({ app, query: '_method' }))
 ```
 
-## Options
+## オプション
 
 ### <Badge type="danger" text="required" /> app: `Hono`
 
-The instance of `Hono` is used in your application.
+アプリケーションで使用される `Hono` のインスタンスです。
 
 ### <Badge type="info" text="optional" /> form: `string`
 
-Form key with a value containing the method name.
-The default is `_method`.
+メソッド名を含む値を持つフォームのキーです。
+デフォルトは `_method` です。
 
 ### <Badge type="info" text="optional" /> header: `boolean`
 
-Header name with a value containing the method name.
+メソッド名を含む値を持つヘッダー名です。
 
 ### <Badge type="info" text="optional" /> query: `boolean`
 
-Query parameter key with a value containing the method name.
+メソッド名を含む値を持つクエリパラメータのキーです。

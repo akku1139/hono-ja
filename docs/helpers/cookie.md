@@ -1,6 +1,6 @@
-# Cookie Helper
+# Cookie ヘルパー
 
-The Cookie Helper provides an easy interface to manage cookies, enabling developers to set, parse, and delete cookies seamlessly.
+Cookie Helper は、クッキーを管理するための簡単なインターフェースを提供し、開発者がクッキーの設定、パース、削除をシームレスに行えるようにします。
 
 ## Import
 
@@ -17,9 +17,9 @@ import {
 } from 'hono/cookie'
 ```
 
-## Usage
+## 使い方
 
-### Regular cookies
+### 通常のクッキー
 
 ```ts
 app.get('/cookie', (c) => {
@@ -31,9 +31,9 @@ app.get('/cookie', (c) => {
 })
 ```
 
-### Signed cookies
+### 署名付きクッキー
 
-**NOTE**: Setting and retrieving signed cookies returns a Promise due to the async nature of the WebCrypto API, which is used to create HMAC SHA-256 signatures.
+**NOTE**: 署名付きクッキーの設定と取得は Promise を返します。 これは、 HMAC SHA-256 署名の作成に使用される WebCrypto API が非同期であるためです。
 
 ```ts
 app.get('/signed-cookie', (c) => {
@@ -53,11 +53,11 @@ app.get('/signed-cookie', (c) => {
 ```
 
 > [!NOTE]
-> `getSignedCookie` distinguishes two cases. A cookie that has a signature but fails verification returns `false`. A cookie that does not have a valid signature format is treated as not being a signed cookie at all and returns `undefined` — the same as when the cookie is not present. This rule applies both when retrieving a single cookie by name and when retrieving all signed cookies. Since both `false` and `undefined` are falsy, `if (!value)` handles both cases.
+> `getSignedCookie` は2つの場合を区別します。 署名はあるものの検証に失敗したクッキーは `false` を返します。 有効な署名形式を持たないクッキーは、そもそも署名付きクッキーとして扱われず、クッキーが存在しない場合と同様に `undefined` を返します。 このルールは、名前を指定して単一のクッキーを取得する場合も、すべての署名付きクッキーを取得する場合も適用されます。 `false` と `undefined` はどちらも falsy なので、 `if (!value)` で両方の場合を処理できます。
 
-### Cookie Generation
+### クッキーの生成
 
-`generateCookie` and `generateSignedCookie` functions allow you to create cookie strings directly without setting them in the response headers.
+`generateCookie` と `generateSignedCookie` 関数を使うと、レスポンスヘッダーに設定することなく、クッキー文字列を直接作成できます。
 
 #### `generateCookie`
 
@@ -98,9 +98,9 @@ const signedCookie = await generateSignedCookie(
 )
 ```
 
-**Note**: Unlike `setCookie` and `setSignedCookie`, these functions only generate the cookie strings. You need to manually set them in headers if needed.
+**Note**: `setCookie` や `setSignedCookie` とは異なり、これらの関数はクッキー文字列を生成するだけです。 必要に応じて、手動でヘッダーに設定する必要があります。
 
-## Options
+## オプション
 
 ### `setCookie` & `setSignedCookie`
 
@@ -115,7 +115,7 @@ const signedCookie = await generateSignedCookie(
 - prefix: `secure` | `'host'`
 - partitioned: `boolean`
 
-Example:
+例:
 
 ```ts
 // Regular cookies
@@ -153,7 +153,7 @@ await setSignedCookie(
 - secure: `boolean`
 - domain: `string`
 
-Example:
+例:
 
 ```ts
 deleteCookie(c, 'banana', {
@@ -163,17 +163,17 @@ deleteCookie(c, 'banana', {
 })
 ```
 
-`deleteCookie` returns the deleted value:
+`deleteCookie` は削除された値を返します:
 
 ```ts
 const deletedCookie = deleteCookie(c, 'delicious_cookie')
 ```
 
-## `__Secure-` and `__Host-` prefix
+## `__Secure-` と `__Host-` プレフィックス
 
-The Cookie helper supports `__Secure-` and `__Host-` prefixes for cookie names.
+Cookie Helper は、クッキー名に対する `__Secure-` と `__Host-` プレフィックスをサポートしています。
 
-If you want to verify if the cookie name has a prefix, specify the prefix option.
+クッキー名がプレフィックスを持つか検証したい場合は、 prefix オプションを指定してください。
 
 ```ts
 const securePrefixCookie = getCookie(c, 'yummy_cookie', 'secure')
@@ -193,7 +193,7 @@ const hostPrefixSignedCookie = await getSignedCookie(
 )
 ```
 
-Also, if you wish to specify a prefix when setting the cookie, specify a value for the prefix option.
+また、クッキーを設定する際にプレフィックスを指定したい場合は、 prefix オプションに値を指定してください。
 
 ```ts
 setCookie(c, 'delicious_cookie', 'macha', {
@@ -211,22 +211,22 @@ await setSignedCookie(
 )
 ```
 
-## Following the best practices
+## ベストプラクティスへの準拠
 
-A New Cookie RFC (a.k.a cookie-bis) and CHIPS include some best practices for Cookie settings that developers should follow.
+新しい Cookie RFC (いわゆる cookie-bis) と CHIPS には、開発者が従うべきクッキー設定のベストプラクティスがいくつか含まれています。
 
 - [RFC6265bis-13](https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-13)
-  - `Max-Age`/`Expires` limitation
-  - `__Host-`/`__Secure-` prefix limitation
+  - `Max-Age`/`Expires` の制限
+  - `__Host-`/`__Secure-` プレフィックスの制限
 - [CHIPS-01](https://www.ietf.org/archive/id/draft-cutler-httpbis-partitioned-cookies-01.html)
-  - `Partitioned` limitation
+  - `Partitioned` の制限
 
-Hono is following the best practices.
-The cookie helper will throw an `Error` when parsing cookies under the following conditions:
+Hono はこれらのベストプラクティスに従っています。
+Cookie Helper は、以下の条件でクッキーをパースする際に `Error` をスローします:
 
-- The cookie name starts with `__Secure-`, but `secure` option is not set.
-- The cookie name starts with `__Host-`, but `secure` option is not set.
-- The cookie name starts with `__Host-`, but `path` is not `/`.
-- The cookie name starts with `__Host-`, but `domain` is set.
-- The `maxAge` option value is greater than 400 days.
-- The `expires` option value is 400 days later than the current time.
+- クッキー名が `__Secure-` で始まるが、 `secure` オプションが設定されていない。
+- クッキー名が `__Host-` で始まるが、 `secure` オプションが設定されていない。
+- クッキー名が `__Host-` で始まるが、 `path` が `/` ではない。
+- クッキー名が `__Host-` で始まるが、 `domain` が設定されている。
+- `maxAge` オプションの値が400日より大きい。
+- `expires` オプションの値が現在時刻より400日後である。

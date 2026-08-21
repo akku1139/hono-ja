@@ -7,11 +7,11 @@ RPC 機能を使用すると、サーバとクライアント間で API の仕�
 ジェネリック引数として `AppType` を受け取ることで、 Hono クライアントは、バリデータで指定された入力の型と `c.json()` を使ってハンドラが返した出力の型の両方を推論することができます。
 
 > [!NOTE]
-RPC の型が monorepo で適切に動作するには、クライアントとサーバ両方の tsconfig.json ファイル内で、 `compilerOptions` に `"strict": true` を設定します。 [詳細はこちら](https://github.com/honojs/hono/issues/2270#issuecomment-2143745118)
+> RPC の型が monorepo で適切に動作するには、クライアントとサーバ両方の tsconfig.json ファイル内で、 `compilerOptions` に `"strict": true` を設定します。 [詳細はこちら](https://github.com/honojs/hono/issues/2270#issuecomment-2143745118)
 
 ## サーバ
 
-サーバ側でしなければならないことはバリデータを記述することで、変数 `route` を生成します。次のサンプルでは [Zod Validator](https://github.com/honojs/middleware/tree/main/packages/zod-validator) を使用します。
+サーバ側でしなければならないことはバリデータを記述することで、変数 `route` を生成します。 次のサンプルでは [Zod Validator](https://github.com/honojs/middleware/tree/main/packages/zod-validator) を使用します。
 
 ```ts{1}
 const route = app.post(
@@ -37,7 +37,7 @@ const route = app.post(
 ```
 
 > [!TIP]
-> The [Standard Schema Validator](https://github.com/honojs/middleware/tree/main/packages/standard-validator) works as well, so you can use any Standard Schema library such as Valibot.
+> [Standard Schema Validator](https://github.com/honojs/middleware/tree/main/packages/standard-validator) も動作するので、 Valibot などの Standard Schema 互換のライブラリを使用できます。
 
 次に、クライアントに API を共有するために型をエクスポートします。
 
@@ -92,7 +92,7 @@ const client = hc<AppType>('http://localhost:8787/', {
   },
 })
 
-// このリクエストは、セットしたあらゆるクッキーを含んでいます
+// This request will now include any cookies you might have set
 const res = await client.posts.$get({
   query: {
     id: '123',
@@ -161,9 +161,9 @@ type ResponseType200 = InferResponseType<
 >
 ```
 
-## グローバルレスポンス
+## Global Response
 
-Hono の RPC クライアントは、`app.onError()` や グローバルミドルウェアのようなグローバルのエラーハンドラから、自動的にレスポンスの型を推論しません。 全てのルートにグローバルなエラーレスポンス型をマージするために `ApplyGlobalResponse` 型ヘルパーを使用することができます。
+Hono RPC クライアントは、 `app.onError()` やグローバルミドルウェアのようなグローバルエラーハンドラからレスポンス型を自動的に推論しません。 `ApplyGlobalResponse` 型ヘルパーを使用すると、グローバルなエラーレスポンス型をすべてのルートにマージできます。
 
 ```ts
 import type { ApplyGlobalResponse } from 'hono/client'
@@ -182,7 +182,7 @@ type AppWithErrors = ApplyGlobalResponse<
 const client = hc<AppWithErrors>('http://localhost')
 ```
 
-クライアントは成功時とエラー時のレスポンス両方について知っています:
+これでクライアントは成功レスポンスとエラーレスポンスの両方を認識します:
 
 ```ts
 const res = await client.api.users.$get()
@@ -191,12 +191,12 @@ if (res.ok) {
   const data = await res.json() // { users: string[] }
 }
 
-// InferResponseType はグローバルエラー型を含んでいます
+// InferResponseType includes the global error type
 type ResType = InferResponseType<typeof client.api.users.$get>
 // { users: string[] } | { error: string }
 ```
 
-一度で複数のグローバルエラーステータスコードを定義することもできます:
+複数のグローバルなエラーステータスコードを一度に定義することもできます:
 
 ```ts
 type AppWithErrors = ApplyGlobalResponse<
@@ -210,7 +210,7 @@ type AppWithErrors = ApplyGlobalResponse<
 
 ## Not Found
 
-クライアントを使用したい場合、 Not Found レスポンスを返すのに `c.notFound()` を使用すべきではありません。クライアントがサーバから取得するデータは、正しく推論することができません。
+クライアントを使用したい場合、 Not Found レスポンスを返すのに `c.notFound()` を使用すべきではありません。 クライアントがサーバから取得するデータを正しく推論できなくなります。
 
 ```ts
 // server.ts
@@ -248,7 +248,7 @@ const res = await client.posts[':id'].$get({
 const data = await res.json() // 🙁 data is unknown
 ```
 
-`c.json()` を使用して、Not Found レスポンスとしてステータスコードを指定してください。
+Not Found レスポンスには `c.json()` を使用し、ステータスコードを指定してください。
 
 ```ts
 export const routes = new Hono().get(
@@ -272,7 +272,7 @@ export const routes = new Hono().get(
 )
 ```
 
-あるいは、 `NotFoundResponse` インタフェースを継承したモジュール拡張を使用することができます。 これを使用すると、 `c.notFound()` が型レスポンスを返すことができます:
+または、モジュール拡張を使って `NotFoundResponse` インターフェースを拡張できます。 これにより、 `c.notFound()` が型付きのレスポンスを返せるようになります:
 
 ```ts
 // server.ts
@@ -297,11 +297,11 @@ const app = new Hono()
 export type AppType = typeof app
 ```
 
-クライアントは、 404 レスポンス型を正しく推論します。
+これでクライアントは 404 レスポンスの型を正しく推論できるようになります。
 
 ## パスパラメータ
 
-パスパラメータやクエリ値を含んだルートを処理することもできます。
+パスパラメータやクエリ値を含むルートも扱えます。
 
 ```ts
 const route = app.get(
@@ -309,7 +309,7 @@ const route = app.get(
   zValidator(
     'query',
     z.object({
-      page: z.coerce.number().optional(), // 強制的に数値に変換
+      page: z.coerce.number().optional(), // coerce to convert to number
     })
   ),
   (c) => {
@@ -322,9 +322,9 @@ const route = app.get(
 )
 ```
 
-たとえ元の値が異なる型であったとしても、パスパラメータやクエリ値はどちらも、 `string` として渡さ**なければなりません**。
+パスパラメータとクエリ値は、実際の値が異なる型であっても **必ず** `string` として渡す必要があります。
 
-`param` でパスに含ませたい文字列を、 `query` でクエリ値として含ませたい文字列を指定します。
+パスに含めたい文字列は `param` で、クエリ値は `query` で指定します。
 
 ```ts
 const res = await client.posts[':id'].$get({
@@ -332,14 +332,14 @@ const res = await client.posts[':id'].$get({
     id: '123',
   },
   query: {
-    page: '1', // `string` だがバリデータで `number` に変換される
+    page: '1', // `string`, converted by the validator to `number`
   },
 })
 ```
 
-### 複数パラメータ
+### 複数のパラメータ
 
-複数パラメータを使ってルートを処理します。
+複数のパラメータを持つルートを扱います。
 
 ```ts
 const route = app.get(
@@ -360,7 +360,7 @@ const route = app.get(
 )
 ```
 
-パスにパラメータを指定するために複数の `['']` を追加します。
+パス内のパラメータを指定するには `['']` を複数追加します。
 
 ```ts
 const res = await client.posts[':postId'][':authorId'].$get({
@@ -374,7 +374,7 @@ const res = await client.posts[':postId'][':authorId'].$get({
 
 ### スラッシュを含める
 
-`hc` 関数は `param` の値を URL エンコードしません。パラメータにスラッシュを含めるには、[正規表現](/docs/api/routing#regexp)を使用します。
+`hc` 関数は `param` の値を URL エンコードしません。 パラメータにスラッシュを含めるには、[正規表現](/docs/api/routing#regexp) を使用してください。
 
 ```ts
 // client.ts
@@ -404,11 +404,11 @@ const route = app.get(
 ```
 
 > [!NOTE]
-正規表現を使用しない基本的なパスパラメータは、スラッシュにマッチしません。 hc 関数を使用してスラッシュを含む `param` を渡す場合、サーバは意図したようにはルート処理しないかもしれません。正確なルート処理を強制するためには、 `encodeURIComponent` を使用してパラメータをエンコードすることが推奨されます。
+> 正規表現を使用しない基本的なパスパラメータは、スラッシュにマッチしません。 hc 関数を使用してスラッシュを含む `param` を渡す場合、サーバは意図した通りにルーティングしない可能性があります。 正しいルーティングを保証するには、 `encodeURIComponent` を使用してパラメータをエンコードすることが推奨されます。
 
-## ヘッダ
+## ヘッダー
 
-リクエストにヘッダを追加することができます。
+リクエストにヘッダーを追加できます。
 
 ```ts
 const res = await client.search.$get(
@@ -424,7 +424,7 @@ const res = await client.search.$get(
 )
 ```
 
-全てのリクエストに共通のヘッダを追加するには、 `hc` 関数の引数に指定します。
+すべてのリクエストに共通のヘッダーを追加するには、 `hc` 関数の引数として指定します。
 
 ```ts
 const client = hc<AppType>('/api', {
@@ -436,7 +436,7 @@ const client = hc<AppType>('/api', {
 
 ## `init` オプション
 
-`init` オプションとしてリクエストに fetch の `RequestInit` オブジェクトを渡すことができます。 以下はリクエストを中止する例です。
+fetch の `RequestInit` オブジェクトを `init` オプションとしてリクエストに渡せます。 以下はリクエストを中止する例です。
 
 ```ts
 import { hc } from 'hono/client'
@@ -464,24 +464,24 @@ abortController.abort()
 ```
 
 ::: info
-`init` で定義される `RequestInit` オブジェクトは最高の優先度があります。 `body | method | headers` のような他のオプションでセットされる内容をオーバーライドするために使用されます。
+`init` で定義された `RequestInit` オブジェクトが最も高い優先度を持ちます。 `body | method | headers` などの他のオプションで設定されたものを上書きするために使用できます。
 :::
 
 ## `$url()`
 
-`$url()` を使用してエンドポイントにアクセスするための `URL` オブジェクトを取得できます。
+`$url()` を使うと、エンドポイントにアクセスするための `URL` オブジェクトを取得できます。
 
 ::: warning
-動作させるためには、絶対 URL を渡さなければなりません。 相対 URLである  `/` を渡すと、次のようなエラーになります。
+動作させるためには、絶対 URL を渡さなければなりません。 相対 URL である `/` を渡すと、次のようなエラーになります。
 
 `Uncaught TypeError: Failed to construct 'URL': Invalid URL`
 
 ```ts
-// ❌ エラーをスローするでしょう
+// ❌ Will throw error
 const client = hc<AppType>('/')
 client.api.post.$url()
 
-// ✅ 期待通りに動作するでしょう
+// ✅ Will work as expected
 const client = hc<AppType>('http://localhost:8787/')
 client.api.post.$url()
 ```
@@ -506,9 +506,9 @@ url = client.api.posts[':id'].$url({
 console.log(url.pathname) // `/api/posts/123`
 ```
 
-### 型安全な URL
+### Typed URL
 
-より正確な URL の型を取得するために、 `hc` に2 つ目の型引数としてベース URL を渡すことができます:
+`hc` の第2型パラメータとしてベース URL を渡すと、より正確な URL 型を得られます:
 
 ```ts
 const client = hc<typeof route, 'http://localhost:8787'>(
@@ -516,15 +516,15 @@ const client = hc<typeof route, 'http://localhost:8787'>(
 )
 
 const url = client.api.posts.$url()
-// url は正確な型情報(プロトコル, ホスト, パスを含む)
-// をもった型安全な URL です
+// url is TypedURL with precise type information
+// including protocol, host, and path
 ```
 
-SWR のようなライブラリに対して型安全なキーとして URL を使用したいときに有用です。
+SWR のようなライブラリで URL を型安全なキーとして使用したい場合に便利です。
 
 ## `$path()`
 
-`$path()` は `$url()` と同じですが、 `URL` オブジェクトの代わりにパス文字列を返します。 `$url()` とは違って、ベース URL オリジンを含みません。 そのため、`hc` に渡すベース URL に関係なく動作します。
+`$path()` は `$url()` と似ていますが、 `URL` オブジェクトの代わりにパス文字列を返します。 `$url()` とは異なりベース URL のオリジンを含まないため、 `hc` に渡すベース URL に関係なく動作します。
 
 ```ts
 const route = app
@@ -544,7 +544,7 @@ path = client.api.posts[':id'].$path({
 console.log(path) // `/api/posts/123`
 ```
 
-クエリパラメータも渡すことができます:
+クエリパラメータも渡せます:
 
 ```ts
 const path = client.api.posts.$path({
@@ -556,9 +556,9 @@ const path = client.api.posts.$path({
 console.log(path) // `/api/posts?page=1&limit=10`
 ```
 
-## ファイルのアップロード
+## ファイルアップロード
 
-フォームのボディを使用してファイルをアップロードできます:
+フォームボディを使ってファイルをアップロードできます:
 
 ```ts
 // client
@@ -587,9 +587,9 @@ const route = app.put(
 
 ## カスタム `fetch` メソッド
 
-カスタム `fetch` メソッドをセットすることができます。
+カスタム `fetch` メソッドを設定できます。
 
-以下の Cloudflare Worker 用のサンプルスクリプトでは、サービスにバインドされた `fetch` メソッドがデフォルトの `fetch` の代わりに使用されています。
+以下の Cloudflare Worker 向けスクリプトの例では、デフォルトの `fetch` の代わりに Service Bindings の `fetch` メソッドを使用しています。
 
 ```toml
 # wrangler.toml
@@ -607,7 +607,7 @@ const client = hc<CreateProfileType>('http://localhost', {
 
 ## カスタムクエリシリアライザ
 
-`buildSearchParams` オプションを使用して、クエリパラメータがどのようにシリアライズされるかをカスタマイズすることができます。 配列や他のカスタム形式用にブラケット記法が必要なときに有用です:
+`buildSearchParams` オプションを使うと、クエリパラメータのシリアライズ方法をカスタマイズできます。 配列にブラケット記法が必要な場合や、その他のカスタムフォーマットが必要な場合に便利です:
 
 ```ts
 const client = hc<AppType>('http://localhost', {
@@ -628,9 +628,9 @@ const client = hc<AppType>('http://localhost', {
 })
 ```
 
-## 推論
+## Infer
 
-リクエストされたオブジェクトの型や返されるオブジェクトの型を知るために `InferRequestType` や `InferResponseType` を使用します。
+`InferRequestType` と `InferResponseType` を使用して、リクエストされるオブジェクトの型と返されるオブジェクトの型を知ることができます。
 
 ```ts
 import type { InferRequestType, InferResponseType } from 'hono/client'
@@ -643,25 +643,25 @@ type ReqType = InferRequestType<typeof $post>['form']
 type ResType = InferResponseType<typeof $post>
 ```
 
-## 型安全なヘルパーを使用してレスポンスを解析する
+## 型安全なヘルパーによるレスポンスのパース
 
-型安全に `hc` からのレスポンスを簡単に解析するために `parseResponse()` ヘルパーを使用できます。
+`parseResponse()` ヘルパーを使用すると、 `hc` からの Response を型安全に簡単にパースできます。
 
 ```ts
 import { parseResponse, DetailedError } from 'hono/client'
 
-// result は解析されたレスポンスボディ (Content-Type に基づいて自動的に解析されます) を含みます
+// result contains the parsed response body (automatically parsed based on Content-Type)
 const result = await parseResponse(client.hello.$get()).catch(
   (e: DetailedError) => {
     console.error(e)
   }
 )
-// レスポンスが OK でない場合、 parseResponse は自動的にエラーをスローします
+// parseResponse automatically throws an error if response is not ok
 ```
 
-## SWR を使用する
+## SWR の使用
 
-[SWR](https://swr.vercel.app) のような React のフックライブラリを使用することもできます。
+[SWR](https://swr.vercel.app) のような React Hook ライブラリも使用できます。
 
 ```tsx
 import useSWR from 'swr'
@@ -697,10 +697,10 @@ const App = () => {
 export default App
 ```
 
-## より大規模なアプリケーションで RPC を使用する
+## 大規模アプリケーションでの RPC の使用
 
-より大規模なアプリケーションでは、 [Building a larger application](/docs/guides/best-practices#building-a-larger-application) で述べられている例のように、推論結果の型に注意が必要です。
-このための簡単な方法は、ハンドラをチェーンすることです。 そうすることで型が常に推論されます。
+[大規模アプリケーションの構築](/docs/guides/best-practices#building-a-larger-application) で述べたような大規模なアプリケーションの場合は、型の推論に注意する必要があります。
+簡単な方法は、常に型が推論されるようにハンドラをチェーンすることです。
 
 ```ts
 // authors.ts
@@ -726,7 +726,7 @@ const app = new Hono()
 export default app
 ```
 
-通常通りに、サブルータをインポートすることができます。 ハンドラをチェーンしていることを確認します。 この場合、アプリケーションのトップレベルなので、エクスポートしたい型になります。
+その後、通常通りサブルーターをインポートし、それらのハンドラもチェーンしてください。 この場合これがアプリのトップレベルであり、エクスポートしたい型になります。
 
 ```ts
 // index.ts
@@ -742,15 +742,15 @@ export default app
 export type AppType = typeof routes
 ```
 
-登録された AppType を使用して新しいクライアントを生成することができます。 普通にそのクライアントを使用します。
+これで、登録された AppType を使用して新しいクライアントを作成し、通常通り使用できます。
 
 ## 既知の問題
 
 ### IDE のパフォーマンス
 
-RPC を使用する際に、より多くのルートがあると、 IDE はより遅くなります。 主な理由の一つは、アプリケーションの型を推論するために大量の型インスタンスが実行されるためです
+RPC を使用する場合、ルートが多くなるほど IDE は遅くなります。 主な原因の1つは、アプリの型を推論するために大量の型インスタンス化が実行されることです。
 
-たとえば、次のようなルートを持っているとします:
+例えば、アプリに次のようなルートがあるとします:
 
 ```ts
 // app.ts
@@ -771,38 +771,38 @@ export const app = Hono<BlankEnv, BlankSchema, '/'>().get<
 >('foo/:id', (c) => c.json({ ok: true }, 200))
 ```
 
-これはシングルルートの型インスタンスです。 ユーザは手動でこれらの型引数を記述する必要がない（これはよいことですが）、一方で型インスタンスは多くの時間を消費することが知られています。 IDE で使用されている `tsserver` は、アプリケーションを使用するたびに、時間のかかる処理をします。 多くのルートがある場合、 IDE は大幅に遅くなる可能性があります。
+これはシングルルートの型インスタンスです。 ユーザは手動でこれらの型引数を記述する必要がない (これはよいことですが) が、一方で型インスタンスは多くの時間を消費することが知られています。 IDE で使用されている `tsserver` は、アプリケーションを使用するたびに、時間のかかる処理をします。 多くのルートがある場合、 IDE は大幅に遅くなる可能性があります。
 
-しかし、この問題を軽減するためのいくつかのヒントがあります
+ただし、この問題を緩和するためのヒントがいくつかあります。
 
-#### Hono のバージョンのミスマッチ
+#### Hono のバージョンの不一致
 
-バックエンドがフロントエンドと分割されており、それぞれが異なるディレクトリにある場合、 Hono のバージョンがマッチしていることを確認する必要があります。 バックエンドでは Hono はあるバージョンを使用していて、フロントエンドでは別のバージョンを使用している場合、_型インスタンスが極端に深く無限にループする_ という問題に直面します。
+バックエンドがフロントエンドから分離され、別のディレクトリにある場合は、 Hono のバージョンが一致していることを確認する必要があります。 バックエンドとフロントエンドで異なる Hono のバージョンを使用すると、 "_Type instantiation is excessively deep and possibly infinite_" のような問題に遭遇します。
 
 ![](https://github.com/user-attachments/assets/e4393c80-29dd-408d-93ab-d55c11ccca05)
 
-#### TypeScript のプロジェクト参照
+#### TypeScript プロジェクト参照
 
-[Hono のバージョンのミスマッチ](#hono-version-mismatch) のケースと同様に、バックエンドとフロントエンドが分割されている場合に起きる問題に直面します。 バックエンド (たとえば `AppType`) からフロントエンド上のコードにアクセスしたい場合、[プロジェクト参照](https://www.typescriptlang.org/docs/handbook/project-references.html) を使用する必要があります。 TypeScript のプロジェクト参照を使用すると、ある TypeScript のコードが、別の TypeScript のコードにアクセスしたり、使用したりすることができます。 _(ソース: [Hono RPC と TypeScript のプロジェクト参照](https://catalins.tech/hono-rpc-in-monorepos/))_
+[Hono のバージョンの不一致](#hono-version-mismatch) の場合と同様に、バックエンドとフロントエンドが分離していると問題に遭遇します。 フロントエンドからバックエンドのコード (例えば `AppType`) にアクセスしたい場合は、[プロジェクト参照](https://www.typescriptlang.org/docs/handbook/project-references.html) を使用する必要があります。 TypeScript のプロジェクト参照により、ある TypeScript コードベースが別の TypeScript コードベースのコードにアクセスして使用できるようになります。 _(出典: [Hono RPC And TypeScript Project References](https://catalins.tech/hono-rpc-in-monorepos/))_
 
-#### 事前にコンパイルする (推奨)
+#### 使用前にコードをコンパイルする (推奨)
 
-`tsc` は、コンパイル時に型インスタンスのような重いタスクを処理することができます。 `tsserver` は、使用するたび毎にすべての型引数をインスタンス化する必要がありません。 このように IDE はかなり速くなります!
+`tsc` は型インスタンス化のような重い処理をコンパイル時に行えます! そうすれば、 `tsserver` は使用するたびにすべての型引数をインスタンス化する必要がありません。 IDE がかなり速くなります!
 
-サーバアプリケーションを含むクライアントをコンパイルすることは、ベストパフォーマンスを与えてくれます。 プロジェクトで次のコードを記述します:
+サーバーアプリを含むクライアントをコンパイルすると、最高のパフォーマンスが得られます。 プロジェクトに次のコードを置いてください:
 
 ```ts
 import { app } from './app'
 import { hc } from 'hono/client'
 
-// これは、コンパイル時に型を計算するためのトリックです。
+// this is a trick to calculate the type when compiling
 export type Client = ReturnType<typeof hc<typeof app>>
 
 export const hcWithType = (...args: Parameters<typeof hc>): Client =>
   hc<typeof app>(...args)
 ```
 
-コンパイル後、すでに計算された型をクライアントが取得するために `hc` の代わりに `hcWithType` を使用することができます。
+コンパイル後、 `hc` の代わりに `hcWithType` を使用することで、型が既に計算済みのクライアントを取得できます。
 
 ```ts
 const client = hcWithType('http://localhost:8787/')
@@ -814,13 +814,13 @@ const res = await client.posts.$post({
 })
 ```
 
-プロジェクトが ノリポである場合、このソリューションはよくフィットします。 [`turborepo`](https://turbo.build/repo/docs) のようなツールを使用すると、サーバプロジェクトとクライアントプロジェクトを簡単に分割することができ、両者の間の依存関係を管理する面でよりよい結合を得ることができます。 ここに、[動作するサンプル](https://github.com/m-shaka/hono-rpc-perf-tips-example)があります。
+プロジェクトが monorepo であれば、この解決策はよく合います。 [`turborepo`](https://turbo.build/repo/docs) のようなツールを使用すると、サーバープロジェクトとクライアントプロジェクトを簡単に分離でき、それらの間の依存関係を管理する統合性が向上します。 [動作するサンプル](https://github.com/m-shaka/hono-rpc-perf-tips-example) はこちらです。
 
-`concurrently` や `npm-run-all` のようなツールを使うことで手動でビルドプロセスの調和を取ることもできます。
+また、 `concurrently` や `npm-run-all` のようなツールを使って、ビルドプロセスを手動で連携させることもできます。
 
-#### 手動で型引数を指定する
+#### 型引数を手動で指定する
 
-これはかなりやっかいですが、型インスタンス化を避けるために手動で型引数を指定することができます。
+少し面倒ですが、型引数を手動で指定することで型インスタンス化を回避できます。
 
 ```ts
 const app = new Hono().get<'foo/:id'>('foo/:id', (c) =>
@@ -828,11 +828,11 @@ const app = new Hono().get<'foo/:id'>('foo/:id', (c) =>
 )
 ```
 
-たくさんのルートがある場合に多くの時間と労力がかかる一方で、単一の型引数だけを指定することで、パフォーマンスに違いがあります。
+たった1つの型引数を指定するだけでもパフォーマンスに違いが出ますが、多くのルートがある場合は多くの時間と労力がかかるかもしれません。
 
-#### アプリケーションとクライアントを複数のファイルに分割する
+#### アプリとクライアントを複数のファイルに分割する
 
-[より大規模なアプリケーションで RPC を使用する](#using-rpc-with-larger-applications) に記述されているように、アプリケーションを複数のアプリケーションに分割することができます。 それぞれのアプリケーション毎にクライアントを生成することができます:
+[大規模アプリケーションでの RPC の使用](#using-rpc-with-larger-applications) で説明したように、アプリを複数のアプリに分割できます。 アプリごとにクライアントを作成することもできます:
 
 ```ts
 // authors-cli.ts
@@ -848,4 +848,4 @@ import { hc } from 'hono/client'
 const booksClient = hc<typeof booksApp>('/books')
 ```
 
-このように `tsserver` は、同時にすべてのルートの型をインスタンス化する必要はありません。
+このようにすることで、 `tsserver` はすべてのルートの型を一度にインスタンス化する必要がなくなります。

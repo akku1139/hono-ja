@@ -1,6 +1,6 @@
-# html Helper
+# HTML ヘルパー
 
-The html Helper lets you write HTML in JavaScript template literal with a tag named `html`. Using `raw()`, the content will be rendered as is. You have to escape these strings by yourself.
+HTML Helper を使うと、 `html` というタグ付きテンプレートで JavaScript のテンプレートリテラル内に HTML を書けます。 `raw()` を使うと、コンテンツはそのままレンダリングされます。 これらの文字列は自分でエスケープする必要があります。
 
 ## Import
 
@@ -23,9 +23,9 @@ app.get('/:username', (c) => {
 })
 ```
 
-### Insert snippets into JSX
+### JSX へのスニペット挿入
 
-Insert the inline script into JSX:
+インラインスクリプトを JSX に挿入します:
 
 ```tsx
 app.get('/', (c) => {
@@ -46,11 +46,11 @@ app.get('/', (c) => {
 })
 ```
 
-### Act as functional component
+### 関数コンポーネントとして動作
 
-Since `html` returns an HtmlEscapedString, it can act as a fully functional component without using JSX.
+`html` は HtmlEscapedString を返すので、 JSX を使わずとも完全に機能するコンポーネントとして動作できます。
 
-#### Use `html` to speed up the process instead of `memo`
+#### `memo` の代わりに `html` を使って処理を高速化する
 
 ```typescript
 const Footer = () => html`
@@ -60,7 +60,7 @@ const Footer = () => html`
 `
 ```
 
-### Receives props and embeds values
+### props の受け取りと値の埋め込み
 
 ```typescript
 interface SiteData {
@@ -117,7 +117,7 @@ app.get('/', (c) => {
 
 ## Tips
 
-Thanks to these libraries, Visual Studio Code and vim also interprets template literals as HTML, allowing syntax highlighting and formatting to be applied.
+これらのライブラリのおかげで、 Visual Studio Code や vim もテンプレートリテラルを HTML として解釈し、シンタックスハイライトやフォーマットを適用できます。
 
 - <https://marketplace.visualstudio.com/items?itemName=bierner.lit-html>
 - <https://github.com/MaxMEllon/vim-jsx-pretty>

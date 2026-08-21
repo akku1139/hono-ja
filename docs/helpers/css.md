@@ -1,8 +1,8 @@
-# CSS ヘルパー
+# css ヘルパー
 
 `hono/css` CSS ヘルパーは Hono のビルトイン CSS in JS(X) ツールです。
 
-JavaScriptで `css` テンプレートリテラルを使うことで CSS in JSX を実現できます。 `css` の戻り値はクラス名で、 class 属性の値に設定できます。 `<Style />` コンポーネントには CSS のコードが含まれます。
+JavaScript で `css` テンプレートリテラルを使うことで CSS in JSX を実現できます。 `css` の戻り値はクラス名で、 class 属性の値に設定できます。 `<Style />` コンポーネントには CSS のコードが含まれます。
 
 ## インポート
 
@@ -111,7 +111,7 @@ return c.render(
 )
 ```
 
-もしくは、 `<Style />` コンポーネントに `css` リテラルを用いて CSS を書くこともできます。
+または、 `<Style />` コンポーネントに `css` リテラルを用いて CSS を書くこともできます。
 
 ```tsx
 export const renderer = jsxRenderer(({ children, title }) => {
@@ -214,7 +214,7 @@ app.get('/', (c) => {
 
 ## `createCssContext` <Badge style="vertical-align: middle;" type="warning" text="Experimental" />
 
-`createCssContext` creates CSS helper functions (`css`, `cx`, `keyframes`, `viewTransition`, `Style`) with a custom context. You can use it to customize the style element ID and the generated class names.
+`createCssContext` は、カスタムコンテキストを持つ CSS ヘルパー関数 (`css` 、 `cx` 、 `keyframes` 、 `viewTransition` 、 `Style`) を作成します。 これを使用して、 style 要素の ID や生成されるクラス名をカスタマイズできます。
 
 ```ts
 import { createCssContext } from 'hono/css'
@@ -226,13 +226,13 @@ const { css, cx, keyframes, Style } = createCssContext({
 
 ### `classNameSlug`
 
-By default, CSS class names are generated in the format `css-1234567890`. You can customize this by passing a `classNameSlug` function.
+デフォルトでは、 CSS クラス名は `css-1234567890` の形式で生成されます。 `classNameSlug` 関数を渡すことで、これをカスタマイズできます。
 
-The function receives three arguments:
+この関数は3つの引数を受け取ります:
 
-- `hash` - the default generated class name (e.g. `css-1234567890`)
-- `label` - extracted from a `/* comment */` at the start of the CSS template (empty string if none)
-- `css` - the minified CSS string
+- `hash` - デフォルトで生成されたクラス名 (例: `css-1234567890`)
+- `label` - CSS テンプレートの先頭にある `/* comment */` から抽出されたもの (なければ空文字列)
+- `css` - ミニファイされた CSS 文字列
 
 ```ts
 const { css, Style } = createCssContext({
@@ -249,7 +249,7 @@ const heroClass = css`
 
 ### `onInvalidSlug`
 
-If the `classNameSlug` function returns an invalid CSS class name, a warning is logged by default. You can customize this behavior with `onInvalidSlug`.
+`classNameSlug` 関数が無効な CSS クラス名を返した場合、デフォルトでは警告がログに出力されます。 この挙動は `onInvalidSlug` でカスタマイズできます。
 
 ```ts
 const { css, Style } = createCssContext({
@@ -261,12 +261,12 @@ const { css, Style } = createCssContext({
 })
 ```
 
-## Security
+## セキュリティ
 
-The CSS helpers are CSS-authoring APIs: like other CSS-in-JS libraries, interpolated values are inserted as **raw CSS**. They block breaking out into HTML (quotes, backslashes, and `</`), but `{`, `}`, and `;` pass through since they are valid CSS.
+CSS Helper は CSS を記述するための API です。 他の CSS-in-JS ライブラリと同様に、補間された値は **生の CSS** として挿入されます。 HTML への脱出 (引用符、バックスラッシュ、 `</`) はブロックされますが、 `{` 、 `}` 、 `;` は有効な CSS であるためそのまま通過します。
 
 ::: warning
-Treat the CSS helpers like other raw sinks (`html`, `raw`, `rawCssString`): **don't pass untrusted input into them directly.** Doing so allows CSS injection. Validate against an allowlist first.
+CSS Helper は他の raw シンク (`html` 、 `raw` 、 `rawCssString`) と同様に扱ってください。**信頼できない入力を直接渡さないでください。** 渡すと CSS インジェクションが可能になります。 まず許可リストに対して検証してください。
 
 ```tsx
 const ALLOWED_COLORS = ['red', 'green', 'blue']

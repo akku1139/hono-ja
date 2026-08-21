@@ -1,6 +1,6 @@
-# Language Middleware
+# Language ミドルウェア
 
-The Language Detector middleware automatically determines a user's preferred language (locale) from various sources and makes it available via `c.get('language')`. Detection strategies include query parameters, cookies, headers, and URL path segments. Perfect for internationalization (i18n) and locale-specific content.
+Language Detector ミドルウェアは、様々なソースからユーザーの優先言語 (ロケール) を自動的に判定し、 `c.get('language')` 経由で利用できるようにします。 検出戦略には、クエリパラメータ、クッキー、ヘッダー、 URL パスセグメントが含まれます。 国際化 (i18n) やロケール固有のコンテンツに最適です。
 
 ## Import
 
@@ -9,9 +9,9 @@ import { Hono } from 'hono'
 import { languageDetector } from 'hono/language'
 ```
 
-## Basic Usage
+## 基本的な使い方
 
-Detect language from query string, cookie, and header (default order), with fallback to English:
+クエリ文字列、クッキー、ヘッダー (デフォルトの順序) から言語を検出し、フォールバックとして英語を使用します:
 
 ```ts
 const app = new Hono()
@@ -29,7 +29,7 @@ app.get('/', (c) => {
 })
 ```
 
-### Client Examples
+### クライアントの例
 
 ```sh
 # Via path
@@ -45,7 +45,7 @@ curl -H 'Cookie: language=ja' http://localhost:8787/
 curl -H 'Accept-Language: ar,en;q=0.9' http://localhost:8787/
 ```
 
-## Default Configuration
+## デフォルト設定
 
 ```ts
 export const DEFAULT_OPTIONS: DetectorOptions = {
@@ -68,24 +68,24 @@ export const DEFAULT_OPTIONS: DetectorOptions = {
 }
 ```
 
-## Key Behaviors
+## 主な挙動
 
-### Detection Workflow
+### 検出のワークフロー
 
-1. **Order**: Checks sources in this sequence by default:
-   - Query parameter (?lang=ar)
-   - Cookie (language=ar)
-   - Accept-Language header
+1. **Order**: デフォルトではこの順序でソースをチェックします:
+   - クエリパラメータ (?lang=ar)
+   - クッキー (language=ar)
+   - Accept-Language ヘッダー
 
-2. **Caching**: Stores detected language in a cookie (1 year by default)
+2. **Caching**: 検出された言語をクッキーに保存します (デフォルトで1年)
 
-3. **Fallback**: Uses `fallbackLanguage` if no valid detection (must be in `supportedLanguages`)
+3. **Fallback**: 有効な検出がなかった場合に `fallbackLanguage` を使用します (`supportedLanguages` に含まれている必要があります)
 
-## Advanced Configuration
+## 高度な設定
 
-### Custom Detection Order
+### カスタム検出順序
 
-Prioritize URL path detection (e.g., /en/about):
+URL パスからの検出を優先します (例: /en/about):
 
 ```ts
 app.use(
@@ -98,9 +98,9 @@ app.use(
 )
 ```
 
-### Progressive Locale Matching
+### 段階的なロケールマッチング
 
-When a detected locale code like `ja-JP` is not in `supportedLanguages`, the middleware progressively truncates subtags to find a match. For example, `zh-Hant-CN` will try `zh-Hant`, then `zh`. An exact match is always preferred.
+`ja-JP` のような検出されたロケールコードが `supportedLanguages` に存在しない場合、ミドルウェアはサブタグを段階的に切り詰めてマッチを探します。 例えば、 `zh-Hant-CN` は `zh-Hant` 、次に `zh` を試します。 完全一致が常に優先されます。
 
 ```ts
 app.use(
@@ -114,9 +114,9 @@ app.use(
 // Accept-Language: zh-Hant-CN → matches 'zh-Hant'
 ```
 
-### Language Code Transformation
+### 言語コードの変換
 
-Normalize complex codes (e.g., en-US → en):
+複雑なコードを正規化します (例: en-US → en):
 
 ```ts
 app.use(
@@ -128,7 +128,7 @@ app.use(
 )
 ```
 
-### Cookie Configuration
+### クッキーの設定
 
 ```ts
 app.use(
@@ -147,7 +147,7 @@ app.use(
 )
 ```
 
-To disable cookie caching:
+クッキーキャッシュを無効にする場合:
 
 ```ts
 languageDetector({
@@ -155,9 +155,9 @@ languageDetector({
 })
 ```
 
-### Debugging
+### デバッグ
 
-Log detection steps:
+検出の過程をログに出力します:
 
 ```ts
 languageDetector({
@@ -165,9 +165,9 @@ languageDetector({
 })
 ```
 
-## Options Reference
+## オプションリファレンス
 
-### Basic Options
+### 基本オプション
 
 | Option               | Type             | Default                               | Required | Description            |
 | :------------------- | :--------------- | :------------------------------------ | :------- | :--------------------- |
@@ -176,7 +176,7 @@ languageDetector({
 | `order`              | `DetectorType[]` | `['querystring', 'cookie', 'header']` | No       | Detection sequence     |
 | `debug`              | `boolean`        | `false`                               | No       | Enable logging         |
 
-### Detection Options
+### 検出オプション
 
 | Option                | Type     | Default             | Description          |
 | :-------------------- | :------- | :------------------ | :------------------- |
@@ -185,7 +185,7 @@ languageDetector({
 | `lookupFromHeaderKey` | `string` | `'accept-language'` | Header name          |
 | `lookupFromPathIndex` | `number` | `0`                 | Path segment index   |
 
-### Cookie Options
+### クッキーオプション
 
 | Option                   | Type                          | Default      | Description          |
 | :----------------------- | :---------------------------- | :----------- | :------------------- |
@@ -197,23 +197,23 @@ languageDetector({
 | `cookieOptions.httpOnly` | `boolean`                     | `true`       | JS accessibility     |
 | `cookieOptions.domain`   | `string`                      | `undefined`  | Cookie domain        |
 
-### Advanced Options
+### 高度なオプション
 
 | Option                    | Type                       | Default     | Description               |
 | :------------------------ | :------------------------- | :---------- | :------------------------ |
 | `ignoreCase`              | `boolean`                  | `true`      | Case-insensitive matching |
 | `convertDetectedLanguage` | `(lang: string) => string` | `undefined` | Language code transformer |
 
-## Validation & Error Handling
+## バリデーションとエラー処理
 
-- `fallbackLanguage` must be in `supportedLanguages` (throws error during setup)
-- `lookupFromPathIndex` must be ≥ 0
-- Invalid configurations throw errors during middleware initialization
-- Failed detections silently use `fallbackLanguage`
+- `fallbackLanguage` は `supportedLanguages` に含まれている必要があります (セットアップ時にエラーをスローします)
+- `lookupFromPathIndex` は 0 以上である必要があります
+- 無効な設定はミドルウェアの初期化時にエラーをスローします
+- 検出に失敗した場合は、黙って `fallbackLanguage` が使用されます
 
-## Common Recipes
+## よくあるレシピ
 
-### Path-Based Routing
+### パスベースのルーティング
 
 ```ts
 app.get('/:lang/home', (c) => {
@@ -222,7 +222,7 @@ app.get('/:lang/home', (c) => {
 })
 ```
 
-### Multiple Supported Languages
+### 複数のサポート言語
 
 ```ts
 languageDetector({

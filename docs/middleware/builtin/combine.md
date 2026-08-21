@@ -1,10 +1,10 @@
-# Combine Middleware
+# Combine ミドルウェア
 
-Combine Middleware combines multiple middleware functions into a single middleware. It provides three functions:
+Combine Middleware は、複数のミドルウェア関数を1つのミドルウェアに結合します。 次の3つの関数を提供します:
 
-- `some` - Runs only one of the given middleware.
-- `every` - Runs all given middleware.
-- `except` - Runs all given middleware only if a condition is not met.
+- `some` - 与えられたミドルウェアのうち1つだけを実行します。
+- `every` - 与えられたすべてのミドルウェアを実行します。
+- `except` - 条件が満たされない場合にのみ、与えられたすべてのミドルウェアを実行します。
 
 ## Import
 
@@ -13,9 +13,9 @@ import { Hono } from 'hono'
 import { some, every, except } from 'hono/combine'
 ```
 
-## Usage
+## 使い方
 
-Here's an example of complex access control rules using Combine Middleware.
+Combine Middleware を使った複雑なアクセス制御ルールの例です。
 
 ```ts
 import { Hono } from 'hono'
@@ -44,7 +44,7 @@ app.get('/', (c) => c.text('Hello Hono!'))
 
 ### some
 
-Runs the first middleware that returns true. Middleware is applied in order, and if any middleware exits successfully, subsequent middleware will not run.
+true を返した最初のミドルウェアを実行します。 ミドルウェアは順番に適用され、いずれかのミドルウェアが正常に終了すると、それ以降のミドルウェアは実行されません。
 
 ```ts
 import { some } from 'hono/combine'
@@ -61,7 +61,7 @@ app.use(
 
 ### every
 
-Runs all middleware and stops if any of them fail. Middleware is applied in order, and if any middleware throws an error, subsequent middleware will not run.
+すべてのミドルウェアを実行し、いずれかが失敗した場合は停止します。 ミドルウェアは順番に適用され、いずれかのミドルウェアがエラーをスローすると、それ以降のミドルウェアは実行されません。
 
 ```ts
 import { some, every } from 'hono/combine'
@@ -82,7 +82,7 @@ app.use(
 
 ### except
 
-Runs all middleware except when the condition is met. You can pass a string or function as the condition. If multiple targets need to be matched, pass them as an array.
+条件が満たされていない場合にすべてのミドルウェアを実行します。 条件として文字列または関数を渡せます。 複数のターゲットにマッチさせる必要がある場合は、配列として渡します。
 
 ```ts
 import { except } from 'hono/combine'

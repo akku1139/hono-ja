@@ -217,7 +217,7 @@ app.get(
 
 ### isSSGContext
 
-`isSSGContext` is a helper function that returns `true` if the current application is running within the SSG context triggered by `toSSG`.
+`isSSGContext` は、現在のアプリケーションが `toSSG` によってトリガーされた SSG コンテキスト内で実行されている場合に `true` を返すヘルパー関数です。
 
 ```ts
 app.get('/page', (c) => {
@@ -244,13 +244,13 @@ app.get('/api', disableSSG(), (c) => c.text('an-api'))
 app.get('/static-page', onlySSG(), (c) => c.html(<h1>Welcome to my site</h1>))
 ```
 
-## Plugins
+## プラグイン
 
-Plugins allow you to extend the functionality of the static site generation process. They use hooks to customize the generation process at different stages.
+プラグインを使用すると、静的サイト生成プロセスの機能を拡張できます。 プラグインはフックを使用して、異なる段階で生成プロセスをカスタマイズします。
 
-### Default Plugin
+### デフォルトプラグイン
 
-By default, `toSSG` uses `defaultPlugin` which skips non-200 status responses (like redirects, errors, or 404s). This prevents generating files for unsuccessful responses.
+デフォルトでは、 `toSSG` は 200 以外のステータスレスポンス (リダイレクト、エラー、404 など) をスキップする `defaultPlugin` を使用します。 これにより、成功しなかったレスポンスのファイル生成が防止されます。
 
 ```ts
 import { toSSG, defaultPlugin } from 'hono/ssg'
@@ -262,7 +262,7 @@ toSSG(app, fs)
 toSSG(app, fs, { plugins: [defaultPlugin] })
 ```
 
-If you specify custom plugins, `defaultPlugin` is **not** automatically included. To keep the default behavior while adding custom plugins, explicitly include it:
+カスタムプラグインを指定した場合、 `defaultPlugin` は自動的には含まれません。 デフォルトの挙動を維持しながらカスタムプラグインを追加するには、明示的に含めてください:
 
 ```ts
 toSSG(app, fs, {
@@ -270,9 +270,9 @@ toSSG(app, fs, {
 })
 ```
 
-### Redirect Plugin
+### リダイレクトプラグイン
 
-The `redirectPlugin` generates HTML redirect pages for routes that return HTTP redirect responses (301, 302, 303, 307, 308). The generated HTML includes a `<meta http-equiv="refresh">` tag and a canonical link.
+`redirectPlugin` は、 HTTP リダイレクトレスポンス (301 、 302 、 303 、 307 、 308) を返すルートに対して、 HTML リダイレクトページを生成します。 生成される HTML には `<meta http-equiv="refresh">` タグと canonical リンクが含まれます。
 
 ```ts
 import { toSSG, redirectPlugin, defaultPlugin } from 'hono/ssg'
@@ -282,20 +282,20 @@ toSSG(app, fs, {
 })
 ```
 
-For example, if your app has:
+例えば、アプリに次のルートがある場合:
 
 ```ts
 app.get('/old', (c) => c.redirect('/new'))
 ```
 
-The `redirectPlugin` will generate an HTML file at `/old.html` with a meta refresh redirect to `/new`.
+`redirectPlugin` は、 `/new` への meta refresh リダイレクトを含む HTML ファイルを `/old.html` として生成します。
 
 > [!NOTE]
-> When used with `defaultPlugin`, place `redirectPlugin` **before** `defaultPlugin`. Since `defaultPlugin` skips non-200 responses, placing it first would prevent `redirectPlugin` from processing redirect responses.
+> `defaultPlugin` と併用する場合は、 `redirectPlugin` を `defaultPlugin` の**前に**配置してください。 `defaultPlugin` は 200 以外のレスポンスをスキップするため、先に配置すると `redirectPlugin` がリダイレクトレスポンスを処理できなくなります。
 
-### Hook Types
+### フックの型
 
-Plugins can use the following hooks to customize the `toSSG` process:
+プラグインは、次のフックを使用して `toSSG` プロセスをカスタマイズできます:
 
 ```ts
 export type BeforeRequestHook = (req: Request) => Request | false
@@ -305,11 +305,11 @@ export type AfterGenerateHook = (
 ) => void | Promise<void>
 ```
 
-- **BeforeRequestHook**: Called before processing each request. Return `false` to skip the route.
-- **AfterResponseHook**: Called after receiving each response. Return `false` to skip file generation.
-- **AfterGenerateHook**: Called after the entire generation process completes.
+- **BeforeRequestHook**: 各リクエストの処理前に呼び出されます。 `false` を返すとそのルートをスキップします。
+- **AfterResponseHook**: 各レスポンスの受信後に呼び出されます。 `false` を返すとファイル生成をスキップします。
+- **AfterGenerateHook**: 生成プロセス全体の完了後に呼び出されます。
 
-### Plugin Interface
+### プラグインインターフェース
 
 ```ts
 export interface SSGPlugin {
@@ -319,9 +319,9 @@ export interface SSGPlugin {
 }
 ```
 
-### Basic Plugin Examples
+### 基本的なプラグインの例
 
-Filter only GET requests:
+GET リクエストのみをフィルタする場合:
 
 ```ts
 const getOnlyPlugin: SSGPlugin = {
@@ -334,7 +334,7 @@ const getOnlyPlugin: SSGPlugin = {
 }
 ```
 
-Filter by status code:
+ステータスコードでフィルタする場合:
 
 ```ts
 const statusFilterPlugin: SSGPlugin = {
@@ -347,7 +347,7 @@ const statusFilterPlugin: SSGPlugin = {
 }
 ```
 
-Log generated files:
+生成されたファイルをログに出力する場合:
 
 ```ts
 const logFilesPlugin: SSGPlugin = {
@@ -359,9 +359,9 @@ const logFilesPlugin: SSGPlugin = {
 }
 ```
 
-### Advanced Plugin Example
+### 高度なプラグインの例
 
-Here's an example of creating a sitemap plugin that generates a `sitemap.xml` file:
+`sitemap.xml` ファイルを生成するサイトマッププラグインを作成する例です:
 
 ```ts
 // plugins.ts
@@ -388,7 +388,7 @@ ${urls.map((url) => `<url><loc>${url}</loc></url>`).join('\n')}
 }
 ```
 
-Applying plugins:
+プラグインの適用:
 
 ```ts
 import app from './index'

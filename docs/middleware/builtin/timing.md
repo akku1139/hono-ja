@@ -1,11 +1,11 @@
-# Server-Timing Middleware
+# Server-Timing ミドルウェア
 
-The [Server-Timing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing) Middleware provides
-performance metrics in the response headers.
+[Server-Timing](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Server-Timing) Middleware は、
+レスポンスヘッダーにパフォーマンスメトリクスを提供します。
 
 ::: info
-Note: On Cloudflare Workers, the timer metrics may not be accurate,
-since [timers only show the time of last I/O](https://developers.cloudflare.com/workers/learning/security-model/#step-1-disallow-timers-and-multi-threading).
+Note: Cloudflare Workers では、 [タイマーは最後の I/O の時間のみを示す](https://developers.cloudflare.com/workers/learning/security-model/#step-1-disallow-timers-and-multi-threading) ため、
+タイマーのメトリクスは正確でない場合があります。
 :::
 
 ## Import
@@ -22,7 +22,7 @@ import {
 import type { TimingVariables } from 'hono/timing'
 ```
 
-## Usage
+## 使い方
 
 ```js
 // Specify the variable types to infer the `c.get('metric')`:
@@ -55,7 +55,7 @@ app.get('/', async (c) => {
 });
 ```
 
-### Conditionally enabled
+### 条件付きで有効化
 
 ```ts
 const app = new Hono()
@@ -69,35 +69,35 @@ app.use(
 )
 ```
 
-## Result
+## 結果
 
 ![](/images/timing-example.png)
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> total: `boolean`
 
-Show the total response time. The default is `true`.
+レスポンスの合計時間を表示します。 デフォルトは `true` です。
 
 ### <Badge type="info" text="optional" /> enabled: `boolean` | `(c: Context) => boolean`
 
-Whether timings should be added to the headers or not. The default is `true`.
+ヘッダーにタイミングを追加するかどうかです。 デフォルトは `true` です。
 
 ### <Badge type="info" text="optional" /> totalDescription: `boolean`
 
-Description for the total response time. The default is `Total Response Time`.
+レスポンスの合計時間の説明です。 デフォルトは `Total Response Time` です。
 
 ### <Badge type="info" text="optional" /> autoEnd: `boolean`
 
-If `startTime()` should end automatically at the end of the request.
-If disabled, not manually ended timers will not be shown.
+`startTime()` をリクエストの終了時に自動的に終了させるかどうかです。
+無効にした場合、手動で終了されていないタイマーは表示されません。
 
 ### <Badge type="info" text="optional" /> crossOrigin: `boolean` | `string` | `(c: Context) => boolean | string`
 
-The origin this timings header should be readable.
+このタイミングヘッダーが読み取り可能なオリジンです。
 
-- If false, only from current origin.
-- If true, from all origin.
-- If string, from this domain(s). Multiple domains must be separated with a comma.
+- false の場合、現在のオリジンからのみ。
+- true の場合、すべてのオリジンから。
+- 文字列の場合、そのドメイン (複数可) から。 複数のドメインはカンマで区切る必要があります。
 
-The default is `false`. See more [docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Timing-Allow-Origin).
+デフォルトは `false` です。 詳しくは [ドキュメント](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Timing-Allow-Origin) をご覧ください。

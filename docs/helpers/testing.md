@@ -1,6 +1,6 @@
-# Testing Helper
+# テストヘルパー
 
-The Testing Helper provides functions to make testing of Hono applications easier.
+Testing Helper は、 Hono アプリケーションのテストを容易にするための関数を提供します。
 
 ## Import
 
@@ -11,17 +11,17 @@ import { testClient } from 'hono/testing'
 
 ## `testClient()`
 
-The `testClient()` function takes an instance of Hono as its first argument and returns an object typed according to your Hono application's routes, similar to the [Hono Client](/docs/guides/rpc#client). This allows you to call your defined routes in a type-safe manner with editor autocompletion within your tests.
+`testClient()` 関数は、 Hono のインスタンスを第1引数に取り、 [Hono Client](/docs/guides/rpc#client) と同様に、 Hono アプリケーションのルートに応じた型が付けられたオブジェクトを返します。 これにより、テスト内でエディタの自動補完を使いながら、型安全に定義したルートを呼び出せます。
 
-**Important Note on Type Inference:**
+**型推論に関する重要な注意:**
 
-For the `testClient` to correctly infer the types of your routes and provide autocompletion, **you must define your routes using chained methods directly on the `Hono` instance**.
+`testClient` がルートの型を正しく推論し、自動補完を提供するためには、 **`Hono` インスタンスに対して直接メソッドチェーンでルートを定義する必要があります**。
 
-The type inference relies on the type flowing through the chained `.get()`, `.post()`, etc., calls. If you define routes separately after creating the Hono instance (like the common pattern shown in the "Hello World" example: `const app = new Hono(); app.get(...)`), the `testClient` will not have the necessary type information for specific routes, and you won't get the type-safe client features.
+型推論は、チェーンされた `.get()` 、 `.post()` などの呼び出しを通じて型が流れることに依存しています。 Hono インスタンスを作成した後にルートを個別に定義した場合 ("Hello World" の例でよく見られる `const app = new Hono(); app.get(...)` のようなパターン)、 `testClient` は特定のルートに必要な型情報を持たず、型安全なクライアントの機能を利用できません。
 
-**Example:**
+**例:**
 
-This example works because the `.get()` method is chained directly onto the `new Hono()` call:
+この例では、 `.get()` メソッドが `new Hono()` の呼び出しに直接チェーンされているため動作します:
 
 ```ts
 // index.ts
@@ -62,7 +62,7 @@ describe('Search Endpoint', () => {
 })
 ```
 
-To include headers in your test, pass them as the second parameter in the call. The second parameter can also take an `init` property as a `RequestInit` object, allowing you to set headers, method, body, etc. Learn more about the `init` property [here](/docs/guides/rpc#init-option).
+テストにヘッダーを含めたい場合は、呼び出しの第2パラメータとして渡します。 第2パラメータは `RequestInit` オブジェクトとして `init` プロパティも受け取ることができ、ヘッダー、メソッド、ボディなどを設定できます。 `init` プロパティの詳細は [こちら](/docs/guides/rpc#init-option) をご覧ください。
 
 ```ts
 // index.test.ts

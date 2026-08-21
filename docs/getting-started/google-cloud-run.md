@@ -24,7 +24,7 @@ gcloud auth login
 
 ## 2. プロジェクトをセットアップする
 
-プロジェクトを作成します。 提案されるプロジェクトIDをそのまま使用してください。
+プロジェクトを作成します。 提案されるプロジェクト ID をそのまま使用してください。
 
 ```sh
 gcloud projects create --set-as-default --name="my app"

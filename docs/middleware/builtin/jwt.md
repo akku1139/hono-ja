@@ -110,7 +110,7 @@ app.use(
 
 ### <Badge type="info" text="optional" /> realm: `string`
 
-The protection space described by the `realm` parameter of the `WWW-Authenticate` challenge header returned on `401` responses. The default is the request URL.
+`401` レスポンスで返される `WWW-Authenticate` チャレンジヘッダーの `realm` パラメータによって記述される保護空間です。 デフォルトはリクエスト URL です。
 
 ```ts
 app.use(
@@ -134,7 +134,7 @@ app.use(
 
 #### <Badge type="info" text="optional" /> VerifyOptions.aud: `string | string[] | RegExp`
 
-The expected audience used for token verification. If this is set, the token must include an `aud` claim and at least one audience value must match.
+トークン検証に使用される期待されるオーディエンスです。 これが設定されている場合、トークンは `aud` クレームを含んでいなければならず、少なくとも1つのオーディエンス値が一致する必要があります。
 
 #### <Badge type="info" text="optional" /> VerifyOptions.nbf: `boolean`
 

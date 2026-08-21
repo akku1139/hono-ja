@@ -1,6 +1,6 @@
-# Logger Middleware
+# Logger ミドルウェア
 
-It's a simple logger.
+シンプルなロガーです。
 
 ## Import
 
@@ -9,7 +9,7 @@ import { Hono } from 'hono'
 import { logger } from 'hono/logger'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -18,38 +18,38 @@ app.use(logger())
 app.get('/', (c) => c.text('Hello Hono!'))
 ```
 
-## Logging Details
+## ログの詳細
 
-The Logger Middleware logs the following details for each request:
+Logger Middleware は、各リクエストについて以下の詳細をログに出力します:
 
-- **Incoming Request**: Logs the HTTP method, request path, and incoming request.
-- **Outgoing Response**: Logs the HTTP method, request path, response status code, and request/response times.
-- **Status Code Coloring**: Response status codes are color-coded for better visibility and quick identification of status categories. Different status code categories are represented by different colors.
-- **Elapsed Time**: The time taken for the request/response cycle is logged in a human-readable format, either in milliseconds (ms) or seconds (s).
+- **Incoming Request**: HTTP メソッド、リクエストパス、受信したリクエストをログに出力します。
+- **Outgoing Response**: HTTP メソッド、リクエストパス、レスポンスのステータスコード、リクエスト/レスポンスの時間をログに出力します。
+- **Status Code Coloring**: レスポンスのステータスコードは、視認性を高め、ステータスカテゴリを素早く識別できるように色分けされます。 異なるステータスコードのカテゴリは、異なる色で表現されます。
+- **Elapsed Time**: リクエスト/レスポンスのサイクルにかかった時間は、人間が読める形式で、ミリ秒 (ms) または秒 (s) のいずれかでログに出力されます。
 
-By using the Logger Middleware, you can easily monitor the flow of requests and responses in your Hono application and quickly identify any issues or performance bottlenecks.
+Logger Middleware を使用することで、 Hono アプリケーションにおけるリクエストとレスポンスの流れを簡単に監視し、問題やパフォーマンスのボトルネックを素早く特定できます。
 
-You can also extend the middleware further by providing your own `PrintFunc` function for tailored logging behavior.
+独自の `PrintFunc` 関数を提供することで、ログの挙動をカスタマイズし、ミドルウェアをさらに拡張することもできます。
 
 ::: tip
 
-To disable _status code coloring_, you can set a `NO_COLOR` environment variable. This is a common way to disable ANSI color escape codes in logging libraries, and is described at <https://no-color.org/>. Note that Cloudflare Workers do not have a `process.env` object, so will default to plaintext log output.
+_status code coloring_ を無効にするには、 `NO_COLOR` 環境変数を設定します。 これは、ロギングライブラリで ANSI カラーエスケープコードを無効にする一般的な方法で、 <https://no-color.org/> で説明されています。 なお、 Cloudflare Workers には `process.env` オブジェクトがないため、デフォルトではプレーンテキストのログ出力になります。
 :::
 
 ## PrintFunc
 
-The Logger Middleware accepts an optional `PrintFunc` function as a parameter. This function allows you to customize the logger and add additional logs.
+Logger Middleware は、オプションの `PrintFunc` 関数をパラメータとして受け取ります。 この関数により、ロガーをカスタマイズしたり、追加のログを出力したりできます。
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> fn: `PrintFunc(str: string, ...rest: string[])`
 
-- `str`: Passed by the logger.
-- `...rest`: Additional string props to be printed to console.
+- `str`: ロガーから渡されます。
+- `...rest`: コンソールに出力される追加の文字列 props です。
 
-### Example
+### 例
 
-Setting up a custom `PrintFunc` function to the Logger Middleware:
+Logger Middleware にカスタム `PrintFunc` 関数を設定します:
 
 ```ts
 export const customLogger = (message: string, ...rest: string[]) => {
@@ -59,7 +59,7 @@ export const customLogger = (message: string, ...rest: string[]) => {
 app.use(logger(customLogger))
 ```
 
-Setting up the custom logger in a route:
+ルート内でカスタムロガーを使用します:
 
 ```ts
 app.post('/blog', (c) => {

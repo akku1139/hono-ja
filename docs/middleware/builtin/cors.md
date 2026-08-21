@@ -1,7 +1,7 @@
-# CORS Middleware
+# CORS ミドルウェア
 
-There are many use cases of Cloudflare Workers as Web APIs and calling them from external front-end application.
-For them we have to implement CORS, let's do this with middleware as well.
+Web API としての Cloudflare Workers のユースケースは多く、外部のフロントエンドアプリケーションから呼び出されます。
+そのためには CORS を実装する必要があります。 これもミドルウェアで実装しましょう。
 
 ## Import
 
@@ -10,7 +10,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -37,7 +37,7 @@ app.all('/api2/abc', (c) => {
 })
 ```
 
-Multiple origins:
+複数のオリジン:
 
 ```ts
 app.use(
@@ -61,7 +61,7 @@ app.use(
 )
 ```
 
-Dynamic allowed methods based on origin:
+オリジンに基づく動的な許可メソッド:
 
 ```ts
 app.use(
@@ -78,35 +78,35 @@ app.use(
 )
 ```
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> origin: `string` | `string[]` | `(origin:string, c:Context) => string`
 
-The value of "_Access-Control-Allow-Origin_" CORS header. You can also pass the callback function like `origin: (origin) => (origin.endsWith('.example.com') ? origin : 'http://example.com')`. The default is `*`.
+"_Access-Control-Allow-Origin_" CORS ヘッダーの値です。 `origin: (origin) => (origin.endsWith('.example.com') ? origin : 'http://example.com')` のようなコールバック関数を渡すこともできます。 デフォルトは `*` です。
 
 ### <Badge type="info" text="optional" /> allowMethods: `string[]` | `(origin:string, c:Context) => string[]`
 
-The value of "_Access-Control-Allow-Methods_" CORS header. You can also pass a callback function to dynamically determine allowed methods based on the origin. The default is `['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'QUERY']`.
+"_Access-Control-Allow-Methods_" CORS ヘッダーの値です。 オリジンに基づいて許可メソッドを動的に決定するコールバック関数を渡すこともできます。 デフォルトは `['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'QUERY']` です。
 
 ### <Badge type="info" text="optional" /> allowHeaders: `string[]`
 
-The value of "_Access-Control-Allow-Headers_" CORS header. The default is `[]`.
+"_Access-Control-Allow-Headers_" CORS ヘッダーの値です。 デフォルトは `[]` です。
 
 ### <Badge type="info" text="optional" /> maxAge: `number`
 
-The value of "_Access-Control-Max-Age_" CORS header.
+"_Access-Control-Max-Age_" CORS ヘッダーの値です。
 
 ### <Badge type="info" text="optional" /> credentials: `boolean`
 
-The value of "_Access-Control-Allow-Credentials_" CORS header.
+"_Access-Control-Allow-Credentials_" CORS ヘッダーの値です。
 
 ### <Badge type="info" text="optional" /> exposeHeaders: `string[]`
 
-The value of "_Access-Control-Expose-Headers_" CORS header. The default is `[]`.
+"_Access-Control-Expose-Headers_" CORS ヘッダーの値です。 デフォルトは `[]` です。
 
-## Environment-dependent CORS configuration
+## 環境に依存する CORS の設定
 
-If you want to adjust CORS configuration according to the execution environment, such as development or production, injecting values from environment variables is convenient as it eliminates the need for the application to be aware of its own execution environment. See the example below for clarification.
+開発環境や本番環境など、実行環境に応じて CORS の設定を調整したい場合は、環境変数から値を注入すると便利です。 これにより、アプリケーションが自身の実行環境を意識する必要がなくなります。 以下の例を参考にしてください。
 
 ```ts
 app.use('*', async (c, next) => {
@@ -117,9 +117,9 @@ app.use('*', async (c, next) => {
 })
 ```
 
-## Using with Vite
+## Vite との併用
 
-When using Hono with Vite, you should disable Vite's built-in CORS feature by setting `server.cors` to `false` in your `vite.config.ts`. This prevents conflicts with Hono's CORS middleware.
+Hono を Vite と併用する場合は、 `vite.config.ts` で `server.cors` を `false` に設定して、 Vite の組み込み CORS 機能を無効にする必要があります。 これは、 Hono の CORS ミドルウェアとの競合を防ぎます。
 
 ```ts
 // vite.config.ts

@@ -1,6 +1,6 @@
-# Proxy Helper
+# プロキシヘルパー
 
-Proxy Helper provides useful functions when using Hono application as a (reverse) proxy.
+Proxy Helper は、 Hono アプリケーションを (リバース) プロキシとして使用する際に役立つ関数を提供します。
 
 ## Import
 
@@ -11,13 +11,13 @@ import { proxy } from 'hono/proxy'
 
 ## `proxy()`
 
-`proxy()` is a `fetch()` API wrapper for proxy. The parameters and return value are the same as for `fetch()` (except for the proxy-specific options).
+`proxy()` は、プロキシのための `fetch()` API ラッパーです。 引数と戻り値は `fetch()` と同じです (プロキシ固有のオプションを除く)。
 
-The `Accept-Encoding` header is replaced with an encoding that the current runtime can handle. Unnecessary response headers are removed, and a `Response` object is returned that can be sent from the handler.
+`Accept-Encoding` ヘッダーは、現在のランタイムが処理できるエンコーディングに置き換えられます。 不要なレスポンスヘッダーは削除され、ハンドラーから送信できる `Response` オブジェクトが返されます。
 
-### Examples
+### 例
 
-Simple usage:
+シンプルな使い方:
 
 ```ts
 app.get('/proxy/:path', (c) => {
@@ -25,7 +25,7 @@ app.get('/proxy/:path', (c) => {
 })
 ```
 
-Complicated usage:
+複雑な使い方:
 
 ```ts
 app.get('/proxy/:path', async (c) => {
@@ -45,7 +45,7 @@ app.get('/proxy/:path', async (c) => {
 })
 ```
 
-Or you can pass the `c.req` as a parameter.
+または、 `c.req` を引数として渡すこともできます。
 
 ```ts
 app.all('/proxy/:path', (c) => {
@@ -61,7 +61,7 @@ app.all('/proxy/:path', (c) => {
 })
 ```
 
-You can override the default global `fetch` function with the `customFetch` option:
+`customFetch` オプションで、デフォルトのグローバル `fetch` 関数をオーバーライドできます:
 
 ```ts
 app.get('/proxy', (c) => {
@@ -71,9 +71,9 @@ app.get('/proxy', (c) => {
 })
 ```
 
-### Connection Header Processing
+### Connection ヘッダーの処理
 
-By default, `proxy()` ignores the `Connection` header to prevent Hop-by-Hop Header Injection attacks. You can enable strict RFC 9110 compliance with the `strictConnectionProcessing` option:
+デフォルトでは、 `proxy()` は Hop-by-Hop ヘッダーインジェクション攻撃を防ぐために `Connection` ヘッダーを無視します。 `strictConnectionProcessing` オプションで、厳密な RFC 9110 準拠を有効にできます:
 
 ```ts
 // Default behavior (recommended for untrusted clients)
@@ -92,7 +92,7 @@ app.get('/internal-proxy/:path', (c) => {
 
 ### `ProxyFetch`
 
-The type of `proxy()` is defined as `ProxyFetch` and is as follows
+`proxy()` の型は `ProxyFetch` として定義されており、以下の通りです
 
 ```ts
 interface ProxyRequestInit extends Omit<RequestInit, 'headers'> {

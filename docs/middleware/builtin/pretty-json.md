@@ -1,14 +1,14 @@
-# Pretty JSON Middleware
+# Pretty JSON ミドルウェア
 
-Pretty JSON middleware enables "_JSON pretty print_" for JSON response body.
-Adding `?pretty` to url query param, the JSON strings are prettified.
+Pretty JSON ミドルウェアは、 JSON レスポンスボディに対して "_JSON pretty print_" を有効にします。
+URL のクエリパラメータに `?pretty` を追加すると、 JSON 文字列が整形されます。
 
 ```js
 // GET /
 {"project":{"name":"Hono","repository":"https://github.com/honojs/hono"}}
 ```
 
-will be:
+これは次のようになります:
 
 ```js
 // GET /?pretty
@@ -27,7 +27,7 @@ import { Hono } from 'hono'
 import { prettyJSON } from 'hono/pretty-json'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -38,16 +38,16 @@ app.get('/', (c) => {
 })
 ```
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> space: `number`
 
-Number of spaces for indentation. The default is `2`.
+インデントに使用するスペースの数です。 デフォルトは `2` です。
 
 ### <Badge type="info" text="optional" /> query: `string`
 
-The name of the query string for applying. The default is `pretty`.
+適用するためのクエリ文字列の名前です。 デフォルトは `pretty` です。
 
 ### <Badge type="info" text="optional" /> force: `boolean`
 
-When set to `true`, JSON responses are always prettified regardless of the query parameter. The default is `false`.
+`true` に設定すると、クエリパラメータに関係なく JSON レスポンスが常に整形されます。 デフォルトは `false` です。

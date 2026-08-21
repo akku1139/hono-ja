@@ -16,9 +16,9 @@ Node.js 18.x 以上で動作します。 具体的に必要な Node.js のバー
 
 ## 1. セットアップ
 
-スターターは Node.js もサポートしています。
-"create-hono" コマンドで開発を開始しましょう。
-この例では `nodejs` テンプレートを選びます。
+Node.js のスターターが利用可能です。
+"create-hono" コマンドでプロジェクトを開始してください。
+この例では `nodejs` テンプレートを選択してください。
 
 ::: code-group
 
@@ -83,7 +83,7 @@ app.get('/', (c) => c.text('Hello Node.js!'))
 serve(app)
 ```
 
-サーバをグレースフルシャットダウンしたい場合、次のように記述します:
+サーバをグレースフルシャットダウンしたい場合は、次のように記述します:
 
 ```ts
 const server = serve(app)
@@ -104,9 +104,9 @@ process.on('SIGTERM', () => {
 })
 ```
 
-## 3. Run
+## 3. 実行
 
-開発サーバーをローカルで起動し、ブラウザで `http://localhost:3000` にアクセスします。
+開発サーバーをローカルで起動し、 Web ブラウザで `http://localhost:3000` にアクセスします。
 
 ::: code-group
 
@@ -124,7 +124,7 @@ pnpm dev
 
 :::
 
-## ポートを変える
+## ポート番号の変更
 
 `port` オプションでポート番号を指定できます。
 
@@ -137,7 +137,7 @@ serve({
 
 ## WebSocket
 
-WebSocket サポートは `@hono/node-server` 内で実装されています。 `ws` をインストールします。 TypeScript を使用している場合は、 `@types/ws` もインストールします。 `{ noServer: true }` を指定して `WebSocketServer` を生成し、 `websocket` オプションを使用して `serve()` に渡します。
+WebSocket サポートは `@hono/node-server` に組み込まれています。 `ws` をインストールし、 TypeScript を使用している場合は `@types/ws` もインストールします。 次に、 `{ noServer: true }` を指定して `WebSocketServer` を生成し、 `websocket` オプションを使用して `serve()` に渡します。
 
 `@hono/node-ws` は非推奨です。
 
@@ -165,9 +165,9 @@ serve({
 })
 ```
 
-## 生の Node.js API にアクセスする
+## 生の Node.js API へのアクセス
 
-Node.js API は `c.env.incoming` と `c.env.outgoing` で使用できます。
+Node.js API は `c.env.incoming` と `c.env.outgoing` からアクセスできます。
 
 ```ts
 import { Hono } from 'hono'
@@ -191,7 +191,7 @@ serve(app)
 
 ## 静的ファイルの配信
 
-`serveStatic` を使うことでローカルファイルシステムから静的ファイルを配信できます。 以下のようなディレクトリ構成の場合を考えてみましょう:
+`serveStatic` を使うことでローカルファイルシステムから静的ファイルを配信できます。 例えば、ディレクトリ構造が次のような場合を考えます:
 
 ```sh
 ./
@@ -202,7 +202,7 @@ serve(app)
     └── image.png
 ```
 
-`/static/*` にリクエストがあったときに `./static` にあるファイルを返したい場合は、下のように書けます:
+パス `/static/*` へのリクエストが来て、 `./static` 配下のファイルを返したい場合、次のように記述できます:
 
 ```ts
 import { serveStatic } from '@hono/node-server/serve-static'
@@ -211,9 +211,9 @@ app.use('/static/*', serveStatic({ root: './' }))
 ```
 
 ::: warning
-`root` オプションは、カレントの作業ディレクトリ (`process.cwd()`) からの相対パスで解決します。 振る舞いが、ソースファイルがどこに置かれているかではなく、**どこで Node.js を実行しているか**に依存しているということです。 異なるディレクトリからサーバを起動した場合は、ファイル解決が失敗します。
+`root` オプションは、カレントの作業ディレクトリ (`process.cwd()`) からの相対パスで解決します。 これは、サーバを実行している場所ではなく、 **ソースファイルが置かれている場所によって動作が異なる** ことを意味します。 異なるディレクトリからサーバを起動した場合、ファイル解決が失敗する可能性があります。
 
-ソースファイルと常に同じディレクトリを指し示すように確実にパスを解決するには、 `import.meta.url` を使用します:
+ソースファイルと常に同じディレクトリを指す信頼できるパス解決を行うには、 `import.meta.url` を使用してください:
 
 ```ts
 import { fileURLToPath } from 'node:url'
@@ -227,13 +227,13 @@ app.use(
 
 :::
 
-`path` オプションを使って、ルートにある `favicon.ico` を配信します:
+ディレクトリルートの `favicon.ico` を配信するには `path` オプションを使用します:
 
 ```ts
 app.use('/favicon.ico', serveStatic({ path: './favicon.ico' }))
 ```
 
-`/hello.txt` や `/image.png` がリクエストされたときに、 `./static/hello.txt` や `./static/image.png` といったファイル名のファイルを返すには、以下のように使います:
+パス `/hello.txt` や `/image.png` へのリクエストが来て、 `./static/hello.txt` や `./static/image.png` という名前のファイルを返したい場合、次のように使用できます:
 
 ```ts
 app.use('*', serveStatic({ root: './static' }))
@@ -241,7 +241,7 @@ app.use('*', serveStatic({ root: './static' }))
 
 ### `rewriteRequestPath`
 
-`http://localhost:3000/static/*` を `./statics` にマップしたい場合は `rewriteRequestPath` オプションを使用できます:
+`http://localhost:3000/static/*` を `./statics` にマップしたい場合、 `rewriteRequestPath` オプションを使用できます:
 
 ```ts
 app.get(
@@ -258,7 +258,7 @@ app.get(
 
 Hono を [Node.js http2 Server](https://nodejs.org/api/http2.html) でも実行できます。
 
-### unencrypted http2
+### 暗号化されていない http2
 
 ```ts
 import { createServer } from 'node:http2'
@@ -269,7 +269,7 @@ const server = serve({
 })
 ```
 
-### encrypted http2
+### 暗号化された http2
 
 ```ts
 import { createSecureServer } from 'node:http2'
@@ -285,7 +285,7 @@ const server = serve({
 })
 ```
 
-## Building & Deployment
+## ビルドとデプロイ
 
 ::: code-group
 
@@ -311,7 +311,7 @@ bun run build
 
 ### Dockerfile
 
-以下は Node.js の Dockerfile の例です。
+Node.js の Dockerfile の例は次の通りです。
 
 ```Dockerfile
 FROM node:22-alpine AS base

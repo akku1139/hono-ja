@@ -1,8 +1,8 @@
-# Route Helper
+# ルートヘルパー
 
-The Route Helper provides enhanced routing information for debugging and middleware development. It allows you to access detailed information about matched routes and the current route being processed.
+Route Helper は、デバッグやミドルウェア開発のための拡張されたルーティング情報を提供します。 マッチしたルートや現在処理中のルートに関する詳細な情報にアクセスできます。
 
-## Import
+## インポート
 
 ```ts
 import { Hono } from 'hono'
@@ -14,9 +14,9 @@ import {
 } from 'hono/route'
 ```
 
-## Usage
+## 使い方
 
-### Basic route information
+### 基本的なルート情報
 
 ```ts
 const app = new Hono()
@@ -32,7 +32,7 @@ app.get('/posts/:id', (c) => {
 })
 ```
 
-### Working with sub-applications
+### サブアプリケーションでの使用
 
 ```ts
 const app = new Hono()
@@ -51,7 +51,7 @@ app.route('/api', apiApp)
 
 ## `matchedRoutes()`
 
-Returns an array of all routes that matched the current request, including middleware.
+ミドルウェアを含む、現在のリクエストにマッチしたすべてのルートの配列を返します。
 
 ```ts
 app.all('/api/*', (c, next) => {
@@ -71,7 +71,7 @@ app.get('/api/users/:id', (c) => {
 
 ## `routePath()`
 
-Returns the route path pattern registered for the current handler.
+現在のハンドラーに登録されたルートのパスパターンを返します。
 
 ```ts
 app.get('/posts/:id', (c) => {
@@ -80,9 +80,9 @@ app.get('/posts/:id', (c) => {
 })
 ```
 
-### Using with index parameter
+### インデックスパラメータの使用
 
-You can optionally pass an index parameter to get the route path at a specific position, similar to `Array.prototype.at()`.
+`Array.prototype.at()` と同様に、インデックスパラメータを渡すことで特定の位置のルートパスを取得できます。
 
 ```ts
 app.all('/api/*', (c, next) => {
@@ -98,7 +98,7 @@ app.get('/api/users/:id', (c) => {
 
 ## `baseRoutePath()`
 
-Returns the base path pattern of the current route as specified in routing.
+ルーティングで指定された現在のルートのベースパスパターンを返します。
 
 ```ts
 const subApp = new Hono()
@@ -109,10 +109,10 @@ subApp.get('/posts/:id', (c) => {
 app.route('/:sub', subApp)
 ```
 
-### Using with index parameter
+### インデックスパラメータの使用
 
-You can optionally pass an index parameter to get the base route path at a specific
-position, similar to `Array.prototype.at()`.
+`Array.prototype.at()` と同様に、インデックスパラメータを渡すことで特定の位置の
+ベースルートパスを取得できます。
 
 ```ts
 app.all('/api/*', (c, next) => {
@@ -131,7 +131,7 @@ app.route('/api', subApp)
 
 ## `basePath()`
 
-Returns the base path with embedded parameters from the actual request.
+実際のリクエストから埋め込まれたパラメータを含むベースパスを返します。
 
 ```ts
 const subApp = new Hono()

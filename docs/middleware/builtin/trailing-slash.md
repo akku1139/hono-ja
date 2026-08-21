@@ -1,8 +1,8 @@
-# Trailing Slash Middleware
+# Trailing Slash ミドルウェア
 
-This middleware handles Trailing Slash in the URL on a GET request.
+このミドルウェアは、 GET リクエストの URL 内の Trailing Slash を処理します。
 
-`appendTrailingSlash` redirects the URL to which it added the Trailing Slash if the content was not found. Also, `trimTrailingSlash` will remove the Trailing Slash.
+`appendTrailingSlash` は、コンテンツが見つからなかった場合に、 Trailing Slash を追加した URL へリダイレクトします。 また、 `trimTrailingSlash` は Trailing Slash を削除します。
 
 ## Import
 
@@ -14,9 +14,9 @@ import {
 } from 'hono/trailing-slash'
 ```
 
-## Usage
+## 使い方
 
-Example of redirecting a GET request of `/about/me` to `/about/me/`.
+`/about/me` への GET リクエストを `/about/me/` へリダイレクトする例です。
 
 ```ts
 import { Hono } from 'hono'
@@ -28,7 +28,7 @@ app.use(appendTrailingSlash())
 app.get('/about/me/', (c) => c.text('With Trailing Slash'))
 ```
 
-Example of redirecting a GET request of `/about/me/` to `/about/me`.
+`/about/me/` への GET リクエストを `/about/me` へリダイレクトする例です。
 
 ```ts
 import { Hono } from 'hono'
@@ -40,11 +40,11 @@ app.use(trimTrailingSlash())
 app.get('/about/me', (c) => c.text('Without Trailing Slash'))
 ```
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> alwaysRedirect: `boolean`
 
-By default, trailing slash middleware only redirects when the response status is `404`. When `alwaysRedirect` is set to `true`, the middleware redirects before executing handlers. This is useful for wildcard routes (`*`) where the default behavior doesn't work.
+デフォルトでは、 Trailing Slash ミドルウェアはレスポンスステータスが `404` の場合にのみリダイレクトします。 `alwaysRedirect` を `true` に設定すると、ミドルウェアはハンドラーを実行する前にリダイレクトします。 これは、デフォルトの挙動が機能しないワイルドカードルート (`*`) に便利です。
 
 ```ts
 const app = new Hono()
@@ -53,11 +53,11 @@ app.use(trimTrailingSlash({ alwaysRedirect: true }))
 app.get('/my-path/*', (c) => c.text('Wildcard route'))
 ```
 
-This option is available for both `trimTrailingSlash` and `appendTrailingSlash`.
+このオプションは、 `trimTrailingSlash` と `appendTrailingSlash` の両方で利用できます。
 
 ### <Badge type="info" text="optional" /> skip: `(path: string) => boolean`
 
-A function that determines whether the redirect should be skipped based on the request path. If the function returns `true`, the redirect will be skipped. This is useful when you want to exclude certain paths, such as those with file extensions, from being redirected.
+リクエストパスに基づいて、リダイレクトをスキップするかどうかを判定する関数です。 関数が `true` を返した場合、リダイレクトはスキップされます。 これは、ファイル拡張子を持つパスなど、特定のパスをリダイレクト対象から除外したい場合に便利です。
 
 ```ts
 app.use(
@@ -67,8 +67,8 @@ app.use(
 )
 ```
 
-This option is available for both `trimTrailingSlash` and `appendTrailingSlash`.
+このオプションは、 `trimTrailingSlash` と `appendTrailingSlash` の両方で利用できます。
 
 ## Note
 
-It will be enabled when the request method is `GET` and the response status is `404`.
+リクエストメソッドが `GET` で、レスポンスステータスが `404` の場合に有効になります。

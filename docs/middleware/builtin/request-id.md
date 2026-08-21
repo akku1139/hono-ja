@@ -1,9 +1,9 @@
-# Request ID Middleware
+# Request ID ミドルウェア
 
-Request ID Middleware generates a unique ID for each request, which you can use in your handlers.
+Request ID Middleware は、各リクエストに対して一意の ID を生成し、ハンドラー内で使用できます。
 
 ::: info
-**Node.js**: This middleware uses `crypto.randomUUID()` to generate IDs. The global `crypto` was introduced in Node.js version 20 or later. Therefore, errors may occur in versions earlier than that. In that case, please specify `generator`. However, if you are using [the Node.js adapter](https://github.com/honojs/node-server), it automatically sets `crypto` globally, so this is not necessary.
+**Node.js**: このミドルウェアは `crypto.randomUUID()` を使って ID を生成します。 グローバルな `crypto` は Node.js のバージョン 20 以降で導入されました。 そのため、それより前のバージョンではエラーが発生する可能性があります。 その場合は `generator` を指定してください。 ただし、 [Node.js アダプタ](https://github.com/honojs/node-server) を使用している場合は、 `crypto` が自動的にグローバルに設定されるため、この必要はありません。
 :::
 
 ## Import
@@ -13,9 +13,9 @@ import { Hono } from 'hono'
 import { requestId } from 'hono/request-id'
 ```
 
-## Usage
+## 使い方
 
-You can access the Request ID through the `requestId` variable in the handlers and middleware to which the Request ID Middleware is applied.
+Request ID Middleware が適用されたハンドラーやミドルウェアでは、 `requestId` 変数を通して Request ID にアクセスできます。
 
 ```ts
 const app = new Hono()
@@ -27,7 +27,7 @@ app.get('/', (c) => {
 })
 ```
 
-If you want to explicitly specify the type, import `RequestIdVariables` and pass it in the generics of `new Hono()`.
+型を明示的に指定したい場合は、 `RequestIdVariables` をインポートして、 `new Hono()` のジェネリクスに渡します。
 
 ```ts
 import type { RequestIdVariables } from 'hono/request-id'
@@ -37,9 +37,9 @@ const app = new Hono<{
 }>()
 ```
 
-### Set Request ID
+### Request ID の設定
 
-You set a custom request ID in the header (default: `X-Request-Id`), the middleware will use that value instead of generating a new one:
+ヘッダー (デフォルト: `X-Request-Id`) にカスタム Request ID を設定すると、ミドルウェアは新しい ID を生成する代わりにその値を使用します:
 
 ```ts
 const app = new Hono()
@@ -58,31 +58,31 @@ const res = await app.request('/', {
 console.log(await res.text()) // your-custom-id
 ```
 
-If you want to disable this feature, set [`headerName` option](#headername-string) to an empty string.
+この機能を無効にしたい場合は、 [`headerName` オプション](#headername-string) に空文字列を設定してください。
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> limitLength: `number`
 
-The maximum length of the request ID. The default is `255`.
+Request ID の最大長です。 デフォルトは `255` です。
 
 ### <Badge type="info" text="optional" /> headerName: `string`
 
-The header name used for the request ID. The default is `X-Request-Id`.
+Request ID に使用されるヘッダー名です。 デフォルトは `X-Request-Id` です。
 
 ### <Badge type="info" text="optional" /> generator: `(c: Context) => string`
 
-The request ID generation function. By default, it uses `crypto.randomUUID()`.
+Request ID の生成関数です。 デフォルトでは `crypto.randomUUID()` を使用します。
 
-## Platform specific Request IDs
+## プラットフォーム固有の Request ID
 
-Some platform (such as AWS Lambda) already generate their own Request IDs per request.
-Without any additional configuration, this middleware is unaware of these specific Request IDs
-and generates a new Request ID. This can lead to confusion when looking at your application logs.
+一部のプラットフォーム (AWS Lambda など) は、リクエストごとに独自の Request ID を既に生成しています。
+追加の設定を行わない場合、このミドルウェアはこれらのプラットフォーム固有の Request ID を認識せず、
+新しい Request ID を生成します。 これにより、アプリケーションのログを見るときに混乱が生じる可能性があります。
 
-To unify these IDs, use the `generator` function to capture the platform specific Request ID and to use it in this middleware.
+これらの ID を統一するには、 `generator` 関数を使ってプラットフォーム固有の Request ID を取得し、このミドルウェアで使用します。
 
-### Platform specific links
+### プラットフォーム固有のリンク
 
 - AWS Lambda
   - [AWS documentation: Context object](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-context.html)

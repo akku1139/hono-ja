@@ -37,9 +37,9 @@ import { WebSocketServer } from 'ws'
 
 :::
 
-On Node.js, WebSocket support is built into `@hono/node-server`. To enable it, install `ws` and, if you use TypeScript, `@types/ws`. Then create a `WebSocketServer` with `{ noServer: true }` and pass it to `serve()` via the `websocket` option.
+Node.js では、 WebSocket サポートは `@hono/node-server` に組み込まれています。 有効にするには、 `ws` と、 TypeScript を使用している場合は `@types/ws` をインストールしてください。 次に、 `{ noServer: true }` を指定して `WebSocketServer` を作成し、 `websocket` オプション経由で `serve()` に渡します。
 
-`@hono/node-ws` is deprecated.
+`@hono/node-ws` は非推奨です。
 
 ## `upgradeWebSocket()`
 
@@ -73,7 +73,7 @@ app.get(
 
 ::: warning
 
-WebSocket ヘルパーを使用するルートでヘッダを変更するミドルウェア ( CORS など) を使用している場合、イミュータブルなヘッドを変更できないというエラーが発生する可能性があります。これは、 `upgradeWebSocket()` が内部的にヘッダを変更するためです。
+WebSocket ヘルパーを使用するルートでヘッダを変更するミドルウェア ( CORS など) を使用している場合、イミュータブルなヘッドを変更できないというエラーが発生する可能性があります。 これは、 `upgradeWebSocket()` が内部的にヘッダを変更するためです。
 
 なので、 WebSocket ヘルパーとミドルウェアを同時に使用している場合は注意してください。
 
@@ -139,7 +139,7 @@ ws.addEventListener('open', () => {
 })
 ```
 
-### Bun with JSX
+### Bun で JSX を使用する場合
 
 ```tsx
 import { Hono } from 'hono'

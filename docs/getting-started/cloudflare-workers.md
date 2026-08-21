@@ -136,7 +136,7 @@ bun run deploy
 
 ## 他のイベントハンドラとともに Hono を使う
 
-_Module Worker モード_ で他のイベントハンドラ( `scheduled` など)を統合できます。
+_Module Worker モード_ で他のイベントハンドラ ( `scheduled` など ) を統合できます。
 
 このように、 `app.fetch` を `fetch` ハンドラとしてエクスポートし、必要に応じて他のハンドラも実装します:
 
@@ -319,7 +319,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 ```
 
-then edit `wrangler.jsonc`, and add this code after the `compatibility_date` line.
+次に `wrangler.jsonc` を編集し、 `compatibility_date` の行の後に次のコードを追加します。
 
 ```jsonc
 "main": "src/index.ts",
@@ -344,7 +344,7 @@ API_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 コードの中で `c.env.*` から環境変数にアクセスします。
 
 ::: info
-By default, `process.env` is not available in Cloudflare Workers, so it is recommended to get environment variables from `c.env`. If you want to use it, you need to enable [`nodejs_compat_populate_process_env`](https://developers.cloudflare.com/workers/configuration/compatibility-flags/#enable-auto-populating-processenv) flag. You can also import `env` from `cloudflare:workers`. For details, please see [How to access `env` on Cloudflare docs](https://developers.cloudflare.com/workers/runtime-apis/bindings/#how-to-access-env)
+デフォルトでは、 `process.env` は Cloudflare Workers では利用できないため、環境変数は `c.env` から取得することが推奨されます。 使用したい場合は、 [`nodejs_compat_populate_process_env`](https://developers.cloudflare.com/workers/configuration/compatibility-flags/#enable-auto-populating-processenv) フラグを有効にする必要があります。 また、 `cloudflare:workers` から `env` をインポートすることもできます。 詳細は [Cloudflare docs の How to access `env`](https://developers.cloudflare.com/workers/runtime-apis/bindings/#how-to-access-env) をご覧ください。
 :::
 
 ```ts

@@ -8,7 +8,7 @@ titleTemplate: ':title'
 Hono - _**\[炎\] 🔥**_ - は小さく、シンプルで爆速なエッジ向け Web フレームワークです。
 あらゆる JavaScript ランタイムで動作します: Cloudflare Workers 、 Fastly Compute 、 Deno 、 Bun 、 Vercel 、 Netlify 、 AWS Lambda 、 Lambda@Edge そして Node.js。
 
-Honoは速いけど、速いだけではありません。
+Hono は速いけど、速いだけではありません。
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -57,7 +57,7 @@ deno init --npm hono@latest
 
 ## 使用例
 
-Hono は Express に似たフロントエンドを持たないWebアプリケーションフレームワークです。
+Hono は Express に似たフロントエンドを持たない Web アプリケーションフレームワークです。
 しかし CDN エッジでミドルウェアを組み合わせることでより大規模なアプリケーションを構築できます。
 以下にいくつかの使用例を紹介します。
 
@@ -68,18 +68,18 @@ Hono は Express に似たフロントエンドを持たないWebアプリケー
 - ライブラリのベースサーバー
 - フルスタックアプリケーション
 
-##  Hono を使用している主なプロジェクト
+## Hono を使用している主なプロジェクト
 
-| プロジェクト                                                                        | プラットフォーム    | 内容                                                                            |
-| ---------------------------------------------------------------------------------- | ------------------ | ----------------------------------------------------------------------------- |
-| [cdnjs](https://cdnjs.com)                                                         | Cloudflare Workers | 無料かつオープンソースの CDN サービス。_API サーバーに Hono を使用_。                                   |
-| [Cloudflare D1](https://www.cloudflare.com/developer-platform/d1/)                 | Cloudflare Workers | サーバーレス SQL データベース。_内部 API サーバーに Hono を使用_。                                     |
-| [Cloudflare Workers KV](https://www.cloudflare.com/developer-platform/workers-kv/) | Cloudflare Workers | サーバーレス KVS (キーバリューストア)。_内部 API サーバーに Hono を使用_。                                |
-| [BaseAI](https://baseai.dev)                                                       | Local AI Server    | メモリ機能を持つサーバーレス AI エージェントパイプ。 Web 向けオープンソースエージェント AI フレームワーク。_API サーバーに Hono を使用_。 |
-| [Unkey](https://unkey.dev)                                                         | Cloudflare Workers | オープンソースの API 認証・認可プラットフォーム。_API サーバーに Hono を使用_。                              |
-| [OpenStatus](https://openstatus.dev)                                               | Bun                | オープンソースの Web サイト・ API 監視プラットフォーム。_API サーバーに Hono を使用_。                          |
-| [Deno Benchmarks](https://deno.com/benchmarks)                                     | Deno               | V8 上で動作する安全な TypeScript ランタイム。_ベンチマーク用途に Hono を使用_。                            |
-| [Clerk](https://clerk.com)                                                         | Cloudflare Workers | オープンソースのユーザー管理プラットフォーム。_API サーバーに Hono を使用_。                                |
+| プロジェクト                                                                       | プラットフォーム   | 内容                                                                                                                                       |
+| ---------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| [cdnjs](https://cdnjs.com)                                                         | Cloudflare Workers | 無料かつオープンソースの CDN サービス。 _API サーバーに Hono を使用_。                                                                     |
+| [Cloudflare D1](https://www.cloudflare.com/developer-platform/d1/)                 | Cloudflare Workers | サーバーレス SQL データベース。 _内部 API サーバーに Hono を使用_。                                                                        |
+| [Cloudflare Workers KV](https://www.cloudflare.com/developer-platform/workers-kv/) | Cloudflare Workers | サーバーレス KVS (キーバリューストア)。 _内部 API サーバーに Hono を使用_。                                                                |
+| [BaseAI](https://baseai.dev)                                                       | Local AI Server    | メモリ機能を持つサーバーレス AI エージェントパイプ。 Web 向けオープンソースエージェント AI フレームワーク。 _API サーバーに Hono を使用_。 |
+| [Unkey](https://unkey.dev)                                                         | Cloudflare Workers | オープンソースの API 認証・認可プラットフォーム。 _API サーバーに Hono を使用_。                                                           |
+| [OpenStatus](https://openstatus.dev)                                               | Bun                | オープンソースの Web サイト・ API 監視プラットフォーム。 _API サーバーに Hono を使用_。                                                    |
+| [Deno Benchmarks](https://deno.com/benchmarks)                                     | Deno               | V8 上で動作する安全な TypeScript ランタイム。 _ベンチマーク用途に Hono を使用_。                                                           |
+| [Clerk](https://clerk.com)                                                         | Cloudflare Workers | オープンソースのユーザー管理プラットフォーム。 _API サーバーに Hono を使用_。                                                              |
 
 そして、
 
@@ -92,7 +92,7 @@ Hono は Express に似たフロントエンドを持たないWebアプリケー
 
 Hono を使用して Cloudflare Workers 向けのアプリケーションを作成するデモ。
 
-![A gif showing a hono app being created quickly with fast iteration.](/images/sc.gif)
+![高速なイテレーションで Hono アプリが素早く作成される様子を示す GIF](/images/sc.gif)
 
 ## 爆速
 
@@ -201,7 +201,7 @@ Hono は楽しい "**開発体験**" を提供します。
 
 例えば、パスパラメータはリテラル型になります。
 
-![A screenshot showing Hono having proper literal typing when URL parameters. The URL "/entry/:date/:id" allows for request parameters to be "date" or "id"](/images/ss.png)
+![URL パラメータに対して Hono が適切なリテラル型を持つことを示すスクリーンショット。 URL "/entry/:date/:id" により、リクエストパラメータは "date" または "id" になる](/images/ss.png)
 
 そして、バリデーターと Hono Client `hc` は RPC モードを有効にします。 RPC モードでは、
 Zod などのお気に入りのバリデーターを使用して、サーバーサイド API 仕様をクライアントと簡単に共有してタイプセーフなアプリケーションを構築できます。

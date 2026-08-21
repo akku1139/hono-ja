@@ -41,7 +41,7 @@ Deno.serve(app.fetch)
 
 ## 4. Run
 
-ローカルで開発サーバーを実行します。次に、 Web ブラウザで `http://localhost:8000` にアクセスします。
+ローカルで開発サーバーを実行します。 次に、 Web ブラウザで `http://localhost:8000` にアクセスします。
 
 ```sh
 deno task start

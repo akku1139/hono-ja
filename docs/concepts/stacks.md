@@ -67,7 +67,7 @@ app.get(
 
 ::: warning
 
-For the RPC to infer routes correctly, all included methods must be chained, and the endpoint or app type must be inferred from a declared variable. For more, see [Best Practices for RPC](https://hono.dev/docs/guides/best-practices#if-you-want-to-use-rpc-features).
+RPC がルートを正しく推論するためには、含まれるすべてのメソッドがチェーンされている必要があり、エンドポイントやアプリの型は宣言された変数から推論される必要があります。 詳しくは [RPC のベストプラクティス](https://hono.dev/docs/guides/best-practices#if-you-want-to-use-rpc-features) をご覧ください。
 
 :::
 
