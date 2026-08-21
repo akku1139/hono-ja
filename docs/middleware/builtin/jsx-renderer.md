@@ -1,6 +1,6 @@
-# JSX Renderer Middleware
+# JSX Renderer ミドルウェア
 
-JSX Renderer Middleware allows you to set up the layout when rendering JSX with the `c.render()` function, without the need for using `c.setRenderer()`. Additionally, it enables access to instances of Context within components through the use of `useRequestContext()`.
+JSX Renderer Middleware は、 `c.setRenderer()` を使うことなく、 `c.render()` 関数で JSX をレンダリングする際のレイアウトを設定できるようにします。 さらに、 `useRequestContext()` を使用して、コンポーネント内の Context のインスタンスにアクセスできるようにします。
 
 ## Import
 
@@ -9,7 +9,7 @@ import { Hono } from 'hono'
 import { jsxRenderer, useRequestContext } from 'hono/jsx-renderer'
 ```
 
-## Usage
+## 使い方
 
 ```jsx
 const app = new Hono()
@@ -33,11 +33,11 @@ app.get('/page/about', (c) => {
 })
 ```
 
-## Options
+## オプション
 
 ### <Badge type="info" text="optional" /> docType: `boolean` | `string`
 
-If you do not want to add a DOCTYPE at the beginning of the HTML, set the `docType` option to `false`.
+HTML の先頭に DOCTYPE を追加したくない場合は、 `docType` オプションを `false` に設定してください。
 
 ```tsx
 app.use(
@@ -55,7 +55,7 @@ app.use(
 )
 ```
 
-And you can specify the DOCTYPE.
+また、 DOCTYPE を指定することもできます。
 
 ```tsx
 app.use(
@@ -78,7 +78,7 @@ app.use(
 
 ### <Badge type="info" text="optional" /> stream: `boolean` | `Record<string, string>`
 
-If you set it to `true` or provide a Record value, it will be rendered as a streaming response.
+`true` を設定するか Record 値を指定すると、ストリーミングレスポンスとしてレンダリングされます。
 
 ```tsx
 const AsyncComponent = async () => {
@@ -112,7 +112,7 @@ app.get('/', (c) => {
 })
 ```
 
-If `true` is set, the following headers are added:
+`true` を設定すると、次のヘッダーが追加されます:
 
 ```ts
 {
@@ -122,11 +122,11 @@ If `true` is set, the following headers are added:
 }
 ```
 
-You can customize the header values by specifying the Record values.
+Record 値を指定することで、ヘッダー値をカスタマイズできます。
 
 ### Function-based Options
 
-You can pass a function that receives a `Context` object instead of a static options object. This allows you to dynamically set options based on the request context, such as environment variables or request parameters.
+静的なオプションオブジェクトの代わりに、 `Context` オブジェクトを受け取る関数を渡せます。 これにより、環境変数やリクエストパラメータなど、リクエストコンテキストに基づいてオプションを動的に設定できます。
 
 ```tsx
 app.use(
@@ -146,7 +146,7 @@ app.use(
 )
 ```
 
-As a concrete example, you can use this to disable streaming when generating static sites (SSG) with `<Suspense>`, by using the [`isSSGContext`](/docs/helpers/ssg#isssgcontext) helper:
+具体的な例として、 [`isSSGContext`](/docs/helpers/ssg#isssgcontext) ヘルパーを使用して、 `<Suspense>` で静的サイト (SSG) を生成する際にストリーミングを無効化できます:
 
 ```tsx
 app.use(
@@ -168,9 +168,9 @@ app.use(
 )
 ```
 
-## Nested Layouts
+## ネストされたレイアウト
 
-The `Layout` component enables nesting the layouts.
+`Layout` コンポーネントにより、レイアウトをネストできます。
 
 ```tsx
 app.use(
@@ -200,7 +200,7 @@ app.route('/blog', blog)
 
 ## `useRequestContext()`
 
-`useRequestContext()` returns an instance of Context.
+`useRequestContext()` は Context のインスタンスを返します。
 
 ```tsx
 import { useRequestContext, jsxRenderer } from 'hono/jsx-renderer'
@@ -223,7 +223,7 @@ app.get('/page/info', (c) => {
 ```
 
 ::: warning
-You can't use `useRequestContext()` with the Deno's `precompile` JSX option. Use the `react-jsx`:
+Deno の `precompile` JSX オプションでは `useRequestContext()` を使用できません。 `react-jsx` を使用してください:
 
 ```json
    "compilerOptions": {
@@ -236,9 +236,9 @@ You can't use `useRequestContext()` with the Deno's `precompile` JSX option. Use
 
 :::
 
-## Extending `ContextRenderer`
+## `ContextRenderer` の拡張
 
-By defining `ContextRenderer` as shown below, you can pass additional content to the renderer. This is handy, for instance, when you want to change the contents of the head tag depending on the page.
+以下のように `ContextRenderer` を定義すると、レンダラーに追加のコンテンツを渡せます。 これは例えば、ページごとに head タグの中身を変更したい場合に便利です。
 
 ```tsx
 declare module 'hono' {

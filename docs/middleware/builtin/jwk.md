@@ -1,30 +1,30 @@
-# JWK Auth Middleware
+# JWK Auth ミドルウェア
 
-The JWK Auth Middleware authenticates requests by verifying tokens using JWK (JSON Web Key). It checks for an `Authorization` header and other configured sources, such as cookies, if specified. It validates tokens using the provided `keys`, retrieves keys from `jwks_uri` if specified, and supports token extraction from cookies if the `cookie` option is set.
+JWK Auth Middleware は、 JWK (JSON Web Key) を使ってトークンを検証することでリクエストを認証します。 `Authorization` ヘッダーと、指定された場合はクッキーなどの他の設定されたソースをチェックします。 提供された `keys` を使用してトークンを検証し、指定された場合は `jwks_uri` からキーを取得し、 `cookie` オプションが設定されている場合はクッキーからのトークン抽出をサポートします。
 
-## What this middleware validates
+## このミドルウェアが検証すること
 
-For each token, `jwk()`:
+各トークンについて、 `jwk()` は次を行います:
 
-- Parses and validates the JWT header format.
-- Requires a `kid` header and finds a matching key by `kid`.
-- Rejects symmetric algorithms (`HS256`, `HS384`, `HS512`).
-- Requires the header `alg` to be included in the configured `alg` allowlist.
-- If a matched JWK has an `alg` field, requires it to match the JWT header `alg`.
-- Verifies the token signature with the matched key.
-- By default, validates time-based claims: `nbf`, `exp`, and `iat`.
+- JWT ヘッダーの形式をパースして検証します。
+- `kid` ヘッダーを要求し、 `kid` によってマッチするキーを探します。
+- 対称アルゴリズム (`HS256` 、 `HS384` 、 `HS512`) を拒否します。
+- ヘッダーの `alg` が設定された `alg` 許可リストに含まれていることを要求します。
+- マッチした JWK に `alg` フィールドがある場合、それが JWT ヘッダーの `alg` と一致することを要求します。
+- マッチしたキーでトークンの署名を検証します。
+- デフォルトでは、時刻ベースのクレームである `nbf` 、 `exp` 、 `iat` を検証します。
 
-Optional claim validation can be configured with the `verification` option:
+オプションのクレーム検証は、 `verification` オプションで設定できます:
 
-- `iss`: validates issuer when provided.
-- `aud`: validates audience when provided.
+- `iss`: 指定された場合に issuer を検証します。
+- `aud`: 指定された場合にオーディエンスを検証します。
 
-If you need additional token checks beyond the above (for example, custom application-level authorization rules), add them in your own middleware after `jwk()`.
+上記以外の追加のトークンチェックが必要な場合 (例えば、カスタムのアプリケーションレベルの認可ルールなど) は、 `jwk()` の後に自分のミドルウェアで追加してください。
 
 :::info
-The Authorization header sent from the client must have a specified scheme.
+クライアントから送信される Authorization ヘッダーには、指定されたスキームが必要です。
 
-Example: `Bearer my.token.value` or `Basic my.token.value`
+例: `Bearer my.token.value` または `Basic my.token.value`
 :::
 
 ## Import
@@ -35,7 +35,7 @@ import { jwk } from 'hono/jwk'
 import { verifyWithJwks } from 'hono/jwt'
 ```
 
-## Usage
+## 使い方
 
 ```ts
 const app = new Hono()
@@ -53,7 +53,7 @@ app.get('/auth/page', (c) => {
 })
 ```
 
-Get payload:
+ペイロードの取得:
 
 ```ts
 const app = new Hono()
@@ -72,7 +72,7 @@ app.get('/auth/page', (c) => {
 })
 ```
 
-Anonymous access:
+匿名アクセス:
 
 ```ts
 const app = new Hono()
@@ -93,9 +93,9 @@ app.get('/auth/page', (c) => {
 })
 ```
 
-## Using `verifyWithJwks` outside of middleware
+## ミドルウェア外での `verifyWithJwks` の使用
 
-The `verifyWithJwks` utility function can be used to verify JWT tokens outside of Hono's middleware context, such as in SvelteKit SSR pages or other server-side environments:
+`verifyWithJwks` ユーティリティ関数は、 SvelteKit の SSR ページなどの Hono のミドルウェアコンテキスト外のサーバーサイド環境で JWT トークンを検証するために使用できます:
 
 ```ts
 const id_payload = await verifyWithJwks(
@@ -110,11 +110,11 @@ const id_payload = await verifyWithJwks(
 )
 ```
 
-## Configuring JWKS fetch request options
+## JWKS 取得リクエストオプションの設定
 
-To configure how JWKS is retrieved from `jwks_uri`, pass fetch request options as the second argument of `jwk()`.
+`jwks_uri` から JWKS を取得する方法を設定するには、 `jwk()` の第2引数として fetch リクエストオプションを渡します。
 
-This argument is `RequestInit` and is used only for the JWKS fetch request.
+この引数は `RequestInit` であり、 JWKS の fetch リクエストにのみ使用されます。
 
 ```ts
 const app = new Hono()
@@ -135,60 +135,60 @@ app.use(
 )
 ```
 
-## Options
+## オプション
 
 ### <Badge type="danger" text="required" /> alg: `AsymmetricAlgorithm[]`
 
-An array of allowed asymmetric algorithms used for token verification.
+トークン検証に使用される許可された非対称アルゴリズムの配列です。
 
-Available types are `RS256` | `RS384` | `RS512` | `PS256` | `PS384` | `PS512` | `ES256` | `ES384` | `ES512` | `EdDSA`.
+利用可能な型は `RS256` | `RS384` | `RS512` | `PS256` | `PS384` | `PS512` | `ES256` | `ES384` | `ES512` | `EdDSA` です。
 
 ### <Badge type="info" text="optional" /> keys: `HonoJsonWebKey[] | (c: Context) => Promise<HonoJsonWebKey[]>`
 
-The values of your public keys, or a function that returns them. The function receives the Context object.
+公開鍵の値、またはそれらを返す関数です。 関数は Context オブジェクトを受け取ります。
 
 ### <Badge type="info" text="optional" /> jwks_uri: `string` | `(c: Context) => Promise<string>`
 
-If this value is set, attempt to fetch JWKs from this URI, expecting a JSON response with `keys`, which are added to the provided `keys` option. You can also pass a callback function to dynamically determine the JWKS URI using the Context.
+この値が設定されている場合、この URI から JWK の取得を試みます。 `keys` を含む JSON レスポンスを期待し、取得したキーは提供された `keys` オプションに追加されます。 Context を使用して JWKS URI を動的に決定するコールバック関数を渡すこともできます。
 
 ### <Badge type="info" text="optional" /> allow_anon: `boolean`
 
-If this value is set to `true`, requests without a valid token will be allowed to pass through the middleware. Use `c.get('jwtPayload')` to check if the request is authenticated. The default is `false`.
+この値が `true` に設定されている場合、有効なトークンを持たないリクエストもミドルウェアを通過できるようになります。 リクエストが認証されているかどうかを確認するには `c.get('jwtPayload')` を使用してください。 デフォルトは `false` です。
 
 ### <Badge type="info" text="optional" /> cookie: `string`
 
-If this value is set, then the value is retrieved from the cookie header using that value as a key, which is then validated as a token.
+この値が設定されている場合、その値をキーとしてクッキーヘッダーから値が取得され、トークンとして検証されます。
 
 ### <Badge type="info" text="optional" /> headerName: `string`
 
-The name of the header to look for the JWT token. The default is `Authorization`.
+JWT トークンを探すヘッダーの名前です。 デフォルトは `Authorization` です。
 
 ### <Badge type="info" text="optional" /> realm: `string`
 
-The protection space described by the `realm` parameter of the `WWW-Authenticate` challenge header returned on `401` responses. The default is the request URL.
+`401` レスポンスで返される `WWW-Authenticate` チャレンジヘッダーの `realm` パラメータによって記述される保護空間です。 デフォルトはリクエスト URL です。
 
 ### <Badge type="info" text="optional" /> verification: `VerifyOptions`
 
-Configure claim validation behavior in addition to signature verification:
+署名検証に加えて、クレーム検証の挙動を設定します:
 
 [Keep in sync with jwt.md]: #
 
 #### <Badge type="info" text="optional" /> VerifyOptions.iss: `string | RegExp`
 
-The expected issuer used for token verification. The `iss` claim will **not** be checked if this isn't set.
+トークン検証に使用される期待される issuer です。 これが設定されていない場合、 `iss` クレームはチェック**されません**。
 
 #### <Badge type="info" text="optional" /> VerifyOptions.aud: `string | string[] | RegExp`
 
-The expected audience used for token verification. If this is set, the token must include an `aud` claim and at least one audience value must match.
+トークン検証に使用される期待されるオーディエンスです。 これが設定されている場合、トークンは `aud` クレームを含んでいなければならず、少なくとも1つのオーディエンス値が一致する必要があります。
 
 #### <Badge type="info" text="optional" /> VerifyOptions.nbf: `boolean`
 
-The `nbf` (not before) claim will be verified if present and this is set to `true`. The default is `true`.
+`nbf` (not before) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
 
 #### <Badge type="info" text="optional" /> VerifyOptions.iat: `boolean`
 
-The `iat` (issued at) claim will be verified if present and this is set to `true`. The default is `true`.
+`iat` (issued at) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
 
 #### <Badge type="info" text="optional" /> VerifyOptions.exp: `boolean`
 
-The `exp` (expiration time) claim will be verified if present and this is set to `true`. The default is `true`.
+`exp` (expiration time) クレームは、存在し、かつこれが `true` に設定されている場合に検証されます。 デフォルトは `true` です。
