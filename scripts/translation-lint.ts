@@ -5,7 +5,13 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
-type Issue = { file: string; line: number; rule: string; message: string; text: string }
+type Issue = {
+  file: string
+  line: number
+  rule: string
+  message: string
+  text: string
+}
 
 const issues: Issue[] = []
 
@@ -38,17 +44,27 @@ function check(file: string) {
     })
 
     const push = (rule: string, message: string) => {
-      issues.push({ file, line: lineNo, rule, message, text: raw.trim().slice(0, 80) })
+      issues.push({
+        file,
+        line: lineNo,
+        rule,
+        message,
+        text: raw.trim().slice(0, 80),
+      })
     }
 
     // 全角記号・全角数字・半角カタカナの使用は禁止 (〜 のみ許容)
-    for (const ch of line.match(/[\uff01-\uff5e\uff66-\uff9d]/g) ?? []) {
+    for (const ch of line.match(/[\uff01-\uff5e\uff66-\uff9d]/g) ??
+      []) {
       if (/\uff66-\uff9d/.test(ch) || ch === '\uff9d') {
         push('half-width-katakana', '半角カタカナは使用禁止です')
         break
       }
       if (ch !== '\uff5e') {
-        push('full-width-char', `全角記号・全角数字は使用禁止です: "${ch}"`)
+        push(
+          'full-width-char',
+          `全角記号・全角数字は使用禁止です: "${ch}"`
+        )
         break
       }
     }
@@ -57,28 +73,43 @@ function check(file: string) {
     }
 
     // 文章中の英単語の前後にはスペースを追加 (かな/漢字と英字が直接隣接してはならない)
-    const m1 = line.match(new RegExp(`${KANA}[A-Za-z0-9]|[A-Za-z0-9]${KANA}`))
+    const m1 = line.match(
+      new RegExp(`${KANA}[A-Za-z0-9]|[A-Za-z0-9]${KANA}`)
+    )
     if (m1) {
-      push('space-around-latin', `英単語の前後にはスペースが必要です (${m1[0]})`)
+      push(
+        'space-around-latin',
+        `英単語の前後にはスペースが必要です (${m1[0]})`
+      )
     }
 
     // 括弧 () の前後には半角スペース。ただし markdown リンク記法 [..](..) や関数呼び出し風のコード的表記は除く
-    const paren = line.match(new RegExp(`(?:^|[^\\s(])\\(|\\)[^\\s.,;:)\\]}]`))
+    const paren = line.match(
+      new RegExp(`(?:^|[^\\s(])\\(|\\)[^\\s.,;:)\\]}]`)
+    )
     if (paren && !/[`\]]\(/.test(line)) {
       // 簡易判定: 日本語文の中で ( の直前が空白でない場合のみ検出
       const open = line.match(new RegExp(`${KANA}\\(`))
       const close = line.match(new RegExp(`\\)${KANA}`))
       if (open || close) {
-        push('space-around-paren', '括弧 () の前後には半角スペースが必要です')
+        push(
+          'space-around-paren',
+          '括弧 () の前後には半角スペースが必要です'
+        )
       }
     }
 
     // 句点の後にはスペース (行末・コードプレースホルダ直前は不要)
-    const noSpaceAfterPeriod = line.match(new RegExp(`。(?=[^ \\t\\u0000\\u0001」）)\\]])`, ))
+    const noSpaceAfterPeriod = line.match(
+      new RegExp(`。(?=[^ \\t\\u0000\\u0001」）)\\]])`)
+    )
     if (noSpaceAfterPeriod) {
       const after = line.match(new RegExp(`。.`))
       if (after && !/^。[ \t]/.test(after[0])) {
-        push('space-after-period', '句点の後にはスペースを追加してください')
+        push(
+          'space-after-period',
+          '句点の後にはスペースを追加してください'
+        )
       }
     }
 
@@ -89,13 +120,28 @@ function check(file: string) {
       const afterIdx = line.indexOf(ph) + ph.length
       const after = line[afterIdx]
       const codeText = codes[ci]
-      if ((before !== undefined && /\S/.test(before) && before !== '(') || (after !== undefined && /\S/.test(after))) {
+      if (
+        (before !== undefined &&
+          /\S/.test(before) &&
+          before !== '(') ||
+        (after !== undefined && /\S/.test(after))
+      ) {
         // 先頭/行頭、あるいはリンクテキスト内などは除外しにくいので、かな漢字との直接隣接のみ検出
-        if (new RegExp(`^(.*[^\\s(])?${ph}`).test(line) && before !== undefined && new RegExp(KANA).test(before)) {
-          push('space-around-code', 'インラインコードブロックの前には半角スペースを追加してください')
+        if (
+          new RegExp(`^(.*[^\\s(])?${ph}`).test(line) &&
+          before !== undefined &&
+          new RegExp(KANA).test(before)
+        ) {
+          push(
+            'space-around-code',
+            'インラインコードブロックの前には半角スペースを追加してください'
+          )
         }
         if (after !== undefined && new RegExp(KANA).test(after)) {
-          push('space-around-code', 'インラインコードブロックの後には半角スペースを追加してください')
+          push(
+            'space-around-code',
+            'インラインコードブロックの後には半角スペースを追加してください'
+          )
         }
       }
     }
