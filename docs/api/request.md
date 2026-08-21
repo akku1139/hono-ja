@@ -391,9 +391,9 @@ app.post(
   '/forward',
   validator('json', (data) => data),
   async (c) => {
-    // バリデーションの後にクローンする
+    // Clone after validation
     const clonedReq = await cloneRawRequest(c.req)
-    // エラーをスローしない
+    // Does not throw the error
     await clonedReq.json()
     // ...
   }

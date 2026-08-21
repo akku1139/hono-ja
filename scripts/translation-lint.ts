@@ -7,7 +7,12 @@
 //     アップストリーム (指定したリモートのブランチ) と行数が一致しないファイルを検出します。
 //     例: node ./scripts/translation-lint.ts --line-count upstream main
 import { execFileSync } from 'node:child_process'
-import { readdirSync, readFileSync, statSync } from 'node:fs'
+import {
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync,
+} from 'node:fs'
 import { join } from 'node:path'
 
 type Issue = {
@@ -23,15 +28,39 @@ const issues: Issue[] = []
 const KANA = '[\\u3040-\\u30ff\\u3400-\\u4dbf\\u4e00-\\u9fff]'
 const hasJapanese = (s: string) => new RegExp(KANA).test(s)
 
+// --fix: 自動修正できる項目を修正する
+const fixMode = process.argv.includes('--fix')
+const argvRaw = process.argv.slice(2)
+let targets = argvRaw.filter((a) => a !== '--fix')
+
 function check(file: string) {
   if (!file.endsWith('.md')) return
   const content = readFileSync(file, 'utf8')
   const lines = content.split('\n')
+  let inCode = false
 
   for (let i = 0; i < lines.length; i++) {
     const lineNo = i + 1
     const raw = lines[i]
-    // コードブロック (``` で囲まれた領域) 内は対象外
+    // コードフェンスの状態を追跡
+    if (/^\s*```/.test(raw)) {
+      inCode = !inCode
+      continue
+    }
+    if (inCode) {
+      // コードブロック内は翻訳しない (コメントも原文のまま)
+      if (hasJapanese(raw)) {
+        issues.push({
+          file,
+          line: lineNo,
+          rule: 'japanese-in-code',
+          message:
+            'コードブロック内は翻訳しません。原文のコードのままにしてください (--fix でアップストリームから復元できます)',
+          text: raw.trim().slice(0, 80),
+        })
+      }
+      continue
+    }
     let line = raw
     if (!hasJapanese(line)) continue
 
@@ -161,6 +190,95 @@ function walk(dir: string): string[] {
   return out
 }
 
+// 軽微なフォーマット問題を自動修正する (--fix)
+// コードブロック内の日本語は、アップストリームとの行数が一致する場合に原文へ復元する
+function applyFixes(
+  file: string,
+  content: string,
+  ref: string | null
+): string | null {
+  let upstreamLines: string[] | null = null
+  if (ref) {
+    try {
+      const upstream = execFileSync(
+        'git',
+        ['show', `${ref}:${file}`],
+        {
+          encoding: 'utf8',
+          maxBuffer: 16 * 1024 * 1024,
+        }
+      )
+      const u = upstream.split('\n')
+      const l = content.split('\n')
+      // 行数が一致するときのみコードブロック復元に使用できる
+      if (u.length === l.length) upstreamLines = u
+    } catch {
+      // アップストリームに存在しない場合はスキップ
+    }
+  }
+
+  const KANA_RE = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]/
+  const FULLWIDTH_MAP: Record<string, string> = {
+    '！': '! ',
+    '？': '? ',
+    '：': ': ',
+    '；': '; ',
+    '（': ' (',
+    '）': ') ',
+    '，': ', ',
+    '．': '. ',
+  }
+  let inCode = false
+  let changed = false
+  const out = content.split('\n').map((raw, idx) => {
+    if (/^\s*```/.test(raw)) {
+      inCode = !inCode
+      return raw
+    }
+    if (inCode) {
+      // コードブロック内の日本語はアップストリームの行で復元
+      if (
+        upstreamLines &&
+        KANA_RE.test(raw) &&
+        !KANA_RE.test(upstreamLines[idx])
+      ) {
+        changed = true
+        return upstreamLines[idx]
+      }
+      return raw
+    }
+    if (!KANA_RE.test(raw)) return raw
+    let line = raw
+    // 全角記号・全角数字を半角へ (〜 は保持)
+    line = line.replace(
+      /[！？：；（），．０-９Ａ-Ｚａ-ｚ]/g,
+      (ch) =>
+        FULLWIDTH_MAP[ch] ??
+        String.fromCodePoint(ch.codePointAt(0)! - 0xfee0)
+    )
+    // 句点の後にスペース
+    line = line.replace(/。(?=[^\s」）)】\]])/g, '。 ')
+    // 英単語・インラインコードの前後スペース
+    for (let pass = 0; pass < 2; pass++) {
+      line = line.replace(
+        new RegExp(`(${KANA})([A-Za-z])|([A-Za-z])(${KANA})`, 'g'),
+        (_, a, b, c, d) =>
+          a !== undefined ? `${a} ${b}` : `${c} ${d}`
+      )
+      line = line.replace(
+        new RegExp(`(${KANA})(\\x60)|(\\x60)(${KANA})`, 'g'),
+        (_, a, b, c, d) =>
+          a !== undefined ? `${a} ${b}` : `${c} ${d}`
+      )
+    }
+    // 連続スペースを1つに
+    line = line.replace(/([^ \t]) {2,}/g, '$1 ')
+    if (line !== raw) changed = true
+    return line
+  })
+  return changed ? out.join('\n') : null
+}
+
 // アップストリームと行数を比較する (--line-count <remote> <branch>)
 function checkLineCount(file: string, ref: string) {
   if (!file.endsWith('.md')) return
@@ -187,9 +305,7 @@ function checkLineCount(file: string, ref: string) {
   }
 }
 
-const argv = process.argv.slice(2)
 let lineCountRef: string | null = null
-let targets = argv.slice()
 if (targets[0] === '--line-count') {
   const remote = targets[1]
   const branch = targets[2]
@@ -212,7 +328,16 @@ function expandTargets(paths: string[]): string[] {
   return out
 }
 
-for (const f of expandTargets(targets.length ? targets : ['docs'])) {
+const files = expandTargets(targets.length ? targets : ['docs'])
+for (const f of files) {
+  if (fixMode && !f.endsWith('.md')) continue
+  if (fixMode) {
+    const fixed = applyFixes(f, readFileSync(f, 'utf8'), lineCountRef)
+    if (fixed !== null) {
+      writeFileSync(f, fixed)
+      console.log(`fixed: ${f}`)
+    }
+  }
   if (lineCountRef) checkLineCount(f, lineCountRef)
   check(f)
 }

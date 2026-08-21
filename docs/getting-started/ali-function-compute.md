@@ -113,6 +113,6 @@ resources:
 最後に、コマンドでデプロイしましょう:
 
 ```sh
-npm run build # TypeScript コードを JavaScript にコンパイルします
-npm run deploy # Alibaba Cloud Function Compute に関数をデプロイします
+npm run build # Compile the TypeScript code to JavaScript
+npm run deploy # Deploy the function to Alibaba Cloud Function Compute
 ```

@@ -151,15 +151,15 @@ Hono は、自動的に HEAD リクエストを GET リクエストに変更し�
 ### ✅ 動作する: HEAD リクエスト用に GET ルートを使用する
 
 ```typescript
-// GOOD: この GET ルートは自動的に HEAD リクエストを処理します
+// GOOD: This GET route automatically handles HEAD requests
 app.get('/api/users', async (c) => {
   const users = await getUsers()
   c.header('X-Total-Count', users.length.toString())
   return c.json(users)
 })
 
-// HEAD /api/users リクエストは次の内容を返します:
-// - GET と同じヘッダ (X-Total-Count を含む)
+// HEAD /api/users will return:
+// - Same headers as GET (including X-Total-Count)
 // - Status 200
 // - No body (null)
 ```
@@ -167,14 +167,14 @@ app.get('/api/users', async (c) => {
 ### ✅ 動作する: HEAD 固有のロジック用にミドルウェアを使用する
 
 ```typescript
-// GOOD: HEAD が異なる振る舞いが必要な際にミドルウェアを使用する
+// GOOD: Use middleware when HEAD needs different behavior
 app.use('/api/resource', async (c, next) => {
   await next()
 
-  // ハンドラの後処理で HEAD 固有のヘッダを追加
+  // Add HEAD-specific headers after the handler
   if (c.req.method === 'HEAD') {
     c.header('X-HEAD-Processed', 'true')
-    // HEAD 用に過度なボディの内容を計算しない
+    // Don't compute expensive body content for HEAD
     c.res = new Response(null, c.res)
   }
 })
@@ -183,16 +183,16 @@ app.use('/api/resource', async (c, next) => {
 ### ❌ 動作しない: HEAD 専用のハンドラを生成してみる
 
 ```typescript
-// BAD: これは期待通りには動作しません
+// BAD: This won't work as expected
 app.head('/api/users', (c) => {
-  // このハンドラは決して呼ばれません
+  // This handler will NEVER be called
   c.header('X-Custom', 'value')
   return c.text('ignored')
 })
 
-// BAD: on() を使用しても動作しません
+// BAD: Using on() also won't work
 app.on('HEAD', '/api/users', (c) => {
-  // ルートマッチングする前に GET に変換されます
+  // Still converted to GET before route matching
 })
 ```
 
@@ -205,7 +205,7 @@ app.on('HEAD', '/api/users', (c) => {
 ### HEAD リクエストをテストする
 
 ```typescript
-// 常に GET と HEAD 両方のレスポンスをテストします
+// Always test both GET and HEAD responses
 it('handles HEAD requests correctly', async () => {
   const getRes = await app.request('/api/users')
   const headRes = await app.request('/api/users', { method: 'HEAD' })

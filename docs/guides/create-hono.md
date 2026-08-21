@@ -12,27 +12,27 @@
 ::: code-group
 
 ```sh [npm]
-# create-hono (npm は `--` が必要です) に引数を送ります
+# Forwarding arguments to create-hono (npm requires `--`)
 npm create hono@latest my-app -- --template cloudflare-workers
 ```
 
 ```sh [yarn]
-# "--template cloudflare-workers" は Cloudflare Workers テンプレートを選択します
+# "--template cloudflare-workers" selects the Cloudflare Workers template
 yarn create hono my-app --template cloudflare-workers
 ```
 
 ```sh [pnpm]
-# "--template cloudflare-workers" は Cloudflare Workers テンプレートを選択します
+# "--template cloudflare-workers" selects the Cloudflare Workers template
 pnpm create hono@latest my-app --template cloudflare-workers
 ```
 
 ```sh [bun]
-# "--template cloudflare-workers" は Cloudflare Workers テンプレートを選択します
+# "--template cloudflare-workers" selects the Cloudflare Workers template
 bun create hono@latest my-app --template cloudflare-workers
 ```
 
 ```sh [deno]
-# "--template cloudflare-workers" は Cloudflare Workers テンプレートを選択します
+# "--template cloudflare-workers" selects the Cloudflare Workers template
 deno init --npm hono@latest my-app --template cloudflare-workers
 ```
 
@@ -43,9 +43,9 @@ deno init --npm hono@latest my-app --template cloudflare-workers
 | Argument                | Description                                                                                                                                                                        | Example                         |
 | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------ |
 | `--template <template>` | 開始テンプレートを選択して、インタラクティブなテンプレートプロンプトをスキップします。 テンプレートは、 `bun`, `cloudflare-workers`, `vercel` のような名称がある可能性があります。 | `--template cloudflare-workers` |
-| `--install`             | テンプレートを生成後に、自動的に依存関係をインストールします。                                                                                                                     | `--install`                     |
-| `--pm <packageManager>` | 依存関係をインストールする際に、どのパッケージマネージャを実行するかを指定します。 一般的な値: `npm`, `pnpm`, `yarn`                                                               | `--pm pnpm`                     |
-| `--offline`             | 最新のリモートテンプレートを取得する代わりに、ローカルのキャッシュまたはテンプレートを使用します。 オフライン環境やローカル実行が決まっている場合に有用です。                      | `--offline`                     |
+| `--install` | テンプレートを生成後に、自動的に依存関係をインストールします。 | `--install` |
+| `--pm <packageManager>` | 依存関係をインストールする際に、どのパッケージマネージャを実行するかを指定します。 一般的な値: `npm`, `pnpm`, `yarn` | `--pm pnpm` |
+| `--offline` | 最新のリモートテンプレートを取得する代わりに、ローカルのキャッシュまたはテンプレートを使用します。 オフライン環境やローカル実行が決まっている場合に有用です。 | `--offline` |
 
 > [!NOTE]
 > 正確なテンプレートのセットや有効なオプションは、 `create-hono` プロジェクトでメンテナンスされています。 この文書では、よく使用されるフラグをまとめています。 完全で信頼のあるリファレンスは、以下のリポジトリを参照してください。

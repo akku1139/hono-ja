@@ -93,7 +93,7 @@ const client = hc<AppType>('http://localhost:8787/', {
   },
 })
 
-// このリクエストは、セットしたあらゆるクッキーを含んでいます
+const res = await client.posts.$get({
 const res = await client.posts.$get({
   query: {
     id: '123',
@@ -192,7 +192,7 @@ if (res.ok) {
   const data = await res.json() // { users: string[] }
 }
 
-// InferResponseType はグローバルエラー型を含んでいます
+type ResType = InferResponseType<typeof client.api.users.$get>
 type ResType = InferResponseType<typeof client.api.users.$get>
 // { users: string[] } | { error: string }
 ```
@@ -309,7 +309,7 @@ const route = app.get(
   zValidator(
     'query',
     z.object({
-      page: z.coerce.number().optional(), // 強制的に数値に変換
+      page: z.coerce.number().optional(), // coerce to convert to number
     })
   ),
   (c) => {
@@ -332,7 +332,7 @@ const res = await client.posts[':id'].$get({
     id: '123',
   },
   query: {
-    page: '1', // `string` だがバリデータで `number` に変換される
+    page: '1', // `string`, converted by the validator to `number`
   },
 })
 ```
@@ -477,11 +477,11 @@ abortController.abort()
 `Uncaught TypeError: Failed to construct 'URL': Invalid URL`
 
 ```ts
-// ❌ エラーをスローするでしょう
+// ❌ Will throw error
 const client = hc<AppType>('/')
 client.api.post.$url()
 
-// ✅ 期待通りに動作するでしょう
+// ✅ Will work as expected
 const client = hc<AppType>('http://localhost:8787/')
 client.api.post.$url()
 ```
@@ -516,8 +516,8 @@ const client = hc<typeof route, 'http://localhost:8787'>(
 )
 
 const url = client.api.posts.$url()
-// url は正確な型情報 ( プロトコル, ホスト, パスを含む )
-// をもった型安全な URL です
+// url is TypedURL with precise type information
+// including protocol, host, and path
 ```
 
 SWR のようなライブラリに対して型安全なキーとして URL を使用したいときに有用です。
@@ -650,13 +650,13 @@ type ResType = InferResponseType<typeof $post>
 ```ts
 import { parseResponse, DetailedError } from 'hono/client'
 
-// result は解析されたレスポンスボディ (Content-Type に基づいて自動的に解析されます) を含みます
+// result contains the parsed response body (automatically parsed based on Content-Type)
 const result = await parseResponse(client.hello.$get()).catch(
   (e: DetailedError) => {
     console.error(e)
   }
 )
-// レスポンスが OK でない場合、 parseResponse は自動的にエラーをスローします
+// parseResponse automatically throws an error if response is not ok
 ```
 
 ## SWR を使用する
@@ -795,7 +795,7 @@ export const app = Hono<BlankEnv, BlankSchema, '/'>().get<
 import { app } from './app'
 import { hc } from 'hono/client'
 
-// これは、コンパイル時に型を計算するためのトリックです。
+// this is a trick to calculate the type when compiling
 export type Client = ReturnType<typeof hc<typeof app>>
 
 export const hcWithType = (...args: Parameters<typeof hc>): Client =>
