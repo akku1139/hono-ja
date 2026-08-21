@@ -1,9 +1,9 @@
-# Bearer Auth Middleware
+# Bearer Auth ミドルウェア
 
-The Bearer Auth Middleware provides authentication by verifying an API token in the Request header.
-The HTTP clients accessing the endpoint will add the `Authorization` header with `Bearer {token}` as the header value.
+Bearer Auth Middleware は、リクエストヘッダー内の API トークンを検証することで認証を提供します。
+エンドポイントにアクセスする HTTP クライアントは、ヘッダー値として `Bearer {token}` を付けた `Authorization` ヘッダーを追加します。
 
-Using `curl` from the terminal, it would look like this:
+ターミナルから `curl` を使用すると、次のようになります:
 
 ```sh
 curl -H 'Authorization: Bearer honoiscool' http://localhost:8787/auth/page
@@ -16,10 +16,10 @@ import { Hono } from 'hono'
 import { bearerAuth } from 'hono/bearer-auth'
 ```
 
-## Usage
+## 使い方
 
 > [!NOTE]
-> Your `token` must match the regex `/[A-Za-z0-9._~+/-]+=*/`, otherwise a 400 error will be returned. Notably, this regex accommodates both URL-safe Base64- and standard Base64-encoded JWTs. This middleware does not require the bearer token to be a JWT, just that it matches the above regex.
+> `token` は正規表現 `/[A-Za-z0-9._~+/-]+=*/` にマッチする必要があります。 そうでない場合は 400 エラーが返されます。 特に、この正規表現は URL セーフ Base64 と標準 Base64 でエンコードされた JWT の両方に対応しています。 このミドルウェアは、ベアラートークンが JWT であることを要求せず、上記の正規表現にマッチすることのみを要求します。
 
 ```ts
 const app = new Hono()
@@ -33,7 +33,7 @@ app.get('/api/page', (c) => {
 })
 ```
 
-To restrict to a specific route + method:
+特定のルート + メソッドに制限する場合:
 
 ```ts
 const app = new Hono()
@@ -49,7 +49,7 @@ app.post('/api/page', bearerAuth({ token }), (c) => {
 })
 ```
 
-To implement multiple tokens (E.g., any valid token can read but create/update/delete are restricted to a privileged token):
+複数のトークンを実装する場合 (例えば、任意の有効なトークンは読み取り可能だが、作成/更新/削除は特権トークンに制限される):
 
 ```ts
 const app = new Hono()
@@ -72,7 +72,7 @@ app.on(privilegedMethods, '/api/page/*', async (c, next) => {
 // Define handlers for GET, POST, etc.
 ```
 
-If you want to verify the value of the token yourself, specify the `verifyToken` option; returning `true` means it is accepted.
+トークンの値を自分で検証したい場合は、 `verifyToken` オプションを指定してください。 `true` を返すと受け入れられたことを意味します。
 
 ```ts
 const app = new Hono()
@@ -87,52 +87,52 @@ app.use(
 )
 ```
 
-## Options
+## オプション
 
 ### <Badge type="danger" text="required" /> token: `string` | `string[]`
 
-The string to validate the incoming bearer token against.
+受信したベアラートークンを検証するための文字列です。
 
 ### <Badge type="info" text="optional" /> realm: `string`
 
-The domain name of the realm, as part of the returned WWW-Authenticate challenge header. The default is `""`.
-See more: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate#directives
+返される WWW-Authenticate チャレンジヘッダーの一部としてのレルムのドメイン名です。 デフォルトは `""` です。
+詳しくは次を参照してください: https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/WWW-Authenticate#directives
 
 ### <Badge type="info" text="optional" /> prefix: `string`
 
-The prefix (or known as `schema`) for the Authorization header value. The default is `"Bearer"`.
+Authorization ヘッダー値のプレフィックス (`schema` とも呼ばれます) です。 デフォルトは `"Bearer"` です。
 
 ### <Badge type="info" text="optional" /> headerName: `string`
 
-The header name. The default value is `Authorization`.
+ヘッダー名です。 デフォルト値は `Authorization` です。
 
 ### <Badge type="info" text="optional" /> hashFunction: `Function`
 
-A function to handle hashing for safe comparison of authentication tokens.
+認証トークンを安全に比較するためのハッシュ処理を行う関数です。
 
 ### <Badge type="info" text="optional" /> verifyToken: `(token: string, c: Context) => boolean | Promise<boolean>`
 
-The function to verify the token.
+トークンを検証する関数です。
 
 ### <Badge type="info" text="optional" /> noAuthenticationHeader: `object`
 
-Customizes the error response when the request does not have an authentication header.
+リクエストに認証ヘッダーがない場合のエラーレスポンスをカスタマイズします。
 
-- `wwwAuthenticateHeader`: `string | object | MessageFunction` - Customizes the WWW-Authenticate header value.
-- `message`: `string | object | MessageFunction` - The custom message for the response body.
+- `wwwAuthenticateHeader`: `string | object | MessageFunction` - WWW-Authenticate ヘッダー値をカスタマイズします。
+- `message`: `string | object | MessageFunction` - レスポンスボディのカスタムメッセージです。
 
-`MessageFunction` is `(c: Context) => string | object | Promise<string | object>`.
+`MessageFunction` は `(c: Context) => string | object | Promise<string | object>` です。
 
 ### <Badge type="info" text="optional" /> invalidAuthenticationHeader: `object`
 
-Customizes the error response when the authentication header format is invalid.
+認証ヘッダーの形式が無効な場合のエラーレスポンスをカスタマイズします。
 
-- `wwwAuthenticateHeader`: `string | object | MessageFunction` - Customizes the WWW-Authenticate header value.
-- `message`: `string | object | MessageFunction` - The custom message for the response body.
+- `wwwAuthenticateHeader`: `string | object | MessageFunction` - WWW-Authenticate ヘッダー値をカスタマイズします。
+- `message`: `string | object | MessageFunction` - レスポンスボディのカスタムメッセージです。
 
 ### <Badge type="info" text="optional" /> invalidToken: `object`
 
-Customizes the error response when the token is invalid.
+トークンが無効な場合のエラーレスポンスをカスタマイズします。
 
-- `wwwAuthenticateHeader`: `string | object | MessageFunction` - Customizes the WWW-Authenticate header value.
-- `message`: `string | object | MessageFunction` - The custom message for the response body.
+- `wwwAuthenticateHeader`: `string | object | MessageFunction` - WWW-Authenticate ヘッダー値をカスタマイズします。
+- `message`: `string | object | MessageFunction` - レスポンスボディのカスタムメッセージです。
