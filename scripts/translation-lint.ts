@@ -33,11 +33,24 @@ const fixMode = process.argv.includes('--fix')
 const argvRaw = process.argv.slice(2)
 let targets = argvRaw.filter((a) => a !== '--fix')
 
-function check(file: string) {
+// アンカー行 = 構造の目印として翻訳前後で行位置を変えてはいけない行
+// (空行、 ``` で始まるコードフェンス行、 ::: で始まるコンテナ行)
+const isAnchor = (l: string) =>
+  l === '' || /^\s*```/.test(l) || /^\s*:::/.test(l)
+
+function check(file: string, upstreamContent: string | null = null) {
   if (!file.endsWith('.md')) return
   const content = readFileSync(file, 'utf8')
   const lines = content.split('\n')
   let inCode = false
+  const anchorIssues: number[] = []
+  const upLines = upstreamContent ? upstreamContent.split('\n') : null
+  if (upLines && upLines.length === lines.length) {
+    // アンカー行が上流と同じ行位置にあるか検証 (行の分割/結合による構造ズレを検出)
+    for (let i = 0; i < lines.length; i++) {
+      if (isAnchor(lines[i]) !== isAnchor(upLines[i])) anchorIssues.push(i + 1)
+    }
+  }
 
   for (let i = 0; i < lines.length; i++) {
     const lineNo = i + 1
@@ -123,7 +136,7 @@ function check(file: string) {
 
     // 句点の後にはスペース (行末・閉じ括弧類・プレースホルダ直前は不要)
     const noSpaceAfterPeriod = line.match(
-      /。[^ \t\u0000\u0001」）)】\]]/
+      /。[^ \t\u0000\u0001」）)】\]*]/
     )
     if (noSpaceAfterPeriod) {
       push(
@@ -164,6 +177,17 @@ function check(file: string) {
         }
       }
     }
+  }
+  // アンカー行の位置ズレを報告
+  for (const ln of anchorIssues) {
+    issues.push({
+      file,
+      line: ln,
+      rule: 'structure-alignment',
+      message:
+        '構造が翻訳元と一致しません (空行 / ``` / ::: の行位置がずれています)。翻訳は翻訳元の行と同じ構造に収めてください',
+      text: '',
+    })
   }
 }
 
@@ -224,18 +248,22 @@ function applyFixes(content: string): string | null {
 }
 
 // アップストリームと行数を比較する (--line-count <remote> <branch>)
-function checkLineCount(file: string, ref: string) {
-  if (!file.endsWith('.md')) return
-  let upstream: string
+function getUpstreamContent(ref: string | null, file: string): string | null {
+  if (!ref) return null
   try {
-    upstream = execFileSync('git', ['show', `${ref}:${file}`], {
+    return execFileSync('git', ['show', `${ref}:${file}`], {
       encoding: 'utf8',
       maxBuffer: 16 * 1024 * 1024,
     })
   } catch {
-    // アップストリームに存在しないファイルは比較対象外
-    return
+    return null
   }
+}
+
+function checkLineCount(file: string, ref: string) {
+  if (!file.endsWith('.md')) return
+  const upstream = getUpstreamContent(ref, file)
+  if (upstream === null) return
   const localLines = readFileSync(file, 'utf8').split('\n').length
   const upstreamLines = upstream.split('\n').length
   if (localLines !== upstreamLines) {
@@ -282,8 +310,12 @@ for (const f of files) {
       console.log(`fixed: ${f}`)
     }
   }
-  if (lineCountRef) checkLineCount(f, lineCountRef)
-  check(f)
+  if (lineCountRef) {
+    checkLineCount(f, lineCountRef)
+    check(f, getUpstreamContent(lineCountRef, f))
+  } else {
+    check(f)
+  }
 }
 
 if (issues.length > 0) {

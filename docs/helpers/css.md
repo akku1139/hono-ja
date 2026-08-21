@@ -1,6 +1,8 @@
-# CSS ヘルパー
+# css ヘルパー
 
-`hono/css` CSS ヘルパーは Hono のビルトイン CSS in JS(X) ツールです。 JavaScript で `css` テンプレートリテラルを使うことで CSS in JSX を実現できます。 `css` の戻り値はクラス名で、 class 属性の値に設定できます。 `<Style />` コンポーネントには CSS のコードが含まれます。
+`hono/css` CSS ヘルパーは Hono のビルトイン CSS in JS(X) ツールです。
+
+JavaScript で `css` テンプレートリテラルを使うことで CSS in JSX を実現できます。 `css` の戻り値はクラス名で、 class 属性の値に設定できます。 `<Style />` コンポーネントには CSS のコードが含まれます。
 
 ## インポート
 
@@ -11,8 +13,7 @@ import { css, cx, keyframes, Style, createCssContext } from 'hono/css'
 
 ## `css` <Badge style="vertical-align: middle;" type="warning" text="Experimental" />
 
-`css` テンプレートリテラル内に CSS を記述できます。 この例では、 `headerClass` を `class` 属性の値として使用します。
-`<Style />` には CSS コードが含まれているので、追加することを忘れないでください。
+`css` テンプレートリテラル内に CSS を記述できます。 この例では、 `headerClass` を `class` 属性の値として使用します。 `<Style />` には CSS コードが含まれているので、追加することを忘れないでください。
 
 ```ts{10,13}
 app.get('/', (c) => {
@@ -110,7 +111,7 @@ return c.render(
 )
 ```
 
-もしくは、 `<Style />` コンポーネントに `css` リテラルを用いて CSS を書くこともできます。
+または、 `<Style />` コンポーネントに `css` リテラルを用いて CSS を書くこともできます。
 
 ```tsx
 export const renderer = jsxRenderer(({ children, title }) => {
@@ -225,7 +226,9 @@ const { css, cx, keyframes, Style } = createCssContext({
 
 ### `classNameSlug`
 
-デフォルトでは、 CSS クラス名は `css-1234567890` の形式で生成されます。 `classNameSlug` 関数を渡すことで、これをカスタマイズできます。 この関数は3つの引数を受け取ります:
+デフォルトでは、 CSS クラス名は `css-1234567890` の形式で生成されます。 `classNameSlug` 関数を渡すことで、これをカスタマイズできます。
+
+この関数は3つの引数を受け取ります:
 
 - `hash` - デフォルトで生成されたクラス名 (例: `css-1234567890`)
 - `label` - CSS テンプレートの先頭にある `/* comment */` から抽出されたもの (なければ空文字列)
@@ -258,15 +261,12 @@ const { css, Style } = createCssContext({
 })
 ```
 
-## Security
+## セキュリティ
 
 CSS Helper は CSS を記述するための API です。 他の CSS-in-JS ライブラリと同様に、補間された値は **生の CSS** として挿入されます。 HTML への脱出 (引用符、バックスラッシュ、 `</`) はブロックされますが、 `{` 、 `}` 、 `;` は有効な CSS であるためそのまま通過します。
 
 ::: warning
-CSS Helper は CSS を記述するための API です。 他の CSS-in-JS ライブラリと同様に、補間された値は **生の CSS** として挿入されます。 HTML への脱出 (引用符、バックスラッシュ、 `</`) はブロックされますが、 `{` 、 `}` 、 `;` は有効な CSS であるためそのまま通過します。
-
-::: warning
-CSS Helper は他の raw シンク (`html` 、 `raw` 、 `rawCssString`) と同様に扱ってください。 **信頼できない入力を直接渡さないでください。 ** 渡すと CSS インジェクションが可能になります。 まず許可リストに対して検証してください。
+CSS Helper は他の raw シンク (`html` 、 `raw` 、 `rawCssString`) と同様に扱ってください。**信頼できない入力を直接渡さないでください。** 渡すと CSS インジェクションが可能になります。 まず許可リストに対して検証してください。
 
 ```tsx
 const ALLOWED_COLORS = ['red', 'green', 'blue']
