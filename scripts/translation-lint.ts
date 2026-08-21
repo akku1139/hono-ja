@@ -48,7 +48,8 @@ function check(file: string, upstreamContent: string | null = null) {
   if (upLines && upLines.length === lines.length) {
     // アンカー行が上流と同じ行位置にあるか検証 (行の分割/結合による構造ズレを検出)
     for (let i = 0; i < lines.length; i++) {
-      if (isAnchor(lines[i]) !== isAnchor(upLines[i])) anchorIssues.push(i + 1)
+      if (isAnchor(lines[i]) !== isAnchor(upLines[i]))
+        anchorIssues.push(i + 1)
     }
   }
 
@@ -248,7 +249,10 @@ function applyFixes(content: string): string | null {
 }
 
 // アップストリームと行数を比較する (--line-count <remote> <branch>)
-function getUpstreamContent(ref: string | null, file: string): string | null {
+function getUpstreamContent(
+  ref: string | null,
+  file: string
+): string | null {
   if (!ref) return null
   try {
     return execFileSync('git', ['show', `${ref}:${file}`], {
