@@ -104,6 +104,10 @@ process.on('SIGTERM', () => {
 })
 ```
 
+::: info
+On Node.js, `serve()` wraps the `node:http` module and returns the underlying server instance, so closing it is up to you. Bun and Deno serve Fetch handlers natively and manage the server themselves, which is why their guides don't include this step.
+:::
+
 ## 3. 実行
 
 開発サーバーをローカルで起動し、 Web ブラウザで `http://localhost:3000` にアクセスします。
