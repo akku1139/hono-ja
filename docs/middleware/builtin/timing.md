@@ -83,7 +83,7 @@ app.use(
 
 ヘッダーにタイミングを追加するかどうかです。 デフォルトは `true` です。
 
-### <Badge type="info" text="optional" /> totalDescription: `boolean`
+### <Badge type="info" text="optional" /> totalDescription: `string`
 
 レスポンスの合計時間の説明です。 デフォルトは `Total Response Time` です。
 
