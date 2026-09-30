@@ -3,9 +3,9 @@
 // 使い方:
 //   node ./scripts/translation-lint.ts [file ...]
 //     ファイルが指定されない場合は docs/ 以下の .md をすべて検査します。
-//   node ./scripts/translation-lint.ts --line-count <remote> <branch> [file ...]
-//     アップストリーム (指定したリモートのブランチ) と行数が一致しないファイルを検出します。
-//     例: node ./scripts/translation-lint.ts --line-count upstream main
+//   node ./scripts/translation-lint.ts --line-count <git-ref> [file ...]
+//     指定した Git ref と行数が一致しないファイルを検出します。
+//     例: node ./scripts/translation-lint.ts --line-count upstream/main
 import { execFileSync } from 'node:child_process'
 import {
   readdirSync,
@@ -258,15 +258,15 @@ function getUpstreamContent(
     return execFileSync('git', ['show', `${ref}:${file}`], {
       encoding: 'utf8',
       maxBuffer: 16 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'ignore'],
     })
   } catch {
     return null
   }
 }
 
-function checkLineCount(file: string, ref: string) {
+function checkLineCount(file: string, upstream: string | null) {
   if (!file.endsWith('.md')) return
-  const upstream = getUpstreamContent(ref, file)
   if (upstream === null) return
   const localLines = readFileSync(file, 'utf8').split('\n').length
   const upstreamLines = upstream.split('\n').length
@@ -283,17 +283,31 @@ function checkLineCount(file: string, ref: string) {
 
 let lineCountRef: string | null = null
 if (targets[0] === '--line-count') {
-  const remote = targets[1]
-  const branch = targets[2]
-  if (!remote || !branch) {
+  const ref = targets[1]
+  if (!ref) {
     console.error(
-      '--line-count には <remote> と <branch> を指定してください'
+      '--line-count には <git-ref> を指定してください'
     )
     process.exit(2)
   }
-  lineCountRef = `${remote}/${branch}`
-  targets = targets.slice(3)
+  lineCountRef = ref
+  targets = targets.slice(2)
 }
+
+function validateGitRef(ref: string) {
+  try {
+    execFileSync('git', ['rev-parse', '--verify', `${ref}^{commit}`], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    })
+  } catch {
+    console.error(`Git ref を解決できません: ${ref}`)
+    process.exit(2)
+  }
+}
+
+if (lineCountRef) validateGitRef(lineCountRef)
+
 // 引数がディレクトリなら再帰的に .md ファイルへ展開する
 function expandTargets(paths: string[]): string[] {
   const out: string[] = []
@@ -315,8 +329,9 @@ for (const f of files) {
     }
   }
   if (lineCountRef) {
-    checkLineCount(f, lineCountRef)
-    check(f, getUpstreamContent(lineCountRef, f))
+    const upstream = getUpstreamContent(lineCountRef, f)
+    checkLineCount(f, upstream)
+    check(f, upstream)
   } else {
     check(f)
   }
