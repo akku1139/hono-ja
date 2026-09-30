@@ -90,10 +90,14 @@ export default { // [!code ++]
 
 ## 静的ファイルの提供
 
-静的ファイルを提供するために `hono/bun` から `serveStatic` をインポートして使用してください、
+静的ファイルを提供するために `@hono/bun` から `serveStatic` をインポートして使用してください、
+
+```sh
+bun add @hono/bun
+```
 
 ```ts
-import { serveStatic } from 'hono/bun'
+import { serveStatic } from '@hono/bun'
 
 const app = new Hono()
 

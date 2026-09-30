@@ -232,10 +232,10 @@ Bearer や JWT 認証、 CORS や ETag などの便利なミドルウェアが�
 ## アダプタ
 
 静的ファイルや WebSocket の処理など、プラットフォームによって異なる機能を実装するためのアダプタがあります。
-例えば、 WebSocket を Cloudflare Workers で扱うためには `hono/cloudflare-workers` をインポートします
+これらは別々のパッケージで提供されます。 例えば、 WebSocket を Cloudflare Workers で扱うためには `@hono/cloudflare-workers` をインストールしてインポートします
 
 ```ts
-import { upgradeWebSocket } from 'hono/cloudflare-workers'
+import { upgradeWebSocket } from '@hono/cloudflare-workers'
 
 app.get(
   '/ws',

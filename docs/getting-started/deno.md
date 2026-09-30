@@ -58,11 +58,15 @@ Deno.serve({ port: 8787 }, app.fetch) // [!code ++]
 
 ## 静的ファイルの提供
 
-静的ファイルを提供するには `hono/deno` から `serveStatic` をインポートして使用します。
+静的ファイルを提供するには `@hono/deno` から `serveStatic` をインポートして使用します。
+
+```sh
+deno add jsr:@hono/deno
+```
 
 ```ts
 import { Hono } from 'hono'
-import { serveStatic } from 'hono/deno'
+import { serveStatic } from '@hono/deno'
 
 const app = new Hono()
 

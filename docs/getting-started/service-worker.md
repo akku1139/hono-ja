@@ -46,22 +46,22 @@ cd my-app
 ::: code-group
 
 ```sh [npm]
-npm i hono
+npm i hono @hono/service-worker
 npm i -D vite
 ```
 
 ```sh [yarn]
-yarn add hono
+yarn add hono @hono/service-worker
 yarn add -D vite
 ```
 
 ```sh [pnpm]
-pnpm add hono
+pnpm add hono @hono/service-worker
 pnpm add -D vite
 ```
 
 ```sh [bun]
-bun add hono
+bun add hono @hono/service-worker
 bun add -D vite
 ```
 
@@ -118,7 +118,7 @@ start()
 declare const self: ServiceWorkerGlobalScope
 
 import { Hono } from 'hono'
-import { handle } from 'hono/service-worker'
+import { handle } from '@hono/service-worker'
 
 const app = new Hono().basePath('/sw')
 app.get('/', (c) => c.text('Hello World'))
@@ -132,7 +132,7 @@ self.addEventListener('fetch', handle(app))
 
 ```ts
 import { Hono } from 'hono'
-import { fire } from 'hono/service-worker'
+import { fire } from '@hono/service-worker'
 
 const app = new Hono().basePath('/sw')
 app.get('/', (c) => c.text('Hello World'))

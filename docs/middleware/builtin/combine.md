@@ -20,7 +20,7 @@ Combine Middleware を使った複雑なアクセス制御ルールの例です�
 ```ts
 import { Hono } from 'hono'
 import { bearerAuth } from 'hono/bearer-auth'
-import { getConnInfo } from 'hono/cloudflare-workers'
+import { getConnInfo } from '@hono/cloudflare-workers'
 import { every, some } from 'hono/combine'
 import { ipRestriction } from 'hono/ip-restriction'
 import { rateLimit } from '@/my-rate-limit'

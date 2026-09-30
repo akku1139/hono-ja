@@ -15,7 +15,7 @@ Bun 上で動作するアプリケーションで、ローカルからのアク�
 
 ```ts
 import { Hono } from 'hono'
-import { getConnInfo } from 'hono/bun'
+import { getConnInfo } from '@hono/bun'
 import { ipRestriction } from 'hono/ip-restriction'
 
 const app = new Hono()
@@ -34,7 +34,7 @@ app.get('/', (c) => c.text('Hello Hono!'))
 環境に適した [ConnInfo Helper](/docs/helpers/conninfo) の `getConninfo` を `ipRestriction` の第1引数として渡します。 例えば、 Deno の場合は次のようになります:
 
 ```ts
-import { getConnInfo } from 'hono/deno'
+import { getConnInfo } from '@hono/deno'
 import { ipRestriction } from 'hono/ip-restriction'
 
 //...

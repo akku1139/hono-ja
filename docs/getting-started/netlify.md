@@ -42,7 +42,7 @@ deno init --npm hono my-app
 
 ```ts
 import { Hono } from 'jsr:@hono/hono'
-import { handle } from 'jsr:@hono/hono/netlify'
+import { handle } from 'jsr:@hono/netlify'
 
 const app = new Hono()
 
@@ -75,7 +75,7 @@ Netlify 向けの `Context` は `c.env` を使用できます:
 
 ```ts
 import { Hono } from 'jsr:@hono/hono'
-import { handle } from 'jsr:@hono/hono/netlify'
+import { handle } from 'jsr:@hono/netlify'
 
 // Import the type definition
 import type { Context } from 'https://edge.netlify.com/'

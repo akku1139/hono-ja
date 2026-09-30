@@ -5,21 +5,23 @@ WebSocket ヘルパーは、 Hono アプリケーションのサーバーサイ�
 
 ## Import
 
+The adapter for each runtime is a separate package (`@hono/cloudflare-workers`, `@hono/deno`, `@hono/bun`, ...). Install the one for your runtime.
+
 ::: code-group
 
 ```ts [Cloudflare Workers]
 import { Hono } from 'hono'
-import { upgradeWebSocket } from 'hono/cloudflare-workers'
+import { upgradeWebSocket } from '@hono/cloudflare-workers'
 ```
 
 ```ts [Deno]
 import { Hono } from 'hono'
-import { upgradeWebSocket } from 'hono/deno'
+import { upgradeWebSocket } from '@hono/deno'
 ```
 
 ```ts [Bun]
 import { Hono } from 'hono'
-import { upgradeWebSocket, websocket } from 'hono/bun'
+import { upgradeWebSocket, websocket } from '@hono/bun'
 
 // ...
 
@@ -108,7 +110,7 @@ WebSocket を使った例:
 ```ts
 // server.ts
 import { Hono } from 'hono'
-import { upgradeWebSocket } from 'hono/cloudflare-workers'
+import { upgradeWebSocket } from '@hono/cloudflare-workers'
 
 const app = new Hono().get(
   '/ws',
@@ -143,7 +145,7 @@ ws.addEventListener('open', () => {
 
 ```tsx
 import { Hono } from 'hono'
-import { upgradeWebSocket, websocket } from 'hono/bun'
+import { upgradeWebSocket, websocket } from '@hono/bun'
 import { html } from 'hono/html'
 
 const app = new Hono()

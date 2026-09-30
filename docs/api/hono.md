@@ -69,7 +69,7 @@ app.onError((err, c) => {
 ## fire()
 
 ::: warning
-**`app.fire()` は非推奨です**。 代わりに `hono/service-worker` から `fire()` を使ってください。 詳しくは[サービスワーカーのドキュメント](/docs/getting-started/service-worker) を読んでください。
+**`app.fire()` は非推奨です**。 代わりに `@hono/service-worker` から `fire()` を使ってください。 詳しくは[サービスワーカーのドキュメント](/docs/getting-started/service-worker) を読んでください。
 :::
 
 `app.fire()` は自動で `fetch` イベントリスナーを追加します。
