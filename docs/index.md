@@ -80,6 +80,7 @@ Hono は Express に似たフロントエンドを持たない Web アプリケ�
 | [OpenStatus](https://openstatus.dev)                                               | Bun                | オープンソースの Web サイト・ API 監視プラットフォーム。 _API サーバーに Hono を使用_。                                                    |
 | [Deno Benchmarks](https://deno.com/benchmarks)                                     | Deno               | V8 上で動作する安全な TypeScript ランタイム。 _ベンチマーク用途に Hono を使用_。                                                           |
 | [Clerk](https://clerk.com)                                                         | Cloudflare Workers | オープンソースのユーザー管理プラットフォーム。 _API サーバーに Hono を使用_。                                                              |
+| [PostHog](https://posthog.com)                                                     | Node.js            | セルフドライビングプロダクトを開発するためのオープンソースプラットフォーム。 _MCP サーバーに Hono を使用_。                               |
 
 そして、
 
