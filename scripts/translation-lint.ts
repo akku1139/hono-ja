@@ -285,9 +285,7 @@ let lineCountRef: string | null = null
 if (targets[0] === '--line-count') {
   const ref = targets[1]
   if (!ref) {
-    console.error(
-      '--line-count には <git-ref> を指定してください'
-    )
+    console.error('--line-count には <git-ref> を指定してください')
     process.exit(2)
   }
   lineCountRef = ref
@@ -296,10 +294,14 @@ if (targets[0] === '--line-count') {
 
 function validateGitRef(ref: string) {
   try {
-    execFileSync('git', ['rev-parse', '--verify', `${ref}^{commit}`], {
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    })
+    execFileSync(
+      'git',
+      ['rev-parse', '--verify', `${ref}^{commit}`],
+      {
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }
+    )
   } catch {
     console.error(`Git ref を解決できません: ${ref}`)
     process.exit(2)
