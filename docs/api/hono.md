@@ -161,6 +161,10 @@ test('POST /message is ok', async () => {
 
 ## mount()
 
+::: warning
+**`app.mount()` は非推奨です**。 [Mount ミドルウェア](/docs/middleware/builtin/mount)を代わりに使ってください。
+:::
+
 `mount()` は他のフレームワークで書かれたアプリケーションを Hono のアプリケーションにマウントできます。
 
 ```ts
