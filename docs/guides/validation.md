@@ -53,7 +53,7 @@ app.post(
 ::: warning
 `json` または `form` をバリデートする際に、リクエストはマッチする `content-type` ヘッダを含んでいる _必要があります_。 (例: `json` の場合は `Content-Type: application/json`) もしそうでない場合、リクエストボディはパースされず、コールバック内で値として空のオブジェクト (`{}`) を受け取るでしょう。
 
-[`app.request()`](../api/request.md)
+[`app.request()`](../api/request)
 を使用してテストをする際に、 `content-type` をセットすることは重要です。
 
 アプリケーションは以下のようになります。
