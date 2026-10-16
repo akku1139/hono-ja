@@ -1,6 +1,6 @@
 # Tencent CloudBase
 
-[Tencent CloudBase](https://docs.cloudbase.net/en/) はテンセントクラウドのサーバレスのバックエンドプラットフォームです。 [HTTP Cloud Functions](https://docs.cloudbase.net/en/cloud-function/develop/how-to-writing-functions-code) は、プレーンな Node.js プロセスとして動作します。アプリケーションは、ポート `9000` で待ち受けし、 CloudBase は [`scf_bootstrap`](https://docs.cloudbase.net/en/cloud-function/develop/scf-bootstrap) を通じてアプリケーションを起動します。 [`@hono/node-server`](https://github.com/honojs/node-server) はそのまま動作します。Hono のアダプタは必要ありません。
+[Tencent CloudBase](https://docs.cloudbase.net/en/) はテンセントクラウドのサーバレスのバックエンドプラットフォームです。 [HTTP Cloud Functions](https://docs.cloudbase.net/en/cloud-function/develop/how-to-writing-functions-code) は、 プレーンな Node.js プロセスとして動作します。アプリケーションは、 ポート `9000` で待ち受けし、 CloudBase は [`scf_bootstrap`](https://docs.cloudbase.net/en/cloud-function/develop/scf-bootstrap) を通じてアプリケーションを起動します。 [`@hono/node-server`](https://github.com/honojs/node-server) はそのまま動作します。Hono のアダプタは必要ありません。
 
 ## 1. Setup
 
@@ -62,7 +62,7 @@ npm run dev
 
 ## 4. Bootstrap
 
-プロジェクトのルートに `scf_bootstrap` ファイル（ファイルの拡張子なし） を作成します。それからファイルに実行権限を与えます:
+プロジェクトのルートに `scf_bootstrap` ファイル ( ファイルの拡張子なし ) を作成します。 それからファイルに実行権限を与えます:
 
 ```sh
 #!/bin/bash
@@ -84,4 +84,4 @@ npm run build
 tcb fn deploy <function-name> --httpFn
 ```
 
-コンソールから zip ファイルをアップロードします。詳細は、[Node.js HTTP function quick start](https://docs.cloudbase.net/en/cloud-function/quickstart/httpfunc/nodejs) を確認してください。
+コンソールから zip ファイルをアップロードします。 詳細は、 [Node.js HTTP function quick start](https://docs.cloudbase.net/en/cloud-function/quickstart/httpfunc/nodejs) を確認してください。
