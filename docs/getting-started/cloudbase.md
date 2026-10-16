@@ -1,10 +1,10 @@
 # Tencent CloudBase
 
-[Tencent CloudBase](https://docs.cloudbase.net/en/) is Tencent Cloud's serverless backend platform. [HTTP Cloud Functions](https://docs.cloudbase.net/en/cloud-function/develop/how-to-writing-functions-code) run as a plain Node.js process. Your application listens on port `9000`, and CloudBase starts it through [`scf_bootstrap`](https://docs.cloudbase.net/en/cloud-function/develop/scf-bootstrap). [`@hono/node-server`](https://github.com/honojs/node-server) works as-is. No extra Hono adapter is required.
+[Tencent CloudBase](https://docs.cloudbase.net/en/) はテンセントクラウドのサーバレスのバックエンドプラットフォームです。 [HTTP Cloud Functions](https://docs.cloudbase.net/en/cloud-function/develop/how-to-writing-functions-code) は、プレーンな Node.js プロセスとして動作します。アプリケーションは、ポート `9000` で待ち受けし、 CloudBase は [`scf_bootstrap`](https://docs.cloudbase.net/en/cloud-function/develop/scf-bootstrap) を通じてアプリケーションを起動します。 [`@hono/node-server`](https://github.com/honojs/node-server) はそのまま動作します。Hono のアダプタは必要ありません。
 
 ## 1. Setup
 
-Start your project with the "create-hono" command. Select `nodejs`.
+"create-hono" コマンドを使用してプロジェクトを開始します。 `nodejs` を選択します。
 
 ::: code-group
 
@@ -36,7 +36,7 @@ bun i
 
 ## 2. Hello World
 
-Edit `src/index.ts`. CloudBase HTTP Cloud Functions require port `9000`.
+`src/index.ts` を編集します。 CloudBase HTTP Cloud Functions は、ポート `9000` を使用します。
 
 ```ts
 import { serve } from '@hono/node-server'
@@ -58,11 +58,11 @@ serve({
 npm run dev
 ```
 
-Then access `http://localhost:9000`.
+それから `http://localhost:9000` にアクセスします。
 
 ## 4. Bootstrap
 
-Create `scf_bootstrap` in the project root (no file extension) and make it executable:
+プロジェクトのルートに `scf_bootstrap` ファイル（ファイルの拡張子なし） を作成します。それからファイルに実行権限を与えます:
 
 ```sh
 #!/bin/bash
@@ -73,15 +73,15 @@ Create `scf_bootstrap` in the project root (no file extension) and make it execu
 chmod +x scf_bootstrap
 ```
 
-Use LF line endings. The Node path must match the function runtime; `/var/lang/node20/bin/node` is for Node.js 20.19.
+改行コードは LF を使用してください。 Node のパスは、関数のランタイムにマッチしなければなりません。 Node.js 20.19 では `/var/lang/node20/bin/node` です。
 
 ## 5. Deploy
 
-Build the app, then deploy an HTTP function (Node.js 20.19) with the [CloudBase CLI](https://docs.cloudbase.net/en/cli-v1/functions/deploy):
+アプリケーションをビルドし、 [CloudBase CLI](https://docs.cloudbase.net/en/cli-v1/functions/deploy) を使って HTTP function (Node.js 20.19) をデプロイします:
 
 ```sh
 npm run build
 tcb fn deploy <function-name> --httpFn
 ```
 
-For console zip upload, see the [Node.js HTTP function quick start](https://docs.cloudbase.net/en/cloud-function/quickstart/httpfunc/nodejs).
+コンソールから zip ファイルをアップロードします。詳細は、[Node.js HTTP function quick start](https://docs.cloudbase.net/en/cloud-function/quickstart/httpfunc/nodejs) を確認してください。
