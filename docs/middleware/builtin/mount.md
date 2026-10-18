@@ -1,6 +1,6 @@
-# Mount Middleware
+# Mount ミドルウェア
 
-The Mount Middleware lets you mount an application built with another framework into your Hono application.
+Mount ミドルウェアは、 別のフレームワークでビルドされたアプリケーションを自身の Hono アプリケーションへマウントさせます。
 
 ## Import
 
@@ -9,17 +9,17 @@ import { Hono } from 'hono'
 import { mount } from 'hono/mount'
 ```
 
-## Usage
+## 使い方
 
-Register the middleware with `app.all()` on a path that ends with `/*`:
+`app.all()` を使用して `/*` で終わるパスに対してミドルウェアを登録します:
 
 ```ts
 import { Router as IttyRouter } from 'itty-router'
 
-// Create itty-router application
+// itty-router アプリケーションを生成
 const ittyRouter = IttyRouter()
 
-// Handle `GET /itty-router/hello`
+// `GET /itty-router/hello` を処理
 ittyRouter.get('/hello', () => new Response('Hello from itty-router'))
 
 const app = new Hono()
@@ -27,17 +27,17 @@ const app = new Hono()
 app.all('/itty-router/*', mount(ittyRouter.handle))
 ```
 
-By default, the mounted application receives a new `Request` with the matched path prefix removed from its URL. A request to `/itty-router/hello` reaches itty-router as `/hello`.
+デフォルトでは、 マウントされたアプリケーションは、 URL からプレフィクスが削除されたパスを持った新しい `Request` オブジェクトを受け取ります。 `/itty-router/hello` へのリクエストは、 `/hello` として itty-router へ渡されます。
 
-The mounted application is called as `handler(request, c.env, c.executionCtx)`, the same arguments as a Cloudflare Workers `fetch` handler. Use `optionHandler` to pass different arguments.
+マウントされたアプリケーションは、 `handler(request, c.env, c.executionCtx)` のようにコールされます。 Cloudflare Workers `fetch` ハンドラと同じ引数です。別の引数を渡すには `optionHandler` を使用します。
 
-## Options
+## オプション
 
-You can pass a function or an object as the second argument.
+第 2 引数として関数やオブジェクトを渡すことができます。
 
 ### <Badge type="info" text="optional" /> optionHandler: `(c: Context) => unknown`
 
-Returns the arguments passed to the mounted application after the `Request`. An array is spread into multiple arguments. You can pass the function directly as the second argument:
+`Request` の後にマウントされたアプリケーションに渡した引数を返します。 配列は複数の引数に展開され、 第 2 引数として直接関数を渡すことができます:
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -46,13 +46,13 @@ const app = new Hono()
 const anotherApp = (request: Request, ...args: unknown[]) =>
   new Response(request.url)
 // ---cut---
-// Call `anotherApp(request, c.env)`
+// `anotherApp(request, c.env)` をコール
 app.all(
   '/app/*',
   mount(anotherApp, (c) => c.env)
 )
 
-// Call `anotherApp(request, c.env, c.executionCtx)`
+// `anotherApp(request, c.env, c.executionCtx)` をコール
 app.all(
   '/app/*',
   mount(anotherApp, {
@@ -63,7 +63,7 @@ app.all(
 
 ### <Badge type="info" text="optional" /> replaceRequest: `((originalRequest: Request) => Request) | false`
 
-Controls which `Request` is passed to the mounted application:
+どの `Request` がマウントされたアプリケーションに渡されたのかを制御します:
 
 ```ts twoslash
 import { Hono } from 'hono'
@@ -72,7 +72,7 @@ const app = new Hono()
 const anotherApp = (request: Request, ...args: unknown[]) =>
   new Response(request.url)
 // ---cut---
-// `/legacy/users` reaches the mounted application as `/api/users`
+// `/legacy/users` は `/api/users` としてマウントされたアプリケーションに届きます
 app.all(
   '/legacy/*',
   mount(anotherApp, {
@@ -85,7 +85,7 @@ app.all(
 )
 ```
 
-To pass the original `Request` unchanged, set it to `false` as a shorthand for `(req) => req`:
+変更されていない元の `Request` を渡す際に、 `(req) => req` を簡略化するために `false` をセットします:
 
 ```ts twoslash
 import { Hono } from 'hono'
