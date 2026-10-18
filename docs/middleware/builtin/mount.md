@@ -29,7 +29,7 @@ app.all('/itty-router/*', mount(ittyRouter.handle))
 
 デフォルトでは、 マウントされたアプリケーションは、 URL からプレフィクスが削除されたパスを持った新しい `Request` オブジェクトを受け取ります。 `/itty-router/hello` へのリクエストは、 `/hello` として itty-router へ渡されます。
 
-マウントされたアプリケーションは、 `handler(request, c.env, c.executionCtx)` のようにコールされます。 Cloudflare Workers `fetch` ハンドラと同じ引数です。別の引数を渡すには `optionHandler` を使用します。
+マウントされたアプリケーションは、 `handler(request, c.env, c.executionCtx)` のようにコールされます。 Cloudflare Workers `fetch` ハンドラと同じ引数です。 別の引数を渡すには `optionHandler` を使用します。
 
 ## オプション
 
