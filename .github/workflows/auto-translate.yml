@@ -41,11 +41,11 @@ jobs:
         run: |
           git remote add upstream https://github.com/honojs/website.git || true
           git fetch upstream main:refs/remotes/upstream/main
-     - name: Translate
-       env:
-         LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-         LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
-         LLM_MODEL: ${{ secrets.LLM_MODEL }}
+      - name: Translate
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
         run: |
           ARGS=""
           if [ -n "${{ inputs.file }}" ]; then ARGS="$ARGS --file ${{ inputs.file }}"; fi
