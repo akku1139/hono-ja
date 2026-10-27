@@ -1,32 +1,32 @@
-# Hono for Coding Agents
+# コーディングエージェント向けの Hono
 
-Hono is a good fit for coding agents. The API is small and built on Web Standards, so an agent already knows most of it. This page lists what we provide so that agents work well with Hono.
+Hono はコーディングエージェントに適しています。 API は小さく、 Web 標準に基づいて構築されているため、エージェントはその大部分をすでに知っています。 このページでは、エージェントが Hono でうまく動作するために私たちが提供するものを一覧します。
 
-## Getting started
+## はじめに
 
-Create a project, then run your agent in it.
+プロジェクトを作成し、その中でエージェントを実行してください。
 
 ```sh
 npm create hono@next my-app
 ```
 
-The templates come with what an agent needs: an `AGENTS.md` that tells the agent how to check the app, and [Hono CLI](/docs/agents/cli) as a dev dependency. Nothing else to set up.
+テンプレートには、エージェントが必要とするものが含まれています: アプリの確認方法をエージェントに伝える `AGENTS.md` と、開発依存関係としての [Hono CLI](/docs/agents/cli) です。 他に設定するものはありません。
 
-## Documentation for agents
+## エージェント向けのドキュメント
 
-Every page on this site is available as Markdown. Fetch it with the `Accept: text/markdown` header:
+このサイトのすべてのページは Markdown として利用できます。 `Accept: text/markdown` ヘッダーで取得してください:
 
 ```sh
 curl -H 'Accept: text/markdown' https://hono.dev/docs/api/routing
 ```
 
-To find the right page, start from [`/llms.txt`](/llms.txt). It lists every page with a one-line description. [`/llms-full.txt`](/llms-full.txt) has the whole documentation in one file, and [`/llms-small.txt`](/llms-small.txt) is a shorter version.
+適切なページを見つけるには、 [`/llms.txt`](/llms.txt) から始めてください。 そこには、各ページが一行の説明とともに一覧されています。 [`/llms-full.txt`](/llms-full.txt) にはドキュメント全体が一つのファイルにまとめられており、 [`/llms-small.txt`](/llms-small.txt) はより短いバージョンです。
 
 ## Hono Skills
 
-[Hono Skills](https://github.com/honojs/skills) are [Agent Skills](https://agentskills.io) for Hono. The `hono` skill gives an agent an inline API reference and the way to test requests with Hono CLI. The `hono-jsx` skill covers UI with `hono/jsx`.
+[Hono Skills](https://github.com/honojs/skills) は Hono 用の [Agent Skills](https://agentskills.io) です。 `hono` スキルは、エージェントにインラインの API リファレンスと Hono CLI でリクエストをテストする方法を提供します。 `hono-jsx` スキルは `hono/jsx` を使った UI をカバーします。
 
-Install them with [skills.sh](https://skills.sh) or [GitHub CLI](https://cli.github.com). Both put the skills where your agent reads them.
+[skills.sh](https://skills.sh) または [GitHub CLI](https://cli.github.com) でインストールしてください。 どちらも、エージェントが読み取る場所にスキルを配置します。
 
 ```sh
 # skills.sh
@@ -39,7 +39,7 @@ gh skill install honojs/skills hono-jsx
 
 ## Hono CLI
 
-[Hono CLI](/docs/agents/cli) loads your app directly, so an agent can inspect and test it without starting a server. Every command prints JSON.
+[Hono CLI](/docs/agents/cli) はアプリを直接読み込むため、エージェントはサーバーを起動せずに検査およびテストできます。 すべてのコマンドは JSON を出力します。
 
 ```sh
 hono routes          # all routes, without reading the source
@@ -49,20 +49,20 @@ hono snapshot        # the current behavior, as batch lines
 hono diff            # what changed vs the last commit
 ```
 
-`hono --help` starts with a note for the agent, and `hono <command> --help` has examples. No other setup.
+`hono --help` はエージェント向けの注記から始まり、 `hono <command> --help` には例があります。 他に設定は必要ありません。
 
 ## AGENTS.md
 
-Agents follow the way your project says to run and check things. One line in `AGENTS.md` is enough to make them use Hono CLI instead of a dev server. The agent learns the rest from `hono --help`. The create-hono templates already have it.
+エージェントは、プロジェクトが実行方法や確認方法として指定した方法に従います。 `AGENTS.md` の一行で、開発サーバーの代わりに Hono CLI を使わせることができます。 エージェントは残りを `hono --help` から学びます。 create-hono のテンプレートにはすでに含まれています。
 
 ```md
 ## Hono CLI
 
-Run `npx hono --help` first, and use the CLI instead of a dev server.
+まず `npx hono --help` を実行し、開発サーバーの代わりに CLI を使用してください。
 ```
 
-Or say it to the agent directly. The same line works as a prompt.
+または、エージェントに直接伝えてください。 同じ一行がプロンプトとして機能します。
 
-## How well do agents use Hono?
+## エージェントは Hono をどの程度うまく使えますか?
 
-We measure it. See [Agent DX](https://agent-dx.hono.dev) for the results.
+私たちはそれを計測しています。 結果は [Agent DX](https://agent-dx.hono.dev) をご覧ください。
