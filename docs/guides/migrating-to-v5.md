@@ -1,22 +1,22 @@
-# Migrating to v5
+# v5 への移行
 
-Hono v5 keeps the core small and moves the rest around it. This page lists the breaking changes from v4 and how to update your code.
+Hono v5 はコアを小さく保ち、それ以外を周囲に移動します。 このページでは v4 からの破壊的変更とコードの更新方法を一覧にしています。
 
-## Try the release candidate
+## リリース候補を試す
 
 ```sh
 npm install hono@next
 ```
 
-## ESM only
+## ESM のみ
 
-`hono` is published as ESM only. The CommonJS build is removed.
+`hono` は ESM のみで公開されます。 CommonJS ビルドは削除されました。
 
-On Node.js, version 22.12 or later is required. `require('hono')` still works there, because Node.js 22.12 can `require()` ES modules.
+Node.js では、バージョン 22.12 以降が必要です。 `require('hono')` は依然として動作します。 Node.js 22.12 は ES モジュールを `require()` できるためです。
 
-## Runtime adapters are separate packages
+## ランタイムアダプターは別のパッケージです
 
-The runtime adapters under `hono/<runtime>` are no longer bundled with `hono`. Install the corresponding package and import from it.
+`hono/<runtime>` 配下のランタイムアダプターは `hono` にバンドルされなくなりました。 対応するパッケージをインストールし、そこからインポートしてください。
 
 | Before                    | After                      |
 | ------------------------- | -------------------------- |
@@ -37,13 +37,13 @@ import { serveStatic } from 'hono/bun'
 import { serveStatic } from '@hono/bun'
 ```
 
-`hono/cloudflare-pages` is removed without a replacement. Cloudflare recommends Workers with static assets, so use `hono` on Workers instead.
+`hono/cloudflare-pages` は置き換えなしで削除されました。 Cloudflare は静的アセット付きの Workers を推奨しているため、代わりに Workers 上で `hono` を使用してください。
 
-`hono/adapter` (`env()` and `getRuntimeKey()`) stays in `hono`.
+`hono/adapter` (`env()` と `getRuntimeKey()`) は `hono` に残ります。
 
-## `onError()` and `notFound()` register routable middleware
+## `onError()` と `notFound()` はルーティング可能なミドルウェアを登録します
 
-`onError()` now accepts middleware with the `(c, next)` signature instead of `(err, c)`. Read the error from `c.error`:
+`onError()` は `(err, c)` の代わりに `(c, next)` シグネチャのミドルウェアを受け付けるようになりました。 エラーは `c.error` から読み取ってください:
 
 ```ts
 // From
@@ -59,7 +59,7 @@ app.onError((c) => {
 })
 ```
 
-`notFound((c) => c.text('Not Found', 404))` keeps the same single-handler syntax. Both APIs also accept an optional path and multiple middleware:
+`notFound((c) => c.text('Not Found', 404))` は同じ単一ハンドラーの構文を維持します。 どちらの API もオプションのパスと複数のミドルウェアを受け付けます:
 
 ```ts
 app.notFound(
@@ -72,22 +72,22 @@ app.notFound(
 )
 ```
 
-The following routing rules apply to both APIs:
+両方の API に次のルーティングルールが適用されます:
 
-- Registrations compose rather than replacing the previous handler. Return a response to stop the chain, or call `next()` to delegate.
-- Paths are independent of the request's HTTP method and relative to `basePath()`. Omitting the path registers `*` within the current base path.
-- `route()` imports sub-app handlers, including `notFound()` handlers. More deeply nested sub-apps take priority; at the same depth, handlers run in registration order, not path specificity order.
-- Scopes match the request path, regardless of which app registered the original route. Request parameters still come from the original route, not the fallback scope.
+- 登録は前のハンドラーを置き換えるのではなく合成されます。 チェーンを止めるにはレスポンスを返し、委譲するには `next()` を呼びます。
+- パスはリクエストの HTTP メソッドに依存せず、`basePath()` からの相対です。 パスを省略すると現在のベースパス内に `*` が登録されます。
+- `route()` は `notFound()` ハンドラーを含むサブアプリのハンドラーをインポートします。 より深くネストされたサブアプリが優先され、同じ深さではハンドラーは登録順に実行され、パスの特異性順ではありません。
+- スコープは、元のルートを登録したアプリに関わらずリクエストパスにマッチします。 リクエストパラメータはフォールバックスコープではなく元のルートから取得されます。
 
-`notFound()` middleware runs for both unmatched requests and explicit `c.notFound()` calls. If the chain reaches its end without a finalized response, the built-in error or not-found handler is used. Errors thrown by `onError()` middleware are handled by the built-in error handler rather than escaping from `app.fetch()`.
+`notFound()` ミドルウェアは、マッチしないリクエストと明示的な `c.notFound()` 呼び出しの両方で実行されます。 チェーンが最終的なレスポンスなしで終了した場合、組み込みのエラーまたは not-found ハンドラーが使用されます。 `onError()` ミドルウェアが投げたエラーは `app.fetch()` から脱出するのではなく、組み込みのエラーハンドラーによって処理されます。
 
-## Non-Error throws go to `onError`
+## 非 Error の throw は `onError` へ
 
-A non-Error value thrown from a handler or middleware, such as a string or a plain object, now goes to `onError` wrapped in an `Error`. The original value is available as `c.error.cause`, and a thrown string is also used as `c.error.message`. It no longer propagates out of `app.fetch()`.
+ハンドラーやミドルウェアから throw された文字列やプレーンオブジェクトのような非 Error 値は、`Error` でラップされて `onError` に渡されます。 元の値は `c.error.cause` から取得でき、throw された文字列は `c.error.message` としても使用されます。 これは `app.fetch()` の外には伝播しなくなりました。
 
-## `getColorEnabledAsync()` is removed
+## `getColorEnabledAsync()` は削除されました
 
-`getColorEnabledAsync()` from `hono/utils/color` is removed. Use `getColorEnabled()` and pass the bindings on Cloudflare Workers. The `logger()` middleware does this by itself, so it needs no change.
+`hono/utils/color` の `getColorEnabledAsync()` は削除されました。 Cloudflare Workers では `getColorEnabled()` を使用し、バインディングを渡してください。 `logger()` ミドルウェアは自身でこれを行うため、変更は不要です。
 
 ```ts
 // Before
@@ -97,9 +97,9 @@ const enabled = await getColorEnabledAsync()
 const enabled = getColorEnabled(c.env)
 ```
 
-## `c.req.query()` may return `undefined` values
+## `c.req.query()` は `undefined` を返すことがあります
 
-`c.req.query()` and `c.req.queries()` without a key now return `Record<string, string | undefined>` and `Record<string, string[] | undefined>`, since a key may be absent.
+キーなしの `c.req.query()` と `c.req.queries()` は、キーが存在しないことがあるため、それぞれ `Record<string, string | undefined>` と `Record<string, string[] | undefined>` を返すようになりました。
 
 ```ts
 // Before
@@ -109,9 +109,9 @@ const { name } = c.req.query() // string
 const { name } = c.req.query() // string | undefined
 ```
 
-## `c.req.json()` returns `unknown`
+## `c.req.json()` は `unknown` を返します
 
-`c.req.json()` returns `Promise<unknown>` instead of `Promise<any>`. Pass the type explicitly, or use `c.req.valid()` with a validator.
+`c.req.json()` は `Promise<any>` の代わりに `Promise<unknown>` を返します。 型を明示的に渡すか、バリデーターと共に `c.req.valid()` を使用してください。
 
 ```ts
 // Before
@@ -121,13 +121,13 @@ const body = await c.req.json() // any
 const body = await c.req.json<{ name: string }>()
 ```
 
-## `c.json()` throws for a value that is not JSON serializable
+## `c.json()` は JSON シリアライズできない値で throw します
 
-`c.json(undefined)` used to return an empty body. It now throws a `TypeError`, like `Response.json()`. The same applies to a function or a symbol.
+`c.json(undefined)` は以前は空のボディを返していました。 今では `Response.json()` のように `TypeError` を throw します。 関数やシンボルでも同様です。
 
-## Wildcard matching is the same in every router
+## ワイルドカードマッチングはすべてのルーターで同じです
 
-A `*` at the end of a segment is a wildcard in every router, and it may match nothing. A `*` in the middle of a segment, such as `/x*y`, is not a wildcard. A segment that is only `*` matches one non-empty segment.
+セグメントの末尾の `*` はすべてのルーターでワイルドカードとなり、何もマッチしないこともあります。 `/x*y` のようなセグメントの途中にある `*` はワイルドカードではありません。 `*` だけのセグメントは空でない一つのセグメントにマッチします。
 
 | Route          | Path          | v5       |
 | -------------- | ------------- | -------- |
@@ -137,13 +137,13 @@ A `*` at the end of a segment is a wildcard in every router, and it may match no
 | `/x*y`         | `/xay`        | No match |
 | `/wild/*/card` | `/wild//card` | No match |
 
-TrieRouter and PatternRouter did not match `/x*/y` to `/xz/y` before. In RegExpRouter, `/x*/y` and `/x/*` can not be registered together and throw `UnsupportedPathError`, so SmartRouter falls back to TrieRouter.
+TrieRouter と PatternRouter は以前 `/x*/y` を `/xz/y` にマッチさせていませんでした。 RegExpRouter では `/x*/y` と `/x/*` を一緒に登録できず `UnsupportedPathError` を throw するため、SmartRouter は TrieRouter にフォールバックします。
 
-## Removed deprecated features
+## 削除された非推奨機能
 
 ### `app.mount()`
 
-Use the [Mount Middleware](/docs/middleware/builtin/mount) instead.
+代わりに [Mount ミドルウェア](/docs/middleware/builtin/mount) を使用してください。
 
 ```ts
 import { mount } from 'hono/mount'
@@ -157,7 +157,7 @@ app.all('/itty-router/*', mount(ittyRouter.handle))
 
 ### `app.fire()`
 
-Use `fire()` from `@hono/service-worker` instead.
+代わりに `@hono/service-worker` の `fire()` を使用してください。
 
 ```ts
 import { fire } from '@hono/service-worker'
@@ -171,7 +171,7 @@ fire(app)
 
 ### `c.req.matchedRoutes` and `c.req.routePath`
 
-Use `matchedRoutes()` and `routePath()` from `hono/route` instead.
+代わりに `hono/route` の `matchedRoutes()` と `routePath()` を使用してください。
 
 ```ts
 import { routePath } from 'hono/route'
@@ -183,9 +183,9 @@ app.get('/posts/:id', (c) => c.text(c.req.routePath))
 app.get('/posts/:id', (c) => c.text(routePath(c)))
 ```
 
-### SSG hook options
+### SSG フックオプション
 
-The `beforeRequestHook`, `afterResponseHook`, and `afterGenerateHook` options of `toSSG()` are removed. Pass them as a plugin via `plugins` instead. `defaultPlugin()`, which skips non-200 responses, is applied only when `plugins` is omitted, so add it explicitly if you need it.
+`toSSG()` の `beforeRequestHook`, `afterResponseHook`, `afterGenerateHook` オプションは削除されました。 代わりに `plugins` を通じてプラグインとして渡してください。 非 200 レスポンスをスキップする `defaultPlugin()` は `plugins` が省略された場合にのみ適用されるため、必要な場合は明示的に追加してください。
 
 ```ts
 import { defaultPlugin, toSSG } from 'hono/ssg'
@@ -199,9 +199,9 @@ toSSG(app, fs, { plugins: [{ beforeRequestHook }, defaultPlugin()] })
 
 ### Others
 
-- Bearer Auth Middleware - `noAuthenticationHeaderMessage`, `invalidAuthenticationHeaderMessage`, and `invalidTokenMessage` are removed. Use `noAuthenticationHeader.message`, `invalidAuthenticationHeader.message`, and `invalidToken.message` instead.
-- Serve Static Middleware - the `pathResolve` option is removed. It was no longer used.
-- SSG Helper - `SSG_DISABLED_RESPONSE` is removed. Use `X_HONO_DISABLE_SSG_HEADER_KEY` instead.
-- `timingSafeEqual()` in `hono/utils/buffer` only accepts strings. The `hashFunction` option of the Basic Auth and Bearer Auth middleware is typed as `(input: string) => string | null | Promise<string | null>` accordingly.
-- `getQueryStrings()` in `hono/utils/url` is removed. Use the `URL` API instead.
-- `UnOfficalStatusCode` in `hono/utils/http-status` is removed. Use `UnofficialStatusCode` instead.
+- Bearer Auth ミドルウェア - `noAuthenticationHeaderMessage`, `invalidAuthenticationHeaderMessage`, `invalidTokenMessage` は削除されました。 代わりに `noAuthenticationHeader.message`, `invalidAuthenticationHeader.message`, `invalidToken.message` を使用してください。
+- Serve Static ミドルウェア - `pathResolve` オプションは削除されました。 すでに使用されていませんでした。
+- SSG ヘルパー - `SSG_DISABLED_RESPONSE` は削除されました。 代わりに `X_HONO_DISABLE_SSG_HEADER_KEY` を使用してください。
+- `hono/utils/buffer` の `timingSafeEqual()` は文字列のみを受け付けます。 Basic Auth と Bearer Auth ミドルウェアの `hashFunction` オプションはそれに合わせて `(input: string) => string | null | Promise<string | null>` と型付けされています。
+- `hono/utils/url` の `getQueryStrings()` は削除されました。 代わりに `URL` API を使用してください。
+- `hono/utils/http-status` の `UnOfficalStatusCode` は削除されました。 代わりに `UnofficialStatusCode` を使用してください。

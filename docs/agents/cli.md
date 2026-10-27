@@ -1,59 +1,59 @@
 # Hono CLI
 
-Hono CLI (`hono`) is a command-line tool for Hono, made for coding agents. It loads your Hono app directly, so an agent can inspect and test the app without starting a server. Commands print JSON by default. `routes`, `request`, `benchmark`, and `ssg` take `--plain` when a human reads the output.
+Hono CLI (`hono`) は Hono のコマンドラインツールで、コーディングエージェント向けに作られています。 Hono アプリを直接読み込むため、エージェントはサーバーを起動せずにアプリを検査・テストできます。 コマンドはデフォルトで JSON を出力します。 人間が読むときは `routes`, `request`, `benchmark`, `ssg` に `--plain` を指定します。
 
-## Installation
+## インストール
 
-Install it in your project. Coding agents find it in `package.json`.
+プロジェクトにインストールします。 コーディングエージェントは `package.json` からそれを見つけます。
 
 ```sh
 npm install -D @hono/cli
 ```
 
-Or globally:
+またはグローバルに:
 
 ```sh
 npm install -g @hono/cli
 ```
 
-## Output
+## 出力
 
-Commands print JSON to stdout. `snapshot` prints batch JSONL lines instead.
+コマンドは JSON を標準出力に出力します。 `snapshot` は代わりにバッチ JSONL 行を出力します。
 
-- Success: `{ "ok": true, "data": ... }` with exit code 0
-- Failure: `{ "ok": false, "error": { "code", "message", "suggestions", "docs" } }` with exit code 1
+- 成功: `{ "ok": true, "data": ... }` 終了コード 0
+- 失敗: `{ "ok": false, "error": { "code", "message", "suggestions", "docs" } }` 終了コード 1
 
-On failure, `error.suggestions` says what to try next, and `error.docs` points to a page on this site. Logs go to stderr.
+失敗時、`error.suggestions` は次に試すべきことを示し、`error.docs` はこのサイトのページを指します。 ログは標準エラー出力に出力されます。
 
-`hono --help` starts with a short note for coding agents, and `hono <command> --help` has examples and notes for each command. An agent needs nothing else to use the CLI.
+`hono --help` はコーディングエージェント向けの短い注記から始まり、`hono <command> --help` には各コマンドの例と注記があります。 エージェントが CLI を使うために必要なものは他にありません。
 
-## Commands
+## コマンド
 
-| Command                      | What it does                                           |
+| コマンド                      | 内容                                           |
 | ---------------------------- | ------------------------------------------------------ |
-| `hono routes [file]`         | Show routes of your Hono app                           |
-| `hono request [path] [file]` | Send a request to your app using `app.request()`       |
-| `hono batch <source> [file]` | Run multiple requests from JSONL using `app.request()` |
-| `hono snapshot [file]`       | Print the current behavior as batch JSONL lines        |
-| `hono diff`                  | Show what your uncommitted changes change              |
-| `hono benchmark [file]`      | Measure the performance of your Hono app               |
-| `hono ssg [file]`            | Generate static files from your Hono app               |
-| `hono init`                  | Add a Hono app to the current directory                |
+| `hono routes [file]`         | Hono アプリのルートを表示します                           |
+| `hono request [path] [file]` | `app.request()` を使ってアプリにリクエストを送信します       |
+| `hono batch <source> [file]` | JSONL から複数のリクエストを `app.request()` で実行します |
+| `hono snapshot [file]`       | 現在の挙動をバッチ JSONL 行として出力します        |
+| `hono diff`                  | 未コミットの変更がアプリに与える影響を表示します              |
+| `hono benchmark [file]`      | Hono アプリのパフォーマンスを計測します               |
+| `hono ssg [file]`            | Hono アプリから静的ファイルを生成します               |
+| `hono init`                  | 現在のディレクトリに Hono アプリを追加します                |
 
-`file` is the path to your app file. When omitted, the app is found in `src/index.ts`, `src/index.tsx`, `src/index.js`, or `src/index.jsx`. TypeScript and JSX are supported.
+`file` はアプリファイルへのパスです。 省略された場合、アプリは `src/index.ts`, `src/index.tsx`, `src/index.js`, または `src/index.jsx` から見つけられます。 TypeScript と JSX がサポートされています。
 
 ### routes
 
-Show all routes of your Hono app, like [`showRoutes()`](/docs/helpers/dev#showroutes). Routes are resolved from the real app instance, so mounted sub-apps and `basePath` are expanded.
+Hono アプリのすべてのルートを表示します。 [`showRoutes()`](/docs/helpers/dev#showroutes) のように。 ルートは実際のアプリインスタンスから解決されるため、マウントされたサブアプリや `basePath` が展開されます。
 
 ```sh
 hono routes
 hono routes --verbose src/app.ts
 ```
 
-- `--verbose` - include middleware
-- `--plain` - human-readable output instead of JSON
-- `-e, --external <package>` - mark a package as external (can be used multiple times)
+- `--verbose` - ミドルウェアを含める
+- `--plain` - JSON の代わりに人間が読みやすい出力
+- `-e, --external <package>` - パッケージを外部としてマークする (複数回使用可能)
 
 ```json
 {
@@ -80,7 +80,7 @@ hono routes --verbose src/app.ts
 
 ### request
 
-Send a request to your app through `app.request()`. No server is needed. `path` defaults to `/`.
+`app.request()` を通じてアプリにリクエストを送信します。 サーバーは不要です。 `path` のデフォルトは `/` です。
 
 ```sh
 hono request /
@@ -93,18 +93,18 @@ hono request /api/users/123 --trace
 hono request / --runtime bun
 ```
 
-- `-X, --method <method>` - HTTP method (default: `GET`)
-- `-d, --data <data>` - request body (`@file` reads a file, `@-` reads stdin). A JSON object or array is sent as JSON, anything else as a form, unless `-H` sets `Content-Type`
-- `-H, --header <header>` - custom header (can be used multiple times)
-- `--trace` - include the matched routes in the output
-- `--runtime <runtime>` - run the app on `node` (default), `bun`, `deno`, `workerd`, or `vite`
-- `--compact` - one-line JSON without the headers
-- `--no-bindings` - skip loading the local Cloudflare bindings
-- `-w, --watch` - watch for changes and resend the request
-- `-o, --output <file>` - write the response body to a file
-- `--plain` - print the raw body like curl (`-i` adds the status and headers, `-I` shows only them)
+- `-X, --method <method>` - HTTP メソッド (デフォルト: `GET`)
+- `-d, --data <data>` - リクエストボディ (`@file` はファイルを読み、`@-` は標準入力を読みます)。 JSON オブジェクトまたは配列は JSON として、それ以外はフォームとして送信されます。 ただし `-H` で `Content-Type` を設定した場合は除きます。
+- `-H, --header <header>` - カスタムヘッダー (複数回使用可能)
+- `--trace` - マッチしたルートを出力に含める
+- `--runtime <runtime>` - アプリを `node` (デフォルト), `bun`, `deno`, `workerd`, または `vite` で実行する
+- `--compact` - ヘッダーなしの一行 JSON
+- `--no-bindings` - ローカルの Cloudflare バインディングの読み込みをスキップする
+- `-w, --watch` - 変更を監視し、リクエストを再送する
+- `-o, --output <file>` - レスポンスボディをファイルに書き込む
+- `--plain` - curl のように生のボディを出力する (`-i` はステータスとヘッダーを追加、`-I` はそれらのみ表示)
 
-A JSON response body is embedded as an object:
+JSON レスポンスボディはオブジェクトとして埋め込まれます:
 
 ```json
 {
@@ -117,27 +117,27 @@ A JSON response body is embedded as an object:
 }
 ```
 
-With `--trace`, the output has `matchedRoutes`: which middleware and handler matched, and which one responded. A 404 result suggests running it.
+`--trace` を使うと、出力に `matchedRoutes` が含まれます: どのミドルウェアとハンドラーがマッチし、どれが応答したかです。 404 の結果はそれを実行することを示唆します。
 
-You can also pass the app code from stdin with `-` as the file. `app` is predefined and exported for you:
+`-` をファイルとして標準入力からアプリコードを渡すこともできます。 `app` は事前定義され、あなたのためにエクスポートされています:
 
 ```sh
 echo 'app.get("/hello", (c) => c.json({ ok: true }))' | hono request /hello -
 ```
 
-#### Cloudflare bindings
+#### Cloudflare バインディング
 
-In a project with a wrangler config, `c.env` carries the real local bindings (KV, D1, R2, vars) automatically, while the app runs on Node.js. This works in `request`, `batch`, `snapshot`, and `ssg`. Skip it with `--no-bindings`. It needs [wrangler](https://developers.cloudflare.com/workers/wrangler/) installed in the project.
+wrangler 設定があるプロジェクトでは、`c.env` が実際のローカルバインディング (KV, D1, R2, vars) を自動的に持ち、アプリは Node.js 上で実行されます。 これは `request`, `batch`, `snapshot`, `ssg` で動作します。 `--no-bindings` でスキップできます。 プロジェクトに [wrangler](https://developers.cloudflare.com/workers/wrangler/) がインストールされている必要があります。
 
-`--runtime workerd` runs the whole app inside workerd instead, with the wrangler config. It is heavier, but it is the full runtime. The entry is `main` in the wrangler config, so pass no file argument.
+`--runtime workerd` は代わりに wrangler 設定と共にアプリ全体を workerd 内で実行します。 より重くなりますが、完全なランタイムです。 エントリは wrangler 設定の `main` なので、ファイル引数は渡さないでください。
 
 #### Vite
 
-`--runtime vite` sends the requests through the Vite dev server of the project, for an app that a Vite plugin builds. The app comes from the Vite config, so pass no file argument. It is the default in a project with `cloudflare.config.ts` and a Vite config, where `c.env` has the bindings, and in a Vite project with no `src/index.ts`. This works in `request`, `batch`, and `snapshot`. A file argument, `--no-bindings`, `--trace`, or `--watch` runs the app on Node.js instead.
+`--runtime vite` は Vite プラグインがビルドするアプリ向けに、プロジェクトの Vite 開発サーバーを通してリクエストを送信します。 アプリは Vite 設定から取得されるため、ファイル引数は渡さないでください。 `cloudflare.config.ts` と Vite 設定があるプロジェクトでは `c.env` にバインディングがあり、デフォルトになります。 また `src/index.ts` がない Vite プロジェクトでもデフォルトです。 これは `request`, `batch`, `snapshot` で動作します。 ファイル引数、`--no-bindings`, `--trace`, `--watch` を指定すると、代わりに Node.js 上でアプリが実行されます。
 
 ### batch
 
-Run multiple requests from JSONL in one call, in order, against one app instance. In-memory state carries between steps.
+JSONL から複数のリクエストを一回の呼び出しで順番に、一つのアプリインスタンスに対して実行します。 メモリ内状態はステップ間で引き継がれます。
 
 ```sh
 hono batch - <<'JSONL'
@@ -148,55 +148,55 @@ hono batch - <<'JSONL'
 JSONL
 ```
 
-One JSON object per line: `method`, `path`, `body`, `headers`, `expect`, and `save`.
+一行に一つの JSON オブジェクト: `method`, `path`, `body`, `headers`, `expect`, `save`。
 
-- `expect` declares the acceptance criteria. `status` matches exactly. `body` is a deep partial match: declared fields must match, and extra fields in the response are ignored.
-- `save` stores a value from the response body by dot path, and later steps use it as `{{id}}`.
-- A string `body` is sent as a form, or as JSON when it is a JSON object or array, unless `headers` sets the content type. An object `body` is sent as JSON.
-- Cookies carry over like in a browser. A login step that sets a cookie signs in the steps after it. A `cookie` header in a step wins.
-- A step without `expect` passes on any 2xx or 3xx and fails on a 4xx or 5xx. To accept a 4xx on purpose, declare it with `expect.status`.
-- A failed step carries `diff`, one line per mismatch.
+- `expect` は受け入れ基準を宣言します。 `status` は完全一致です。 `body` は深い部分一致です: 宣言されたフィールドがマッチする必要があり、レスポンスの余分なフィールドは無視されます。
+- `save` はドットパスでレスポンスボディから値を保存し、後のステップで `{{id}}` として使用します。
+- 文字列の `body` はフォームとして送信されます。 または JSON オブジェクトや配列の場合は JSON として送信されます。 ただし `headers` でコンテンツタイプを設定した場合は除きます。 オブジェクトの `body` は JSON として送信されます。
+- Cookie はブラウザのように引き継がれます。 Cookie を設定するログインステップは、その後のステップをサインイン状態にします。 ステップ内の `cookie` ヘッダーが優先されます。
+- `expect` のないステップは 2xx または 3xx で合格し、4xx または 5xx で失敗します。 意図的に 4xx を受け入れるには、`expect.status` で宣言してください。
+- 失敗したステップは `diff` を持ち、不一致ごとに一行です。
 
-The output has the actual `status` and `body` of each step, `pass` per step, and a `summary`. Rerun until `failed` is 0.
+出力には各ステップの実際の `status` と `body`、ステップごとの `pass`、`summary` が含まれます。 `failed` が 0 になるまで再実行してください。
 
-- `-H, --header <header>` - a shared header for every step
-- `--compact` - print only the failed steps and the summary
+- `-H, --header <header>` - すべてのステップに共有されるヘッダー
+- `--compact` - 失敗したステップとサマリーのみを出力する
 - `--runtime <runtime>` - `node` (default), `workerd`, or `vite`
-- `--no-bindings` - skip loading the local Cloudflare bindings
+- `--no-bindings` - ローカルの Cloudflare バインディングの読み込みをスキップする
 
 ### snapshot
 
-Print the current behavior of the app as batch JSONL lines, to stdout. No file is written.
+アプリの現在の挙動をバッチ JSONL 行として標準出力に出力します。 ファイルは書き込まれません。
 
 ```sh
 hono snapshot
 hono snapshot --status-only src/app.ts
 ```
 
-Paramless GET routes are executed, and their actual status and body become the `expect`. A GET route with a param is executed too when the app already showed a path for it, in a link or in a JSON field with the param's name. Other param routes and non-GET routes are printed without an `expect`, for you to fill in. One probe line records the response for a path that matches no route.
+パラメータなしの GET ルートが実行され、その実際のステータスとボディが `expect` になります。 パラメータ付きの GET ルートは、アプリがすでにリンクやパラメータ名を持つ JSON フィールドでそのパスを示していた場合に実行されます。 その他のパラメータ付きルートと非 GET ルートは `expect` なしで出力されるため、あなたが記入します。 一つのプローブ行が、どのルートにもマッチしないパスのレスポンスを記録します。
 
-Unlike `routes`, this command sends real requests, so middleware runs.
+`routes` とは異なり、このコマンドは実際のリクエストを送信するため、ミドルウェアが実行されます。
 
-Capture before a refactor, then rerun the lines with `hono batch` until `failed` is 0.
+リファクタリング前にキャプチャし、`failed` が 0 になるまで `hono batch` で行を再実行してください。
 
-- `--status-only` - capture only the status codes, not the bodies
+- `--status-only` - ボディではなくステータスコードのみをキャプチャする
 - `--runtime <runtime>` - `node` (default), `workerd`, or `vite`
-- `--no-bindings` - skip loading the local Cloudflare bindings
+- `--no-bindings` - ローカルの Cloudflare バインディングの読み込みをスキップする
 
 ### diff
 
-Show what your uncommitted changes do to the app. It runs the app at the last commit and as it is now, and compares the answers. Nothing to capture first.
+未コミットの変更がアプリに何をするかを表示します。 最後のコミット時と現在のアプリを実行し、答えを比較します。 事前のキャプチャは不要です。
 
 ```sh
 hono diff
 hono diff --base main
 ```
 
-- `--base <ref>` - the commit to compare with (default: `HEAD`)
+- `--base <ref>` - 比較対象のコミット (デフォルト: `HEAD`)
 
-The GET routes that `hono snapshot` runs and a 404 probe are run on both sides. `changed` lists each one that answers differently, with the status and body differences. Routes that appear or disappear are in `added` and `removed`. Other param routes and non-GET routes are not run, so check them with `hono batch`.
+`hono snapshot` が実行する GET ルートと 404 プローブが両側で実行されます。 `changed` は、ステータスとボディの差異と共に、異なる応答をしたものを一覧にします。 出現または消失したルートは `added` と `removed` に入ります。 その他のパラメータ付きルートと非 GET ルートは実行されないため、`hono batch` で確認してください。
 
-Each side runs in a temporary git worktree with fresh local data, so data you wrote while testing does not count. `node_modules` is shared, and `.dev.vars` is copied. An empty `changed` after a refactor means the GET routes answer as before.
+各側は最新のローカルデータを持つ一時的な git worktree で実行されるため、テスト中に書き込んだデータはカウントされません。 `node_modules` は共有され、`.dev.vars` はコピーされます。 リファクタリング後の空の `changed` は、GET ルートが以前と同じ応答をすることを意味します。
 
 ```json
 {
@@ -215,7 +215,7 @@ Each side runs in a temporary git worktree with fresh local data, so data you wr
 
 ### benchmark
 
-Measure the performance of your Hono app. It is a micro benchmark of routing and handlers: `app.request()` is called directly, with no HTTP stack and no network. Each run happens in a fresh process, so results are comparable.
+Hono アプリのパフォーマンスを計測します。 ルーティングとハンドラーのマイクロベンチマークです: `app.request()` が HTTP スタックやネットワークなしで直接呼び出されます。 各実行は新しいプロセスで行われるため、結果は比較可能です。
 
 ```sh
 hono benchmark
@@ -225,17 +225,17 @@ hono benchmark --hono 4.12.3 --hono 4.13.0
 hono benchmark --hono ../hono
 ```
 
-- `-P, --path <path>` - benchmark only this path (can be used multiple times)
-- `-X`, `-d`, `-H` - the method, body, and headers for `-P` paths
-- `--duration <ms>` - how long to measure each route (default: `500`)
-- `--warmup <count>` - requests before measuring (default: `30`)
-- `--hono <version-or-path>` - benchmark the same app with another Hono: an npm version, or a local checkout
+- `-P, --path <path>` - このパスのみをベンチマークする (複数回使用可能)
+- `-X`, `-d`, `-H` - `-P` パス用のメソッド、ボディ、ヘッダー
+- `--duration <ms>` - 各ルートを計測する時間 (デフォルト: `500`)
+- `--warmup <count>` - 計測前のリクエスト数 (デフォルト: `30`)
+- `--hono <version-or-path>` - 別の Hono で同じアプリをベンチマークする: npm バージョン、またはローカルチェックアウト
 
-A few percent of difference is noise. To compare, run it more than once and check that the difference repeats.
+数パーセントの差はノイズです。 比較するには、複数回実行し、差が繰り返されるか確認してください。
 
 ### ssg
 
-Generate static files from your Hono app, like the [SSG helper](/docs/helpers/ssg).
+Hono アプリから静的ファイルを生成します。 [SSG ヘルパー](/docs/helpers/ssg) のように。
 
 ```sh
 hono ssg
@@ -243,11 +243,11 @@ hono ssg -o dist/static src/app.ts
 hono ssg --exclude '/api/*'
 ```
 
-- `-o, --outdir <dir>` - output directory (default: `static`)
-- `--include <path>` / `--exclude <path>` - select routes by path. `*` matches anything
-- `--no-bindings` - skip loading the local Cloudflare bindings
+- `-o, --outdir <dir>` - 出力ディレクトリ (デフォルト: `static`)
+- `--include <path>` / `--exclude <path>` - パスでルートを選択する。 `*` は任意にマッチする
+- `--no-bindings` - ローカルの Cloudflare バインディングの読み込みをスキップする
 
-A page that does not answer 200 is not written. It is listed in `skipped` with its status, so check it with `hono request <path>`.
+200 を返さないページは書き込まれません。 そのステータスと共に `skipped` に一覧されるため、`hono request <path>` で確認してください。
 
 ```json
 {
@@ -262,7 +262,7 @@ A page that does not answer 200 is not written. It is listed in `skipped` with i
 
 ### init
 
-Add a Hono app from a [create-hono](/docs/guides/create-hono) template to the current directory. Use it in a project that already exists, where `npm create hono` cannot.
+[create-hono](/docs/guides/create-hono) テンプレートから Hono アプリを現在のディレクトリに追加します。 `npm create hono` が使えない、すでに存在するプロジェクトで使用します。
 
 ```sh
 npm install -D @hono/cli
@@ -270,12 +270,12 @@ npx hono init --template cloudflare-workers --install
 npx hono request /
 ```
 
-- `-t, --template <template>` - the template, one of `aws-lambda`, `bun`, `cloudflare-workers`, `deno`, `fastly`, `lambda-edge`, `netlify`, `nextjs`, `nodejs`, `vercel`, or `x-basic`
-- `-i, --install` - install the dependencies with the package manager from the lockfile, or from the command that started `hono`
+- `-t, --template <template>` - テンプレート。 `aws-lambda`, `bun`, `cloudflare-workers`, `deno`, `fastly`, `lambda-edge`, `netlify`, `nextjs`, `nodejs`, `vercel`, `x-basic` のいずれか
+ - `-i, --install` - ロックファイルから、または `hono` を起動したコマンドからパッケージマネージャーで依存関係をインストールする
 
-Without `--template`, the template comes from the files in the directory: `wrangler.jsonc` or `cloudflare.config.ts` means `cloudflare-workers`, `deno.json` means `deno`, `bun.lock` means `bun`, and so on. With no hint, a terminal shows a list to pick from. Without a terminal, the error lists the templates.
+`--template` なしでは、テンプレートはディレクトリ内のファイルから決まります: `wrangler.jsonc` または `cloudflare.config.ts` は `cloudflare-workers`、`deno.json` は `deno`、`bun.lock` は `bun`、などです。 ヒントがない場合、ターミナルには選択リストが表示されます。 ターミナルがない場合、エラーがテンプレートを一覧します。
 
-A file that already exists is never overwritten. It is listed in `skipped`. `package.json` is merged, and its existing values win, except `type`, which the template sets to `module`. With a wrangler config in place, the template does not add `cloudflare.config.ts`, and the other way around. Without `--install`, run your package manager next.
+すでに存在するファイルは決して上書きされません。 それは `skipped` に一覧されます。 `package.json` はマージされ、既存の値が優先されますが、`type` はテンプレートが `module` に設定します。 wrangler 設定がある場合、テンプレートは `cloudflare.config.ts` を追加しません。 逆も同様です。 `--install` なしでは、次にパッケージマネージャーを実行してください。
 
 ```json
 {

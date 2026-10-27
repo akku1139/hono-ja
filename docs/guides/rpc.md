@@ -851,9 +851,9 @@ const booksClient = hc<typeof booksApp>('/books')
 
 このようにすることで、 `tsserver` はすべてのルートの型を一度にインスタンス化する必要がなくなります。
 
-### Handlers that return a promise chain
+### Promise チェーンを返すハンドラー
 
-A handler that returns a `.then()` chain directly loses its response type, so the client infers `unknown`:
+`.then()` チェーンを直接返すハンドラーはレスポンス型を失うため、クライアントは `unknown` と推論します:
 
 ```ts
 const app = new Hono().get('/', (c) =>
@@ -865,7 +865,7 @@ const res = await client.index.$get()
 const data = await res.json() // unknown
 ```
 
-This is a TypeScript inference limitation — the response type cannot be inferred through a `.then()` chain. Use `async`/`await` instead:
+これは TypeScript の推論の制限です — レスポンス型は `.then()` チェーンを通して推論できません。 代わりに `async`/`await` を使用してください:
 
 ```ts
 const app = new Hono().get('/', async (c) => {
@@ -878,7 +878,7 @@ const res = await client.index.$get()
 const data = await res.json() // { hello: string }
 ```
 
-If you cannot avoid the chain, annotating `then()` also works:
+チェーンを避けられない場合は、`then()` に注釈を付ける方法もあります:
 
 ```ts
 import type { TypedResponse } from 'hono/types'

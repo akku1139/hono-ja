@@ -105,7 +105,7 @@ process.on('SIGTERM', () => {
 ```
 
 ::: info
-On Node.js, `serve()` wraps the `node:http` module and returns the underlying server instance, so closing it is up to you. Bun and Deno serve Fetch handlers natively and manage the server themselves, which is why their guides don't include this step.
+Node.js では、`serve()` は `node:http` モジュールをラップし、基盤となるサーバーインスタンスを返すため、閉じるのはあなた次第です。 Bun と Deno は Fetch ハンドラーをネイティブに提供し、サーバー自身を管理するため、それらのガイドにはこの手順は含まれていません。
 :::
 
 ## 3. 実行
@@ -244,7 +244,7 @@ app.use('*', serveStatic({ root: './static' }))
 ```
 
 ::: warning
-Route matching is case-sensitive, but the file system may not be. On Windows and macOS, `/ADMIN/secret.txt` resolves to the same file as `/admin/secret.txt`, and Windows also accepts 8.3 short names such as `/PROTEC~1`. Path-scoped middleware such as `app.use('/admin/*', auth)` does not match those spellings, so do not rely on it to protect files under a static root. Keep protected files outside the directory you serve, or apply the middleware to every path that `serveStatic` handles.
+ルートのマッチングは大文字小文字を区別しますが、ファイルシステムはそうではない場合があります。 Windows と macOS では、`/ADMIN/secret.txt` は `/admin/secret.txt` と同じファイルとして解決され、Windows は `/PROTEC~1` のような 8.3 形式の短縮名も受け付けます。 `app.use('/admin/*', auth)` のようなパススコープのミドルウェアはそれらの表記にマッチしないため、静的ルート配下のファイルを保護するためにそれらに頼らないでください。 保護するファイルは配信するディレクトリの外に置くか、`serveStatic` が扱うすべてのパスにミドルウェアを適用してください。
 :::
 
 ### `rewriteRequestPath`

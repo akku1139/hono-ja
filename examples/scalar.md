@@ -40,7 +40,7 @@ export default app
 
 ### Themes
 
-The middleware applies a custom Hono theme by default. To use a different look, set `theme` to one of [the predefined themes](https://scalar.com/products/api-references/themes) — `alternate`, `default`, `moon`, `purple`, `solarized`, `bluePlanet`, `deepSpace`, `saturn`, `kepler`, `mars`, or `laserwave` — or `none` to start from a blank slate. All themes come with a light and dark color scheme.
+ミドルウェアはデフォルトでカスタムの Hono テーマを適用します。 別の見た目を使うには、`theme` を [定義済みテーマ](https://scalar.com/products/api-references/themes) のいずれか — `alternate`, `default`, `moon`, `purple`, `solarized`, `bluePlanet`, `deepSpace`, `saturn`, `kepler`, `mars`, `laserwave` — または白紙から始める `none` に設定してください。 すべてのテーマにはライトとダークのカラースキームがあります。
 
 ```ts
 import { Scalar } from '@scalar/hono-api-reference'

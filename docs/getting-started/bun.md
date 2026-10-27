@@ -60,7 +60,7 @@ export default app
 
 既存のプロジェクトに Hono セットアップしている場合、 `bun run dev` コマンドは、 "Hello World" スクリプトが `src/index.ts` に置かれていると想定します。
 
-## 4. Run
+## 4. 実行
 
 以下のコマンドを実行します。
 
@@ -123,7 +123,7 @@ app.get('*', serveStatic({ path: './static/fallback.txt' }))
 ```
 
 ::: warning
-Route matching is case-sensitive, but the file system may not be. On Windows and macOS, `/ADMIN/secret.txt` resolves to the same file as `/admin/secret.txt`, and Windows also accepts 8.3 short names such as `/PROTEC~1`. Path-scoped middleware such as `app.use('/admin/*', auth)` does not match those spellings, so do not rely on it to protect files under a static root. Keep protected files outside the directory you serve, or apply the middleware to every path that `serveStatic` handles.
+ルートのマッチングは大文字小文字を区別しますが、ファイルシステムはそうではない場合があります。 Windows と macOS では、`/ADMIN/secret.txt` は `/admin/secret.txt` と同じファイルとして解決され、Windows は `/PROTEC~1` のような 8.3 形式の短縮名も受け付けます。 `app.use('/admin/*', auth)` のようなパススコープのミドルウェアはそれらの表記にマッチしないため、静的ルート配下のファイルを保護するためにそれらに頼らないでください。 保護するファイルは配信するディレクトリの外に置くか、`serveStatic` が扱うすべてのパスにミドルウェアを適用してください。
 :::
 
 ### `rewriteRequestPath`

@@ -2,7 +2,7 @@
 
 [Tencent CloudBase](https://docs.cloudbase.net/en/) はテンセントクラウドのサーバレスのバックエンドプラットフォームです。 [HTTP Cloud Functions](https://docs.cloudbase.net/en/cloud-function/develop/how-to-writing-functions-code) は、 プレーンな Node.js プロセスとして動作します。 アプリケーションは、 ポート `9000` で待ち受けし、 CloudBase は [`scf_bootstrap`](https://docs.cloudbase.net/en/cloud-function/develop/scf-bootstrap) を通じてアプリケーションを起動します。 [`@hono/node-server`](https://github.com/honojs/node-server) はそのまま動作します。 Hono のアダプタは必要ありません。
 
-## 1. Setup
+## 1. セットアップ
 
 "create-hono" コマンドを使用してプロジェクトを開始します。 `nodejs` を選択します。
 
@@ -52,7 +52,7 @@ serve({
 })
 ```
 
-## 3. Run
+## 3. 実行
 
 ```sh
 npm run dev
@@ -60,7 +60,7 @@ npm run dev
 
 それから `http://localhost:9000` にアクセスします。
 
-## 4. Bootstrap
+## 4. ブートストラップ
 
 プロジェクトのルートに `scf_bootstrap` ファイル ( ファイルの拡張子なし ) を作成します。 それからファイルに実行権限を与えます:
 
@@ -75,7 +75,7 @@ chmod +x scf_bootstrap
 
 改行コードは LF を使用してください。 Node のパスは、関数のランタイムにマッチしなければなりません。 Node.js 20.19 では `/var/lang/node20/bin/node` です。
 
-## 5. Deploy
+## 5. デプロイ
 
 アプリケーションをビルドし、 [CloudBase CLI](https://docs.cloudbase.net/en/cli-v1/functions/deploy) を使って HTTP function (Node.js 20.19) をデプロイします:
 
