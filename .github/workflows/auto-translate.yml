@@ -65,3 +65,5 @@ jobs:
 
             Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             Please review before merging.
+
+            Model: `${{ secrets.LLM_MODEL }}`
