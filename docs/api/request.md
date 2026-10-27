@@ -371,7 +371,7 @@ app.get('/about/me', async (c) => {
 ```ts
 // For Cloudflare Workers
 app.post('/', async (c) => {
-  const metadata = c.req.raw.cf?.hostMetadata?
+  const metadata = c.req.raw.cf?.hostMetadata
   // ...
 })
 ```
