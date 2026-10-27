@@ -57,7 +57,11 @@ jobs:
         with:
           branch: auto-translate
           title: 'docs: auto-translate upstream changes'
-          commit-message: 'docs: auto-translate upstream changes'
+          commit-message: 'docs: auto-translate upstream changes (run ${{ github.run_number }})'
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           body: |
             Automated translation of upstream changes by LLM.
+
+            Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             Please review before merging.
