@@ -1,0 +1,62 @@
+name: auto-translate
+
+on:
+  workflow_dispatch:
+    inputs:
+      file:
+        description: 'Translate a single file (optional)'
+        required: false
+        type: string
+      base:
+        description: 'Base git ref (optional)'
+        required: false
+        type: string
+  schedule:
+    - cron: '0 0 * * 1'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  translate:
+    name: 'Auto Translate'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: '.tool-versions'
+      - uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # v6.0.5
+        with:
+          cache: true
+          run_install: true
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/honojs/website.git || true
+          git fetch upstream main:refs/remotes/upstream/main
+     - name: Translate
+       env:
+         LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+         LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+         LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.file }}" ]; then ARGS="$ARGS --file ${{ inputs.file }}"; fi
+          if [ -n "${{ inputs.base }}" ]; then ARGS="$ARGS --base ${{ inputs.base }}"; fi
+          node ./scripts/translate-upstream.ts $ARGS
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: auto-translate
+          title: 'docs: auto-translate upstream changes'
+          commit-message: 'docs: auto-translate upstream changes'
+          body: |
+            Automated translation of upstream changes by LLM.
+            Please review before merging.
