@@ -43,7 +43,7 @@ app.use(
 
 ### <Badge type="info" text="optional" /> weak: `boolean`
 
-[弱い検証](https://developer.mozilla.org/ja/docs/Web/HTTP/Conditional_requests#weak_validation) を使用するかどうかを定義します。 `true` が設定されると、値のプレフィックスに `w/` が追加されます。 デフォルトは `false` です。
+[弱い検証](https://developer.mozilla.org/ja/docs/Web/HTTP/Conditional_requests#weak_validation) を使用するかどうかを定義します。 `true` が設定されると、値のプレフィックスに `W/` が追加されます。 デフォルトは `false` です。
 
 ### <Badge type="info" text="optional" /> retainedHeaders: `string[]`
 

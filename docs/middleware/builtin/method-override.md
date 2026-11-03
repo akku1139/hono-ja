@@ -71,10 +71,10 @@ app.use('/posts', methodOverride({ app, query: '_method' }))
 メソッド名を含む値を持つフォームのキーです。
 デフォルトは `_method` です。
 
-### <Badge type="info" text="optional" /> header: `boolean`
+### <Badge type="info" text="optional" /> header: `string`
 
 メソッド名を含む値を持つヘッダー名です。
 
-### <Badge type="info" text="optional" /> query: `boolean`
+### <Badge type="info" text="optional" /> query: `string`
 
 メソッド名を含む値を持つクエリパラメータのキーです。

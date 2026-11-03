@@ -32,9 +32,6 @@ app.get('/', (c) => {
 ### クライアントの例
 
 ```sh
-# Via path
-curl http://localhost:8787/ar/home
-
 # Via query parameter
 curl http://localhost:8787/?lang=ar
 
@@ -161,7 +158,7 @@ languageDetector({
 
 ```ts
 languageDetector({
-  debug: true, // Shows: "Detected from querystring: ar"
+  debug: true, // Shows: "Language detected from querystring: ar"
 })
 ```
 

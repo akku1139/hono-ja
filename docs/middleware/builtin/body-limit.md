@@ -39,7 +39,7 @@ app.post(
 
 ### <Badge type="danger" text="required" /> maxSize: `number`
 
-制限したいファイルの最大ファイルサイズです。 デフォルトは `100 * 1024` - `100kb` です。
+制限したいファイルの最大ファイルサイズです。
 
 ### <Badge type="info" text="optional" /> onError: `OnError`
 

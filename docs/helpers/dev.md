@@ -49,8 +49,11 @@ showRoutes(app, {
 
 ```txt
 GET   /v1/posts
+        [handler]
 GET   /v1/posts/:id
+        [handler]
 POST  /v1/posts
+        [handler]
 ```
 
 ## オプション
